@@ -7,7 +7,8 @@ import datetime
 #Reconhesedor
 audio = sr.Recognizer()
 maquina = pyttsx3.init()
-
+maquina.say('ola sou tina')
+maquina.runAndWait()
 
 
 def executar():
@@ -42,6 +43,6 @@ def usuario():
         maquina.runAndWait()
         
         
-usuario()
+
         
     

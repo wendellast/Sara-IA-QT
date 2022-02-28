@@ -3,10 +3,12 @@ import speech_recognition as sr
 import pyttsx3
 import datetime
 
-
 #Reconhesedor
 audio = sr.Recognizer()
-maquina = pyttsx3.init()
+maquina = pyttsx3.init('dummy')
+maquina.say('olá, eu sou a sara')
+maquina.say('como posso ajudar')
+maquina.runAndWait()
 
 
 
@@ -42,6 +44,6 @@ def usuario():
         maquina.runAndWait()
         
         
-usuario()
+
         
     

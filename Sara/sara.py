@@ -5,7 +5,7 @@ import datetime
 
 #Reconhesedor
 audio = sr.Recognizer()
-maquina = pyttsx3.init('dummy')
+maquina = pyttsx3.init('espeak')
 maquina.say('olá, eu sou a sara')
 maquina.say('como posso ajudar')
 maquina.runAndWait()

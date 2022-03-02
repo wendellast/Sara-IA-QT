@@ -5,17 +5,15 @@ import datetime
 
 #Reconhesedor
 audio = sr.Recognizer()
-<<<<<<< HEAD
 maquina = pyttsx3.init('espeak')
 maquina.say('olá, eu sou a sara')
 maquina.say('como posso ajudar')
 maquina.runAndWait()
 
-=======
 maquina = pyttsx3.init()
-maquina.say('ola sou tina')
+maquina.say('ola sou sara')
 maquina.runAndWait()
->>>>>>> 6e1586d307ceb3e6d95b1025c0bb46c957cbb991
+
 
 
 def executar():
@@ -48,8 +46,4 @@ def usuario():
         hora = datetime.datetime.now().strftime('%H:%M')
         maquina.say('Agora são' + hora)
         maquina.runAndWait()
-        
-        
 
-        
-    

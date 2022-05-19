@@ -1,2 +1,24 @@
 # Sara_Python
 Teste sara Ia usando python
+
+Instale Todas as bibliotecas para que não de nada de errado
+
+
+# Bibliotecas Usadas e Modulos >> 
+
+**********************************
+from flask import Flask, request
+
+speech_recognition as sr
+pyttsx3
+datetime
+wikipedia
+pywhatkit
+os
+colorama
+
+# Pyaudio >>> Acima de python 3.6; Não fuciona instalação por pip padrão
+**********************************
+
+
+# Criador Wendel Alves >> Wendellast

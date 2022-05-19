@@ -10,5 +10,11 @@
         ".",
         "-p",
         "*test.py"
+    ],
+    "cSpell.words": [
+        "audio",
+        "Microphone",
+        "usuario",
+        "wikipedia"
     ]
 }

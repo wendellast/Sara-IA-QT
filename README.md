@@ -4,7 +4,7 @@ Teste sara Ia usando python
 Instale Todas as bibliotecas para que não de nada de errado
 
 
-# Bibliotecas Usadas e Modulos >> 
+# Bibliotecas Usadas e Módulos 
 
 **********************************
 
@@ -28,8 +28,11 @@ Instale Todas as bibliotecas para que não de nada de errado
 
 **********************************
 
-# Pyaudio >>> Acima de python 3.6; Não fuciona instalação por pip padrão
+# Pyaudio >>> Acima de python 3.6; Não funciona instalação por pip padrão
 **********************************
+
+#Sintese de Voz usado (letícia) >> Instalação:
+
 
 
 

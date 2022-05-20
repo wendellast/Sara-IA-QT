@@ -9,11 +9,7 @@ def linha(msg=''): # Linha para menu
     print('[bold][green]=-=[/]'*20)
     
 def linha_extra(): # Linha para menu
-    print('[bold][yellow]=-=[/]'*20) # linha separar
-    
-    
-    
-    
+    print('[yellow]=-=[/]'*20) # linha separar
     
 
 def linha_sara(): # Linha para menu

@@ -1,7 +1,4 @@
 #Importação de Bibliotecas e Módulos
-from build import interface
-from build import uteis
-from flask import Flask, request
 from rich import print
 import speech_recognition as sr
 import pyttsx3
@@ -10,16 +7,9 @@ import wikipedia
 import pywhatkit
 import os
 
-
-audio = sr.Recognizer() #Reconhecedor de Audio
-
-sara = pyttsx3.init('sapi5') # escolha sua sintese de voz (caso não tenha deixe sem nada, que irar ser automaticamente Sapi5)
-
-# Usado Original sintese de voz Letícia
-voz = sara.getProperty('voices')
-sara.setProperty('voice', voz[2].id)
-velocidade = sara.getProperty('rate')
-sara.setProperty('rate', velocidade-50)
+#Reconhecedor de Audio
+audio = sr.Recognizer()
+sara = pyttsx3.init()
 
 
 # Abre o microfone para falar
@@ -94,10 +84,6 @@ def usuario_comandos():
                 sara.runAndWait()
                 abrir = os.startfile('"C:\Program Files\Google\Chrome\Application\chrome.exe"')
                 
-                
-            elif 'escreva' in comando:
-                uteis.text()
-                
             elif 'sair' in comando:
                 print('saindo...')
                 break
@@ -105,12 +91,31 @@ def usuario_comandos():
             elif 'ei sara ' in comando:
                 return comando
             
-    
+            elif 'escrever' in comando:
+                text()
     except:
         print('Erro, algo deu errado !!')
         sara.say('Erro, algo deu errado')
         sara.runAndWait()
         
+ 
 
 
 
+
+
+def text():
+    
+    with sr.Microphone() as source:
+        
+            
+            print('[blue]Ouvindo...[/]')
+            reconhecedor = audio.listen(source) # Definir o microfone 
+            comando_escrever = audio.recognize_google(reconhecedor, language='pt-BR')
+            comando_escrever = comando_escrever.lower()
+    
+    with open('usuario_texto.txt', 'w') as arquivo:
+        print(comando_escrever)
+        arquivo.write(f'{comando_escrever}')
+        
+text()

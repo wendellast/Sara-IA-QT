@@ -66,6 +66,7 @@ def usuario_comandos():
                 print(f'Agora são {hora} horas / minutos')
                 sara.say(f'Agora são {hora}')
                 sara.runAndWait()
+              
                 
             elif 'oi' in comando: # Comando cumprimento
                 print(f'Olá, eu sou Sara, Tudo bem ?')
@@ -89,7 +90,7 @@ def usuario_comandos():
                 print('saindo')
                 break
             
-            elif 'sara' in comando:
+            elif 'ei sara ' in comando:
                 return comando
             
     

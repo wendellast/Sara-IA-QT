@@ -3,7 +3,7 @@ from rich import print
 from rich.table import Table
 
 def linha(msg=''): # Linha para menu
-    msg.title()
+    
     print('[bold][green]=-=[/]'*20) # linha separar
     print(f'[bold][red]{msg:^30}')
     print('[bold][green]=-=[/]'*20)

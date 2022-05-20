@@ -2,7 +2,12 @@ import build
 from build import interface
 
 
-interface.linha()
+
 #Iniciar Sara
-build.usuario_comandos()
+
+
+interface.linha_extra() # Linha para separar
+interface.linha_sara() # iniciar interface do terminal Sara
+build.usuario_comandos() # Iniciar os comandos do Usuario
+interface.linha_extra() # Linha para separar
 

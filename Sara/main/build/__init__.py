@@ -1,7 +1,7 @@
-#Importação de Bibliotecas e Modulos
+#Importação de Bibliotecas e Módulos
 from build import interface
 from flask import Flask, request
-
+from rich import print
 import speech_recognition as sr
 import pyttsx3
 import datetime
@@ -20,8 +20,8 @@ def executar(): # Executar comando
     try:
         with sr.Microphone() as source:
         
-            interface.linha('Sara')
-            print('Ouvindo...')
+            
+            print('[blue]Ouvindo...[/]')
             reconhecedor = audio.listen(source) # Definir o microfone 
             comando = audio.recognize_google(reconhecedor, language='pt-BR')
             comando = comando.lower()
@@ -29,12 +29,12 @@ def executar(): # Executar comando
         #Identificar comando    
         if 'sara' in comando:
             comando = comando.replace('sara', '')
-        
+            
 
     except:
         
         #Erro de microfone 
-        print('Infelizmente o seu microfone não está funcionando, verifique e tente novamente !!!')
+        print('[red]Infelizmente o seu microfone não está funcionando, verifique e tente novamente !!![/]')
         
         sara.say(f'Infelizmente o seu microfone não está funcionando, verifique e tente novamente')
         sara.runAndWait()
@@ -45,40 +45,53 @@ def executar(): # Executar comando
 def usuario_comandos():
     
     try:
-        comando = executar() # Executar comando de voz 
+        while True:
         
-        
-        if 'procure por' in comando: # Comando para procurar algo na Wikipedia
+            comando = executar() # Executar comando de voz 
             
-            procurar = comando.replace('procure por', '')
-            wikipedia.set_lang('pt')
-            resultado = wikipedia.summary(procurar,2)
-            interface.linha('Wikipedia')
-            print(resultado)
-            sara.say(resultado)
-            sara.runAndWait()
             
-        elif 'horas' in comando: # Peguntar Horas
-            hora = datetime.datetime.now().strftime('%H:%M')
-            sara.say(f'Agora são {hora}')
-            sara.runAndWait()
+            if 'procure' in comando: # Comando para procurar algo na Wikipedia
+                
+                procurar = comando.replace('procure', '')
+                wikipedia.set_lang('pt')
+                resultado = wikipedia.summary(procurar,2)
+                interface.linha('Wikipedia')
+                print(resultado)
+                sara.say(resultado)
+                sara.runAndWait()
+                
+            elif 'horas' in comando: # Peguntar Horas
+                hora = datetime.datetime.now().strftime('%H:%M')
+                
+                print(f'Agora são {hora} horas / minutos')
+                sara.say(f'Agora são {hora}')
+                sara.runAndWait()
+                
+            elif 'oi' in comando: # Comando cumprimento
+                print(f'Olá, eu sou Sara, Tudo bem ?')
+                sara.say('Olá, eu sou Sara, Tudo bem ?')
+                sara.runAndWait()
+                
+            elif 'toque' in comando: # Tocar musica no youtube 
+                musica = comando.replace('toque', '')
+                resultado = pywhatkit.playonyt(musica)
+                print(f'Tocando música {musica}')
+                sara.say(f' Tocando música {musica}')
+                sara.runAndWait()
+                
+            elif 'abrir chrome' in comando:
+                abrir = comando.replace('abrir chrome', '')
+                sara.say(f'Abrindo {abrir}')
+                sara.runAndWait()
+                abrir = os.startfile('"C:\Program Files\Google\Chrome\Application\chrome.exe"')
+                
+            elif 'sair' in comando:
+                print('saindo')
+                break
             
-        elif 'oi' in comando: # Comando cumprimento
-            print(f'Olá, eu sou Sara, Tudo bem ?')
-            sara.say('Olá, eu sou Sara, Tudo bem ?')
-            sara.runAndWait()
+            elif 'sara' in comando:
+                return comando
             
-        elif 'toque' in comando: # Tocar musica no youtube 
-            musica = comando.replace('toque', '')
-            resultado = pywhatkit.playonyt(musica)
-            sara.say(f' Tocando música {musica}')
-            sara.runAndWait()
-            
-        elif 'abrir chrome' in comando:
-            abrir = comando.replace('abrir chrome', '')
-            sara.say(f'Abrindo {abrir}')
-            sara.runAndWait()
-            abrir = os.startfile('"C:\Program Files\Google\Chrome\Application\chrome.exe"')
     
     except:
         print('Erro, algo deu errado !!')

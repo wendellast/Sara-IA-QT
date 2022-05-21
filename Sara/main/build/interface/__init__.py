@@ -8,11 +8,13 @@ def linha(msg=''): # Linha para menu
     print(f'[bold][red]{msg:^30}')
     print('[bold][green]=-=[/]'*20)
     
+    
 def linha_extra(): # Linha para menu
-    print('[yellow]=-=[/]'*20) # linha separar
+    print('[bold yellow]=-=[/]'*20) # linha separar
     
 
 def linha_sara(): # Linha para menu
+   
     
     #Tabela Sara >> 
     table = Table(title='----> SARA <----', title_justify='center', title_style='blue')
@@ -24,11 +26,8 @@ def linha_sara(): # Linha para menu
     #Adicionar linhas nas colunas >> 
     table.add_row('Sara, assistente virtual pessoal', '--Beta v1.0--   Compativel: Windows >> Sim;   linux >> Em breve;   Mac >> Em breve  ',  'Contado: Telegram >> https://t.me/Lasstll')
     
+   
+  
     
     print(table)
     
-    
-    
-   
-
-

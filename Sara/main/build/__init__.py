@@ -11,6 +11,7 @@ import pywhatkit
 import os
 
 
+
 audio = sr.Recognizer() #Reconhecedor de Audio
 
 sara = pyttsx3.init('sapi5') # escolha sua sintese de voz (caso não tenha deixe sem nada, que irar ser automaticamente Sapi5)
@@ -26,17 +27,22 @@ sara.setProperty('rate', velocidade-50)
 def executar(): # Executar comando 
     
     try:
-        with sr.Microphone() as source:
-        
+        while True:
             
-            print('[blue]Ouvindo...[/]')
-            reconhecedor = audio.listen(source) # Definir o microfone 
-            comando = audio.recognize_google(reconhecedor, language='pt-BR')
-            comando = comando.lower()
+            with sr.Microphone() as source:
             
-        #Identificar comando    
-        if 'sara' in comando:
-            comando = comando.replace('sara', '')
+                
+                print('[blue]Ouvindo...[/]')
+                reconhecedor = audio.listen(source) # Definir o microfone 
+                comando = audio.recognize_google(reconhecedor, language='pt-BR')
+                comando = comando.lower()
+                
+            #Identificar comando    
+            if 'sara' in comando:
+                comando = comando.replace('sara', '')
+                
+            elif 'sair' in comando:
+                break
             
 
     except:
@@ -99,8 +105,11 @@ def usuario_comandos():
                 uteis.text()
                 
             elif 'sair' in comando:
-                print('saindo...')
+                print('[cyan]saindo...[/]')
+                sara.say('Saindo')
+                sara.runAndWait()
                 break
+                
             
             elif 'ei sara ' in comando:
                 return comando
@@ -110,6 +119,10 @@ def usuario_comandos():
         print('Erro, algo deu errado !!')
         sara.say('Erro, algo deu errado')
         sara.runAndWait()
+
+
+    
+    
         
 
 

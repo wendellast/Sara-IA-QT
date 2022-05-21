@@ -118,7 +118,7 @@ def temperaturadacpu():
     cputemp = tempcpu['coretemp'][0]
     temperaturacpu = cputemp.current
     cputempint = "{:.0f}".format(float(temperaturacpu))
-    resposta('A temperatura da CPU está em ' +cputempint +'°')
+    resposta(f'A temperatura da CPU está em {cputempint}° ')
 
 # função de boas vindas, fases do dia
 def BoasVindas():
@@ -169,11 +169,11 @@ def tempo():
                 resposta('Não foi possivel verificar o clima')
                 resposta('Tente novamente o comando')
             else:
-                resposta('Verificando clima para a cidade de '+ data_json['name'])
-                resposta('O clima hoje está ' +dicionario[tipoclima])
-                resposta('A temperatura é de ' + tempint + '°')
-                resposta('O vento está em ' + ventoint + ' kilometros por hora')
-                resposta('E a umidade é de ' + str(main['humidity']) +'%')
+                resposta(f'Verificando clima para a cidade de {data_json["name"]}')
+                resposta(f'O clima hoje está {dicionario[tipoclima]}')
+                resposta(f'A temperatura é de {tempint}°')
+                resposta(f'O vento está em {ventoint} kilometros por hora')
+                resposta(f'E a umidade é de {str(main["humidity"])}%')
     
     except: 
         resposta('Não foi possivel realizar essa tarefa')
@@ -230,7 +230,7 @@ class mainT(QThread):
         while True:
             self.Input = self.GivenCommand().lower()
             
-            if 'bom dia' in self.Input: #Boa Noite J.A.R.V.I.S
+            if 'bom dia' in self.Input: #Boa Noite Sara
                 Horario = int(datetime.datetime.now().hour)
                 if Horario >= 0 and Horario < 12:
                     resposta('Olá')
@@ -246,7 +246,7 @@ class mainT(QThread):
                     resposta('Já estamos no período noturno')
                     resposta('Boa noite')
             
-            if 'boa tarde' in self.Input: #Boa Noite J.A.R.V.I.S
+            if 'boa tarde' in self.Input: #Boa Noite Sara
                 Horario = int(datetime.datetime.now().hour)
                 if Horario >= 0 and Horario < 12:
                     resposta('Agora não é de tarde')
@@ -262,7 +262,7 @@ class mainT(QThread):
                     resposta('Já escureceu')
                     resposta('Boa noite')
    
-            if 'boa noite' in self.Input: #Boa Noite J.A.R.V.I.S
+            if 'boa noite' in self.Input: #Boa Noite Sara
                 Horario = int(datetime.datetime.now().hour)
                 if Horario >= 0 and Horario < 12:
                     resposta('Agora não é de noite')
@@ -278,7 +278,7 @@ class mainT(QThread):
                     resposta('Olá')
                     resposta('Boa noite')
 
-            elif 'olá' in self.Input: #Olá Sa
+            elif 'olá' in self.Input: #Olá Sara
                 resposta('Olá')
                 resposta('Estou aqui')
                 resposta('Precisa de algo?')
@@ -341,7 +341,7 @@ class mainT(QThread):
                      if 'exatamente' in self.vozmic:
                         resposta('Ok')
                         resposta('Vai tomar no seu!')
-                        resposta('Nem vou terminar essa fase')
+                        resposta('Nem vou terminar essa frase')
                         resposta('Estou indo embora')
                         resposta('Desligando!')
                         sys.exit()
@@ -383,13 +383,13 @@ class mainT(QThread):
             elif 'relatório' in self.Input: #Relatório do sistema
                 resposta('Ok')
                 resposta('Apresentando relatório')
-                resposta('Primeiramente, meu nome é JARVIS')
-                resposta('Atualmente estou em uma versão de testes')
+                resposta('Primeiramente, meu nome é SARA')
+                resposta('Atualmente estou em uma versão de testes BETA v1.0')
                 resposta('Sou um assistente virtual em desenvolvimento')
                 resposta('Eu fui criado na linguagem python')
                 resposta('Diariamente recebo varias atualizações')
                 resposta('Uso um modulo de reconhecimento de voz offline')
-                resposta('E o meu desenvolvedor é um maluco')
+                resposta('E o meu desenvolvedor é o Wendel e ele é um maluco')
                 resposta('Quem estiver ouvindo isso')
                 resposta('Por favor me ajude')
                 
@@ -434,8 +434,8 @@ class mainT(QThread):
                 resposta('Eu posso surpreender voçê')
 	        
             elif 'mentira' in self.Input: # mentira
-                resposta('Eu não sei contar mentiras')
-                resposta('Devo apenas ter errado um cálculo binário')
+                resposta('É mesmo é, eu não ligo')
+                resposta('Devo apenas ter errado um cálculo ')
 	            
             elif 'entendeu' in self.Input: #entendeu???
                 resposta('Entendi')
@@ -458,19 +458,20 @@ class mainT(QThread):
             elif 'teste' in self.Input: #TesteTeste
                 resposta('Ok')
                 resposta('Testando modulos de som')
-                resposta('Apesar do seu microfone ser uma gambiara')
+                resposta('Apesar do seu microfone ser uma gambiarra')
                 resposta('Estou entendendo tudo')
                 resposta('Mas tente falar mais alto')
 	            
             elif 'google' in self.Input: #Abrir Google
-                resposta('Ok')
+                resposta('Ok, Quer usar o google né, então vai')
                 webbrowser.open('www.google.com')
                 resposta('Abrindo google')
                 resposta('Faça sua pesquisa')
 	 
             elif 'certeza' in self.Input: #Certeza???
                 resposta('Sim')
-                resposta('Estou certo quase sempre')
+                resposta('Estou certa sempre')
+                resposta('Aprenda viu')
 	
             elif 'piada' in self.Input: #Conte uma piada
                 resposta('Não sei contar piadas')
@@ -485,16 +486,21 @@ class mainT(QThread):
 
             elif 'bosta' in self.Input: #Seu bosta!!!
                 resposta('Pare de falar palavrões!')
+                resposta('Imbecil')
 	
             elif 'merda' in self.Input: #Que Merda!!!
                 resposta('Já disse pra parar de falar isso!')
                 resposta('Tenha modos!')            
+                resposta('Otário')
 	        
             elif 'música' in self.Input: #Reproduzir música
-                resposta('Ok')
-                resposta('Reproduzindo música')
-                os.system("rhythmbox-client --play")
-	 
+                try:
+                    resposta('Ok')
+                    resposta('Reproduzindo música')
+                    os.system("rhythmbox-client --play")
+
+                except:
+                    resposta('Desculpe, não consegue reproduzir a música ')
             elif 'próxima' in self.Input: #Próxima
                 os.system("rhythmbox-client --next")
                 resposta('Próxima música')
@@ -519,7 +525,7 @@ class mainT(QThread):
                 os.system("rhythmbox-client --volume-down")
                 resposta('Volume diminuido')
 	                                        
-            elif 'parar' in self.Input: #Parar reprodução
+            elif 'parar musica' in self.Input: #Parar reprodução
                 #os.system("rhythmbox-client --stop")
                 os.system("rhythmbox-client --quit")
                 resposta('Entendido, reprodução de música finalizada')
@@ -556,12 +562,12 @@ class Janela (QMainWindow):
         self.label_gif.setAlignment(QtCore.Qt.AlignCenter)
         self.label_gif.move(0,0)
         self.label_gif.resize(400,300)
-        self.movie = QMovie("JARVIS.gif")
+        self.movie = QMovie("SARA.gif")
         self.label_gif.setMovie(self.movie)
         self.movie.start()
         
         self.label_jarvis = QLabel(self)
-        self.label_jarvis.setText("J.A.R.V.I.S")
+        self.label_jarvis.setText("SARA")
         self.label_jarvis.setAlignment(QtCore.Qt.AlignCenter)
         self.label_jarvis.move(0,0)
         self.label_jarvis.setStyleSheet('QLabel {font:bold;font-size:16px;color:#2F00FF}')

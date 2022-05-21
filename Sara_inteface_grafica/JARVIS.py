@@ -1,18 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#
-# Assistente Virtual Offline
-#
-# Copyright 2021 JaimeJGJG
-#
-# Ultimo update:03/02/2021
-#
 from vosk import Model, KaldiRecognizer
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtGui import QMovie
 from plyer import notification
+from rich import print
+
 import speech_recognition as sr
 import os
 import pyaudio
@@ -26,8 +19,7 @@ import json
 import requests
 import time
 import wikipedia
-import rich
-from rich import print
+
 
 r = sr.Recognizer()
 
@@ -57,13 +49,13 @@ model = Model("model-br")
 rec = KaldiRecognizer(model, 16000)
 
 # Trás a função letícia voz
-speaker=pyttsx3.init()
+sara_voz=pyttsx3.init()
 
 # Função de ajuste de voz da sara
-voz = speaker.getProperty('voices')
-speaker.setProperty('voice', voz[2].id)
-rate = speaker.getProperty('rate')
-speaker.setProperty('rate', rate-50)
+voz = sara_voz.getProperty('voices')
+sara_voz.setProperty('voice', voz[2].id)
+rate = sara_voz.getProperty('rate')
+sara_voz.setProperty('rate', rate-50)
 
 
 # Função de fala sara (voz da letícia)   
@@ -71,43 +63,43 @@ def resposta(audio):
     notification.notify(title = "SARA",message = audio,timeout = 3)
     stream . stop_stream ()
     print('ASSISTENTE: ' + audio)
-    speaker.say(audio)
-    speaker.runAndWait()
-    stream . start_stream ()
+    sara_voz.say(audio)
+    sara_voz.runAndWait()
+    stream.start_stream ()
 
 def notificar(textos):
-	notification.notify(title = "J.A.R.V.I.S",message = textos,timeout = 10)
+	notification.notify(title = "SARA",message = textos,timeout = 10)
 
 def respostalonga(textofala):
-    notification.notify(title = "J.A.R.V.I.S",message = textofala,timeout = 30)
-    stream . stop_stream ()
-    speaker.say(textofala)
-    speaker.runAndWait()
-    stream . start_stream ()
+    notification.notify(title = "SARA",message = textofala,timeout = 30)
+    stream.stop_stream ()
+    sara_voz.say(textofala)
+    sara_voz.runAndWait()
+    stream.start_stream ()
 
 def horario():
 	from datetime import datetime
 	hora = datetime.now()
 	horas= hora.strftime('%H horas e %M minutos')
-	resposta('Agora são ' +horas)
+	resposta(f'Agora são {horas}')
 
 def datahoje():
     from datetime import date
     dataatual = date.today()
     diassemana = ('Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado','Domingo')
     meses = ('Zero','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro')
-    resposta("Hoje é " +diassemana[dataatual.weekday()])
-    diatexto = '{} de '.format(dataatual.day)
+    resposta(f"Hoje é {diassemana[dataatual.weekday()]}")
+    diatexto = f'{dataatual.day} de '
     mesatual = (meses[dataatual.month])
     datatexto = dataatual.strftime(" de %Y")
-    resposta('Dia '+diatexto +mesatual +datatexto)
+    resposta(f'Dia {diatexto} {mesatual} {datatexto}')
 
 def bateria():
     bateria = psutil.sensors_battery()
     carga = bateria.percent
     bp = str(bateria.percent)
     bpint = "{:.0f}".format(float(bp))
-    resposta("A bateria está em:" +bpint +'%')
+    resposta(f"A bateria está em: {bpint}%")
     if carga <= 20:
         resposta('Ela está em nivel crítico')
         resposta('Por favor, coloque o carregador')
@@ -119,7 +111,7 @@ def cpu ():
     usocpuinfo = str(psutil.cpu_percent())
     usodacpu  = "{:.0f}".format(float(usocpuinfo))
     resposta('Verificando carga do sistema')
-    resposta('O uso do processador está em ' +usodacpu +'%')
+    resposta(f'O uso do processador está em {usodacpu}%')
 
 def temperaturadacpu():
     tempcpu = psutil.sensors_temperatures()

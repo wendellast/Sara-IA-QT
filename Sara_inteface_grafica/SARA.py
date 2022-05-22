@@ -74,7 +74,7 @@ def notificar(textos):
 	notification.notify(title = "SARA",message = textos,timeout = 10)
 
 def respostalonga(textofala):
-    notification.notify(title = "SARA",message = textofala,timeout = 30)
+    
     stream.stop_stream ()
     sara_voz.say(textofala)
     sara_voz.runAndWait()
@@ -85,6 +85,7 @@ def horario():
 	hora = datetime.now()
 	horas= hora.strftime('%H horas e %M minutos')
 	resposta(f'Agora são {horas}')
+    
 
 def datahoje():
     from datetime import date
@@ -117,7 +118,7 @@ def cpu ():
     resposta(f'O uso do processador está em {usodacpu}%')
 
 def temperaturadacpu():
-    tempcpu = psutil.sensors_temperatures()
+    tempcpu = psutil.sensors_temperatures(fahrenheit=False)
     cputemp = tempcpu['coretemp'][0]
     temperaturacpu = cputemp.current
     cputempint = "{:.0f}".format(float(temperaturacpu))
@@ -138,7 +139,7 @@ def BoasVindas():
 def tempo(): 
     try:
         #Procure no google maps as cordenadas da sua cidade e coloque no "lat" e no "lon"(Latitude,Longitude)
-        api_url = "https://fcc-weather-api.glitch.me/api/current?lat=LATITUDE_AQUI&lon=LONGITUDE_AQUI"
+        api_url = "https://fcc-weather-api.glitch.me/api/current?lat=14º 13 30&lon=42º 46 53"
         data = requests.get(api_url)
         data_json = data.json()
         if data_json['cod'] == 200:
@@ -387,10 +388,12 @@ class mainT(QThread):
                 bateria()
             
             elif 'vai chover' in self.Input:
+                
 	            resposta('Não sei')
 	            resposta('Eu não tenho essa função ainda')
 	       
             elif 'errado' in self.Input:
+                
                 resposta('Desculpa')
                 resposta('Errei um cálculo')
                 resposta('Tente seu comando novamente')
@@ -432,6 +435,7 @@ class mainT(QThread):
             elif 'resumo' in self.Input: #Me fale sobre um assunto
                 resposta('Ok')
                 resposta('Sobre qual assunto?')
+                
                 try:
                     with sr.Microphone() as s:
                         r.adjust_for_ambient_noise(s)
@@ -440,9 +444,11 @@ class mainT(QThread):
                         resposta('Interessante')
                         resposta('Aguarde um momento')
                         resposta(f'Vou pesquisar e apresentar um resumo sobre {speech}')
-                        wikipedia . set_lang ( "pt" )
+                        wikipedia.set_lang ( "pt" )
                         resultadowik = wikipedia.summary(speech, 2)
+                        print(resultadowik)
                         respostalonga(resultadowik)
+                       
                 except:
                     resposta('Erro')
                     resposta('A conexão falhou')
@@ -452,6 +458,8 @@ class mainT(QThread):
                 resposta('Interessante sou eu')
                 resposta('Me fale mais comandos')
                 resposta('Eu posso surpreender voçê')
+            elif 'exêlente' in self.Input:
+                resposta('Obrigada, eu dou o meu melhor')
 	        
             elif 'mentira' in self.Input: # mentira
                 resposta('É mesmo é, eu não ligo')
@@ -461,6 +469,7 @@ class mainT(QThread):
                 resposta('Entendi')
                 resposta('Quer dizer')
                 resposta('Mais ou menos')
+                print(self.Input)
 	
             elif 'horas' in self.Input: #Que horas são???
                 horario()
@@ -590,9 +599,37 @@ class mainT(QThread):
                 resposta('Tudo certo') 
 	
             elif 'sistema' in self.Input: #Carga do sistema
-                cpu()
-                temperaturadacpu()
-
+                system_os = platform.system()
+                
+                if 'Windows' in system_os:
+                    cpu()
+                    resposta('A temperatura do CPU não possivel ver no Windows ')
+                else:
+                    cpu()
+                    temperaturadacpu()
+            
+            elif 'escrever' in self.Input:
+                try:
+                    with sr.Microphone() as source:
+                        r.adjust_for_ambient_noise(s)
+                        audio = r.listen(s)
+                        resposta('Fale o que deseja que eu escreva')
+                        self.Input
+                            
+                        
+                        
+                        
+                    
+                    with open('usuario_texto.txt', 'w') as arquivo:
+                        arquivo.write(f'{self.Input}')
+                        resposta('Pronto escrito')
+                
+                except:
+                    resposta('Desculpe, Erro na conexão')
+        
+                 
+            else:
+                comando_novo(self.Input)
 # Para adicionar a fala coloque Dspeak = mainT() e tbm Dspeak.start()
 
 class Janela (QMainWindow):
@@ -610,12 +647,12 @@ class Janela (QMainWindow):
         self.label_gif.setMovie(self.movie)
         self.movie.start()
         
-        self.label_jarvis = QLabel(self)
-        self.label_jarvis.setText("SARA")
-        self.label_jarvis.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_jarvis.move(0,0)
-        self.label_jarvis.setStyleSheet('QLabel {font:bold;font-size:16px;color:#2F00FF}')
-        self.label_jarvis.resize(400,300)
+        self.label_sara = QLabel(self)
+        self.label_sara.setText("SARA")
+        self.label_sara.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_sara.move(0,0)
+        self.label_sara.setStyleSheet('QLabel {font:bold;font-size:16px;color:#2F00FF}')
+        self.label_sara.resize(400,300)
         
         self.label_cpu = QLabel(self)
         self.label_cpu.setText("Uso da CPU: 32%")

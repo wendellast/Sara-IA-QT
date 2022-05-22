@@ -23,7 +23,9 @@ import time
 import wikipedia
 import platform
 
-r = sr.Recognizer()
+frases = {'ei':'Olá'}
+
+vozes = sr.Recognizer()
 
 def SomIncial():
     p = vlc.MediaPlayer("StartSound.mp3")
@@ -51,7 +53,7 @@ model = Model("model-br")
 rec = KaldiRecognizer(model, 16000)
 
 # Trás a função letícia voz
-sara_voz=pyttsx3.init()
+sara_voz=pyttsx3.init('sapi5')
 
 # Função de ajuste de voz da sara
 voz = sara_voz.getProperty('voices')
@@ -63,7 +65,7 @@ sara_voz.setProperty('rate', rate-50)
 
 # Função de fala sara (voz da letícia)   
 def resposta(audio):
-    notification.notify(title = "SARA",message = audio,timeout = 3)
+    # notification.notify(title = "SARA",message = audio,timeout = 3)
     stream.stop_stream ()
     print(f'SARA: {audio}')
     sara_voz.say(audio)
@@ -71,8 +73,8 @@ def resposta(audio):
     stream.start_stream ()
 
 def notificar(textos):
-	notification.notify(title = "SARA",message = textos,timeout = 10)
-
+	# notification.notify(title = "SARA",message = textos,timeout = 10)
+    pass
 def respostalonga(textofala):
     
     stream.stop_stream ()
@@ -229,26 +231,34 @@ class mainT(QThread):
     # Faz o reconhecimento
     def GivenCommand(self):
 		# print("ouvindo...")
-        rec.pause_threshold = 1
+        #rec.pause_threshold = 1
 		# Lendo audio do microfone
-        data = stream.read(20000)
+        #data = stream.read(20000)
 		# Convertendo audio em texto
-        rec.AcceptWaveform(data)   
+        #rec.AcceptWaveform(data)   
         try:
-            Input = rec.Result()
+            with sr.Microphone() as s:
+                audio = vozes.listen(s)
+                speech2 = vozes.recognize_google(audio, language= "pt-BR")
+            
+            
+                speech = speech2.lower()
+                
         except:
 			# Retorna os erros
             print('Não entendi, fale novamente')
 			# resposta("Não entendi o que você disse, fale novamente.")
             return 'none'
         #Input = Input.lower()
-        return Input
+        return speech
 
   
     # Comandos e conversas   
     def SARA(self):
         while True:
             self.Input = self.GivenCommand().lower()
+            self.frases = frases
+            self.st = str(self.Input)
             
             if 'bom dia' in self.Input: #Boa Noite Sara
                 Horario = int(datetime.datetime.now().hour)
@@ -329,6 +339,7 @@ class mainT(QThread):
             elif 'funcionamento' in self.Input: #Como está seu funcionamento???
                 resposta('Estou funcionando normalmente')
                 resposta('Obrigado por perguntar')
+            
             
             elif 'silêncio' in self.Input: #Fique em silêncio
                 resposta('Ok')
@@ -421,9 +432,9 @@ class mainT(QThread):
                 resposta('Me fale o que voçê deseja pesquisar')
                 try:
                     with sr.Microphone() as s:
-                        r.adjust_for_ambient_noise(s)
-                        audio = r.listen(s)
-                        speech = r.recognize_google(audio, language= "pt-BR")
+                        audio.adjust_for_ambient_noise(s)
+                        audio = audio.listen(s)
+                        speech = audio.recognize_google(audio, language= "pt-BR")
                         resposta('Ok, pesquisando no google sobre '+speech)
                         webbrowser.open('http://google.com/search?q='+speech)
                     
@@ -438,9 +449,9 @@ class mainT(QThread):
                 
                 try:
                     with sr.Microphone() as s:
-                        r.adjust_for_ambient_noise(s)
-                        audio = r.listen(s)
-                        speech = r.recognize_google(audio, language= "pt-BR")
+                        audio.adjust_for_ambient_noise(s)
+                        audio = audio.listen(s)
+                        speech = audio.recognize_google(audio, language= "pt-BR")
                         resposta('Interessante')
                         resposta('Aguarde um momento')
                         resposta(f'Vou pesquisar e apresentar um resumo sobre {speech}')
@@ -516,6 +527,7 @@ class mainT(QThread):
                 
             elif  'puta' in self.Input:   
                 resposta('Puta é a sua mãe')
+               
                 
             elif  'Burra' in self.Input:
                 resposta('haha, Burra é tu')
@@ -532,7 +544,10 @@ class mainT(QThread):
                 resposta('Eu não fui criado com emoções')
                 resposta('Então, não posso produzir nada engraçado')
                 resposta('Sugiro pesquisar na web')
-           
+            
+            elif self.Input in self.frases:
+                resposta(self.frases[self.Input])
+                
             elif 'surdo' in self.Input: #Surdo!!!
                 resposta('Estava quase dormindo')
                 resposta('Desculpa')
@@ -577,7 +592,8 @@ class mainT(QThread):
             elif 'diminuir' in self.Input: #Diminuir volume
                 os.system("rhythmbox-client --volume-down")
                 resposta('Volume diminuido')
-	                                        
+	        
+                                         
             elif 'parar musica' in self.Input: #Parar reprodução
                 #os.system("rhythmbox-client --stop")
                 os.system("rhythmbox-client --quit")
@@ -608,11 +624,15 @@ class mainT(QThread):
                     cpu()
                     temperaturadacpu()
             
+            elif self.Input[0] in self.frases:
+                resposta(frases[self.Input])
+                print('ooo')
+                        
             elif 'escrever' in self.Input:
                 try:
                     with sr.Microphone() as source:
-                        r.adjust_for_ambient_noise(s)
-                        audio = r.listen(s)
+                        audio.adjust_for_ambient_noise(s)
+                        audio = audio.listen(s)
                         resposta('Fale o que deseja que eu escreva')
                         self.Input
                             
@@ -628,8 +648,7 @@ class mainT(QThread):
                     resposta('Desculpe, Erro na conexão')
         
                  
-            else:
-                comando_novo(self.Input)
+            
 # Para adicionar a fala coloque Dspeak = mainT() e tbm Dspeak.start()
 
 class Janela (QMainWindow):

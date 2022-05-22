@@ -6,6 +6,7 @@ from PyQt5.QtGui import QMovie
 from plyer import notification
 from rich import print
 from rich.table import Table
+from build import *
 
 import speech_recognition as sr
 import os
@@ -20,7 +21,7 @@ import json
 import requests
 import time
 import wikipedia
-
+import platform
 
 r = sr.Recognizer()
 
@@ -59,10 +60,11 @@ rate = sara_voz.getProperty('rate')
 sara_voz.setProperty('rate', rate-50)
 
 
+
 # Função de fala sara (voz da letícia)   
 def resposta(audio):
     notification.notify(title = "SARA",message = audio,timeout = 3)
-    stream . stop_stream ()
+    stream.stop_stream ()
     print(f'SARA: {audio}')
     sara_voz.say(audio)
     sara_voz.runAndWait()
@@ -219,7 +221,7 @@ class mainT(QThread):
         SomCarregamento()
         resposta('Ok')
         resposta('Módulos Carregados')
-        resposta('Tudo pronto, QUAl o seu comando')
+        resposta('Tudo pronto, o que deseja ?')
         self.SARA()
 
     # Aciona os comandos
@@ -470,9 +472,14 @@ class mainT(QThread):
                 tempo()
 	
             elif 'arquivos' in self.Input: #Abrir arquivos
-                resposta('Abrindo arquivos')
-                os.system("thunar //home//*//")
-	
+                system_os = platform.system()
+                
+                if 'Windows' in system_os:
+                    pass
+                else:
+                    resposta('Abrindo arquivos')
+                    os.system("thunar //home//*//")
+         
             elif 'teste' in self.Input: #TesteTeste
                 resposta('Ok')
                 resposta('Testando modulos de som')
@@ -490,7 +497,26 @@ class mainT(QThread):
                 resposta('Sim')
                 resposta('Estou certa sempre')
                 resposta('Aprenda viu')
-	
+
+            elif 'quem é você' in self.Input:
+                resposta('Eu sou SARA, Uma inteligencia Artificial')
+             
+            # Insutos    
+            elif  'porra' in self.Input:
+                resposta('limpa essa boca') 
+                
+            elif  'puta' in self.Input:   
+                resposta('Puta é a sua mãe')
+                
+            elif  'Burra' in self.Input:
+                resposta('haha, Burra é tu')
+                
+            elif  'vaca' in self.Input:
+                resposta('Vaca é seu pai, com aqueles chifres')
+                  
+            elif 'cachorra' in self.Input:
+                resposta('Cachorra é você Cadela')     
+                
             elif 'piada' in self.Input: #Conte uma piada
                 resposta('Não sei contar piadas')
                 resposta('Diferente dos outros assistentes virtuais')

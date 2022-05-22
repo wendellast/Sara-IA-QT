@@ -5,6 +5,7 @@ from PyQt5 import QtGui, QtCore
 from PyQt5.QtGui import QMovie
 from plyer import notification
 from rich import print
+from rich.table import Table
 
 import speech_recognition as sr
 import os
@@ -62,7 +63,7 @@ sara_voz.setProperty('rate', rate-50)
 def resposta(audio):
     notification.notify(title = "SARA",message = audio,timeout = 3)
     stream . stop_stream ()
-    print('ASSISTENTE: ' + audio)
+    print(f'SARA: {audio}')
     sara_voz.say(audio)
     sara_voz.runAndWait()
     stream.start_stream ()
@@ -94,7 +95,7 @@ def datahoje():
     datatexto = dataatual.strftime(" de %Y")
     resposta(f'Dia {diatexto} {mesatual} {datatexto}')
 
-def bateria():
+def bateria(): # Conserta
     bateria = psutil.sensors_battery()
     carga = bateria.percent
     bp = str(bateria.percent)
@@ -190,6 +191,22 @@ def AteMais():
     elif Horario >= 18 and Horario != 0:
         resposta('Boa noite')
 
+def linha_sara(): # Linha para menu
+   
+    
+    #Tabela Sara >> 
+    table = Table(title='----> SARA <----', title_justify='center', title_style='blue')
+    
+    table.add_column('Informação', justify='center', style='purple')
+    table.add_column('Versão', justify='center', style='red')
+    table.add_column('Suporte', justify='center', style='green')
+    
+    #Adicionar linhas nas colunas >> 
+    table.add_row('Sara, assistente virtual pessoal', '--Beta v1.0--   Compativel: Windows >> Sim;   linux >> Em breve;   Mac >> Em breve  ',  'Contado: Telegram >> https://t.me/Lasstll')
+    
+    print(table)
+    
+linha_sara()  
 resposta('Olá')
 BoasVindas()
 resposta('Iniciando módulos')
@@ -201,8 +218,8 @@ class mainT(QThread):
     def run(self):
         SomCarregamento()
         resposta('Ok')
-        resposta('Modulos iniciados')
-        resposta('Tudo pronto para atender seus comandos')
+        resposta('Módulos Carregados')
+        resposta('Tudo pronto, QUAl o seu comando')
         self.SARA()
 
     # Aciona os comandos
@@ -362,6 +379,7 @@ class mainT(QThread):
                         resposta('Vou deixar passar essa')
                         resposta('Mas tenha mais respeito')
                         self.SARA()
+                        
                 
             elif 'bateria' in self.Input:
                 bateria()
@@ -409,7 +427,7 @@ class mainT(QThread):
                     resposta('Não foi possivel conectar ao google')
                     resposta('A conexão falhou')
             
-            elif 'assunto' in self.Input: #Me fale sobre um assunto
+            elif 'resumo' in self.Input: #Me fale sobre um assunto
                 resposta('Ok')
                 resposta('Sobre qual assunto?')
                 try:
@@ -419,9 +437,9 @@ class mainT(QThread):
                         speech = r.recognize_google(audio, language= "pt-BR")
                         resposta('Interessante')
                         resposta('Aguarde um momento')
-                        resposta('Vou pesquisar e apresentar um resumo sobre '+speech)
+                        resposta(f'Vou pesquisar e apresentar um resumo sobre {speech}')
                         wikipedia . set_lang ( "pt" )
-                        resultadowik = wikipedia.summary(speech, sentences=2)
+                        resultadowik = wikipedia.summary(speech, 2)
                         respostalonga(resultadowik)
                 except:
                     resposta('Erro')
@@ -497,7 +515,7 @@ class mainT(QThread):
                 try:
                     resposta('Ok')
                     resposta('Reproduzindo música')
-                    os.system("rhythmbox-client --play")
+                    os.startfile('"%ProgramFiles(x86)%\Windows Media Player\wmplayer.exe"')
 
                 except:
                     resposta('Desculpe, não consegue reproduzir a música ')
@@ -590,7 +608,7 @@ class Janela (QMainWindow):
         self.label_assv.resize(200,20)
 
         self.label_version = QLabel(self)
-        self.label_version.setText("Alpha version 1.2.1")
+        self.label_version.setText("Versão BETA 1.0")
         self.label_version.setAlignment(QtCore.Qt.AlignCenter)
         self.label_version.move(265,270)
         self.label_version.setStyleSheet('QLabel {font-size:14px;color:#000079}')

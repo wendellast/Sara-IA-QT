@@ -42,7 +42,8 @@ Ele usa um sistema de reconhecimento de voz offline
 
 # PARA TUDO FUNCIONAR: *lINUX*
 
-> INSTALE ALGUNS MODULOS:
+# INSTALE ALGUNS MODULOS:
+
 >>  sudo apt-get install python3-pyaudio
 
 >>  sudo apt-get install python3-dbus
@@ -51,7 +52,7 @@ Ele usa um sistema de reconhecimento de voz offline
 
 >>  Voz Letícia : https://f123.org/leticia/
 
-> AGORA ALGUMAS INSTALAÇÕES EM PIP3:
+# AGORA ALGUMAS INSTALAÇÕES EM PIP3:
 
 >> pip3 install SpeechRecognition
 

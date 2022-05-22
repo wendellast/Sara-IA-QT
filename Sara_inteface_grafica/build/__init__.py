@@ -2,7 +2,7 @@ import os
 from rich import print
 import platform
 
-
+pessoas = {}
 
 def abrir_arquivos(): # Conserta depois
     try:
@@ -11,7 +11,8 @@ def abrir_arquivos(): # Conserta depois
     except:
         print('Erro não consegue abrir')
     
-
+def mente_pessoas():
+    pass
 
 
 

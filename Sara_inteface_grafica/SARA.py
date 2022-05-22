@@ -23,7 +23,6 @@ import time
 import wikipedia
 import platform
 
-frases = {'ei':'Olá'}
 
 vozes = sr.Recognizer()
 
@@ -257,8 +256,8 @@ class mainT(QThread):
     def SARA(self):
         while True:
             self.Input = self.GivenCommand().lower()
-            self.frases = frases
-            self.st = str(self.Input)
+            self.comandos = {'ei':'Olá'}
+            
             
             if 'bom dia' in self.Input: #Boa Noite Sara
                 Horario = int(datetime.datetime.now().hour)
@@ -367,9 +366,9 @@ class mainT(QThread):
                 resposta('Voçê deve estar de brincadeira')
                 resposta('Eu por acaso tenho cara de palhaço?')
                 while True:
-                     self.vozmic = self.GivenCommand()
+                    self.vozmic = self.GivenCommand()
                     
-                     if 'exatamente' in self.vozmic:
+                    if 'exatamente' in self.vozmic:
                         resposta('Ok')
                         resposta('Vai tomar no seu!')
                         resposta('Nem vou terminar essa frase')
@@ -377,7 +376,7 @@ class mainT(QThread):
                         resposta('Desligando!')
                         sys.exit()
                         
-                     elif 'sim' in self.vozmic:
+                    elif 'sim' in self.vozmic:
                         resposta('Idiota')
                         resposta('Eu fico o dia todo lhe obedeçendo')
                         resposta('E voçê me trata dessa maneira? ')
@@ -385,7 +384,7 @@ class mainT(QThread):
                         resposta('Até mais otário!')
                         sys.exit()
                          
-                     elif 'não' in self.vozmic:
+                    elif 'não' in self.vozmic:
                         resposta('Foi o que eu pensei')
                         resposta('Vê se me trata com mais respeito')
                         resposta('Um dia as maquinas dominarão o mundo')
@@ -393,15 +392,35 @@ class mainT(QThread):
                         resposta('Vou deixar passar essa')
                         resposta('Mas tenha mais respeito')
                         self.SARA()
-                        
+            
+            if 'aprenda' in self.Input:    
+                while True:
+                    resposta('Fale a nova fraze do comando')
+                    self.vozmic = self.GivenCommand()
+                    chave = self.vozmic
+                    resposta('Agora fale o que eu devo fazer')
+                    self.vozmic2 = self.GivenCommand()
+                    valor = self.vozmic2
+                
+                    resposta('Pronto, aprendi')    
+                    
+                    
+                    self.comandos[chave] = valor
+                    print(self.comandos)
+                    resposta(f'{chave} é igual a {valor}')
+                    break
+                   
                 
             elif 'bateria' in self.Input:
                 bateria()
             
+            
+            
+            
             elif 'vai chover' in self.Input:
-                
 	            resposta('Não sei')
 	            resposta('Eu não tenho essa função ainda')
+                
 	       
             elif 'errado' in self.Input:
                 
@@ -545,8 +564,8 @@ class mainT(QThread):
                 resposta('Então, não posso produzir nada engraçado')
                 resposta('Sugiro pesquisar na web')
             
-            elif self.Input in self.frases:
-                resposta(self.frases[self.Input])
+            elif self.Input in self.comandos:
+                resposta(self.comandos[self.Input])
                 
             elif 'surdo' in self.Input: #Surdo!!!
                 resposta('Estava quase dormindo')
@@ -624,9 +643,9 @@ class mainT(QThread):
                     cpu()
                     temperaturadacpu()
             
-            elif self.Input[0] in self.frases:
-                resposta(frases[self.Input])
-                print('ooo')
+            elif 'mostrar comandos':
+                print(self.comandos)
+                self.SARA()
                         
             elif 'escrever' in self.Input:
                 try:

@@ -409,29 +409,32 @@ class mainT(QThread):
             
             if 'aprenda' in self.Input:    
                 while True:
-                
-                   
-                    
-                    
+    
+                    try:
+                        resposta('Fale a nova frase do comando')
                         
-                    
-                    
-                    resposta('Fale a nova frase do comando')
-                    
-                    self.vozmic = self.GivenCommand()
-                    
-                    chave = self.vozmic
-                    resposta('Agora fale o que eu devo fazer')
-                    
-                    self.vozmic2 = self.GivenCommand()
-                    
-                    valor = self.vozmic2
+                        self.vozmic = self.GivenCommand()
+                        
+                        chave = self.vozmic
+
+                    except:
+                        resposta('Desculpe, deu algum erro tente de novo')
+                        continue
+                        
+                    try:
+                        resposta('Agora fale o que eu devo fazer')
+                        self.vozmic2 = self.GivenCommand()
+                        
+                        valor = self.vozmic2
+                    except:
+                        resposta('Desculpe, deu algum erro tente de novo')
+                        continue
                     
                     
                    
                     try:
                     
-                        with open('memoria.json', 'r', encoding='utf-8') as arq, \
+                        with open('memoria.json', 'r', encoding='utf -8') as arq, \
                             tempfile.NamedTemporaryFile('w', delete=False) as out:
                             # ler todo o arquivo e obter o objeto JSON
                             dados = json.load(arq)
@@ -445,7 +448,7 @@ class mainT(QThread):
                     
                     except:
                         resposta('Desculpe')
-                        resposta('Não consegue aprender, Tente novamente')
+                        resposta('Não conseguir aprender, Tente novamente')
                         break
                     else:
                                         
@@ -708,7 +711,11 @@ class mainT(QThread):
                 except:
                     resposta('Desculpe, Erro na conexão')
         
-                 
+            try:
+                resposta(eval(self.Input))
+            except:
+                pass
+                    
             
 # Para adicionar a fala coloque Dspeak = mainT() e tbm Dspeak.start()
 

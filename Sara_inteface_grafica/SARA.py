@@ -24,7 +24,7 @@ import wikipedia
 import platform
 import shutil
 import tempfile
-import shelve
+import pywhatkit
 
 vozes = sr.Recognizer()
 
@@ -265,7 +265,7 @@ class mainT(QThread):
             BASE_DIR = os.path.dirname(__file__)
             SAVE_TO = os.path.join(BASE_DIR, 'mente.json')
 
-            with open('memoria.json', 'r') as file:
+            with open(r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\memoria\memoria.json', 'r') as file:
                 self.comandos = json.load(file)
                 
                 
@@ -434,7 +434,7 @@ class mainT(QThread):
                    
                     try:
                     
-                        with open('memoria.json', 'r', encoding='utf -8') as arq, \
+                        with open(r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\memoria\memoria.json', 'r', encoding='UTF-8') as arq, \
                             tempfile.NamedTemporaryFile('w', delete=False) as out:
                             # ler todo o arquivo e obter o objeto JSON
                             dados = json.load(arq)
@@ -444,7 +444,7 @@ class mainT(QThread):
                             json.dump(dados, out, ensure_ascii=False, indent=4, separators=(',',':'))
 
                         # se tudo deu certo, renomeia o arquivo temporário
-                        shutil.move(out.name, 'memoria.json')
+                        shutil.move(out.name, r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\memoria\memoria.json')
                     
                     except:
                         resposta('Desculpe')
@@ -498,13 +498,12 @@ class mainT(QThread):
                 resposta('Muito bem, realizando pesquisa')
                 resposta('Me fale o que voçê deseja pesquisar')
                 try:
-                    with sr.Microphone() as s:
-                        audio.adjust_for_ambient_noise(s)
-                        audio = audio.listen(s)
-                        speech = audio.recognize_google(audio, language= "pt-BR")
-                        resposta('Ok, pesquisando no google sobre '+speech)
-                        webbrowser.open('http://google.com/search?q='+speech)
-                    
+                    self.vozmic2 = self.GivenCommand()
+                        
+                        
+                    resposta('Ok, pesquisando no google sobre '+self.vozmic2)
+                    webbrowser.open('http://google.com/search?q='+self.vozmic2)
+                
                 except:
                     resposta('Erro')
                     resposta('Não foi possivel conectar ao google')
@@ -515,17 +514,29 @@ class mainT(QThread):
                 resposta('Sobre qual assunto?')
                 
                 try:
-                    with sr.Microphone() as s:
-                        audio.adjust_for_ambient_noise(s)
-                        audio = audio.listen(s)
-                        speech = audio.recognize_google(audio, language= "pt-BR")
-                        resposta('Interessante')
-                        resposta('Aguarde um momento')
-                        resposta(f'Vou pesquisar e apresentar um resumo sobre {speech}')
-                        wikipedia.set_lang ( "pt" )
-                        resultadowik = wikipedia.summary(speech, 2)
-                        print(resultadowik)
-                        respostalonga(resultadowik)
+                    self.vozmic2 = self.GivenCommand()
+                    
+                    resposta('Interessante')
+                    resposta('Aguarde um momento')
+                    resposta(f'Vou pesquisar e apresentar um resumo sobre {self.vozmic2}')
+                    procurar = self.vozmic2.replace('resumo', '')
+                    wikipedia.set_lang('pt')
+                    resultado = wikipedia.summary(procurar,2)
+                    print(resultado)
+                    respostalonga(resultado)
+                   
+                        
+                        
+                        
+                    
+                    system_os = platform.system()
+                
+                    if 'Windows' in system_os:
+                        with open(r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\resumo\resumo_texto.txt', 'a+', encoding='UTF-8') as arquivo:
+                            arquivo.write(f'{resultado}')
+                            resposta('Escrevir o resumo para você')
+                        
+                        
                        
                 except:
                     resposta('Erro')
@@ -536,8 +547,9 @@ class mainT(QThread):
                 resposta('Interessante sou eu')
                 resposta('Me fale mais comandos')
                 resposta('Eu posso surpreender voçê')
+           
             elif 'exêlente' in self.Input:
-                resposta('Obrigada, eu dou o meu melhor')
+                resposta('EU sei disso, eu sou incrível')
 	        
             elif 'mentira' in self.Input: # mentira
                 resposta('É mesmo é, eu não ligo')
@@ -627,7 +639,13 @@ class mainT(QThread):
                 resposta('Tenha modos!')            
                 resposta('Otário')
 	        
-            elif 'música' in self.Input: #Reproduzir música
+            elif 'música' in self.Input:
+                musica = self.Input.replace('música', '')
+                resultado = pywhatkit.playonyt(musica)
+                resposta(f'Tocando música {musica}')
+                
+         
+            elif 'playlist' in self.Input: #Reproduzir música
                 try:
                     resposta('Ok')
                     resposta('Reproduzindo música')
@@ -660,7 +678,7 @@ class mainT(QThread):
                 resposta('Volume diminuido')
 	        
                                          
-            elif 'parar musica' in self.Input: #Parar reprodução
+            elif 'parar playlist' in self.Input: #Parar reprodução
                 #os.system("rhythmbox-client --stop")
                 os.system("rhythmbox-client --quit")
                 resposta('Entendido, reprodução de música finalizada')
@@ -692,20 +710,15 @@ class mainT(QThread):
             
             
                         
-            elif 'escrever' in self.Input:
+            elif 'escreva' in self.Input:
                 try:
-                    with sr.Microphone() as source:
-                        audio.adjust_for_ambient_noise(s)
-                        audio = audio.listen(s)
-                        resposta('Fale o que deseja que eu escreva')
-                        self.Input
-                            
+                   
                         
-                        
-                        
-                    
-                    with open('usuario_texto.txt', 'w') as arquivo:
-                        arquivo.write(f'{self.Input}')
+                    resposta('Fale o que deseja que eu escreva')
+                    self.vozmic = self.GivenCommand()
+
+                    with open(r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\escrito\texto_escrito_pela_sara_usuario.txt', 'a+',  encoding='UTF-8') as arquivo:
+                        arquivo.write(f'{self.vozmic}')
                         resposta('Pronto escrito')
                 
                 except:

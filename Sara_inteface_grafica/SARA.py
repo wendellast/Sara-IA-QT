@@ -102,17 +102,20 @@ def datahoje():
     resposta(f'Dia {diatexto} {mesatual} {datatexto}')
 
 def bateria(): # Conserta
-    bateria = psutil.sensors_battery()
-    carga = bateria.percent
-    bp = str(bateria.percent)
-    bpint = "{:.0f}".format(float(bp))
-    resposta(f"A bateria está em: {bpint}%")
-    if carga <= 20:
-        resposta('Ela está em nivel crítico')
-        resposta('Por favor, coloque o carregador')
-    elif carga == 100:
-        resposta('Ela está totalmente carregada')
-        resposta('Retire o carregador da tomada')
+    try:
+        bateria = psutil.sensors_battery()
+        carga = bateria.percent
+        bp = str(bateria.percent)
+        bpint = "{:.0f}".format(float(bp))
+        resposta(f"A bateria está em: {bpint}%")
+        if carga <= 20:
+            resposta('Ela está em nivel crítico')
+            resposta('Por favor, coloque o carregador')
+        elif carga == 100:
+            resposta('Ela está totalmente carregada')
+            resposta('Retire o carregador da tomada')
+    except:
+        resposta(f'Não foi possivel dizer a bateria')
 
 def cpu ():
     usocpuinfo = str(psutil.cpu_percent())
@@ -261,12 +264,11 @@ class mainT(QThread):
             
             BASE_DIR = os.path.dirname(__file__)
             SAVE_TO = os.path.join(BASE_DIR, 'mente.json')
-            
-            self.comandos = []
-            
-            
-         
-            
+
+            with open('memoria.json', 'r') as file:
+                self.comandos = json.load(file)
+                
+                
             
             if 'bom dia' in self.Input: #Boa Noite Sara
                 Horario = int(datetime.datetime.now().hour)
@@ -427,25 +429,29 @@ class mainT(QThread):
                     
                     
                    
+                    try:
                     
-                    
-                    with open('memoria.json', 'r', encoding='utf-8') as arq, \
-                        tempfile.NamedTemporaryFile('w', delete=False) as out:
-                        # ler todo o arquivo e obter o objeto JSON
-                        dados = json.load(arq)
-                        # atualizar os dados com a nova pergunta
-                        dados[chave] = valor
-                        # escreve o objeto atualizado no arquivo temporário
-                        json.dump(dados, out, ensure_ascii=False, indent=4, separators=(',',':'))
+                        with open('memoria.json', 'r', encoding='utf-8') as arq, \
+                            tempfile.NamedTemporaryFile('w', delete=False) as out:
+                            # ler todo o arquivo e obter o objeto JSON
+                            dados = json.load(arq)
+                            # atualizar os dados com a nova pergunta
+                            dados[chave] = valor
+                            # escreve o objeto atualizado no arquivo temporário
+                            json.dump(dados, out, ensure_ascii=False, indent=4, separators=(',',':'))
 
-                    # se tudo deu certo, renomeia o arquivo temporário
-                    shutil.move(out.name, 'memoria.json')
+                        # se tudo deu certo, renomeia o arquivo temporário
+                        shutil.move(out.name, 'memoria.json')
                     
-                    
+                    except:
+                        resposta('Desculpe')
+                        resposta('Não consegue aprender, Tente novamente')
+                        break
+                    else:
                                         
-                    resposta('Pronto, aprendi') 
-                    resposta(f'{chave } é igual a {valor}')
-                    break
+                        resposta('Pronto, aprendi') 
+                        resposta(f'{chave } é igual a {valor}')
+                        break
                    
             elif self.Input in self.comandos:
                 resposta(self.comandos[self.Input])

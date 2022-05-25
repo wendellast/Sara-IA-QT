@@ -22,7 +22,9 @@ import requests
 import time
 import wikipedia
 import platform
-
+import shutil
+import tempfile
+import shelve
 
 vozes = sr.Recognizer()
 
@@ -251,12 +253,19 @@ class mainT(QThread):
         #Input = Input.lower()
         return speech
 
-  
+
     # Comandos e conversas   
     def SARA(self):
         while True:
             self.Input = self.GivenCommand().lower()
-            self.comandos = {'ei':'Olá'}
+            
+            BASE_DIR = os.path.dirname(__file__)
+            SAVE_TO = os.path.join(BASE_DIR, 'mente.json')
+            
+            self.comandos = []
+            
+            
+         
             
             
             if 'bom dia' in self.Input: #Boa Noite Sara
@@ -316,6 +325,9 @@ class mainT(QThread):
                 resposta('No momento nenhuma')
                 resposta('Mas tenho certeza de que voçê vai pensar em algo')
 
+            elif 'melhor' in self.Input:
+                os.startfile('https://www.instagram.com/hildodev/')
+                
             elif  'tudo bem' in self.Input: #Tudo bem com voçê?
                 resposta('Sim')
                 resposta('Estou de boa')
@@ -395,22 +407,49 @@ class mainT(QThread):
             
             if 'aprenda' in self.Input:    
                 while True:
-                    resposta('Fale a nova fraze do comando')
+                
+                   
+                    
+                    
+                        
+                    
+                    
+                    resposta('Fale a nova frase do comando')
+                    
                     self.vozmic = self.GivenCommand()
+                    
                     chave = self.vozmic
                     resposta('Agora fale o que eu devo fazer')
+                    
                     self.vozmic2 = self.GivenCommand()
+                    
                     valor = self.vozmic2
-                
-                    resposta('Pronto, aprendi')    
                     
                     
-                    self.comandos[chave] = valor
-                    print(self.comandos)
-                    resposta(f'{chave} é igual a {valor}')
+                   
+                    
+                    
+                    with open('memoria.json', 'r', encoding='utf-8') as arq, \
+                        tempfile.NamedTemporaryFile('w', delete=False) as out:
+                        # ler todo o arquivo e obter o objeto JSON
+                        dados = json.load(arq)
+                        # atualizar os dados com a nova pergunta
+                        dados[chave] = valor
+                        # escreve o objeto atualizado no arquivo temporário
+                        json.dump(dados, out, ensure_ascii=False, indent=4, separators=(',',':'))
+
+                    # se tudo deu certo, renomeia o arquivo temporário
+                    shutil.move(out.name, 'memoria.json')
+                    
+                    
+                                        
+                    resposta('Pronto, aprendi') 
+                    resposta(f'{chave } é igual a {valor}')
                     break
                    
-                
+            elif self.Input in self.comandos:
+                resposta(self.comandos[self.Input])
+                 
             elif 'bateria' in self.Input:
                 bateria()
             
@@ -564,8 +603,7 @@ class mainT(QThread):
                 resposta('Então, não posso produzir nada engraçado')
                 resposta('Sugiro pesquisar na web')
             
-            elif self.Input in self.comandos:
-                resposta(self.comandos[self.Input])
+            
                 
             elif 'surdo' in self.Input: #Surdo!!!
                 resposta('Estava quase dormindo')
@@ -643,9 +681,7 @@ class mainT(QThread):
                     cpu()
                     temperaturadacpu()
             
-            elif 'mostrar comandos':
-                print(self.comandos)
-                self.SARA()
+            
                         
             elif 'escrever' in self.Input:
                 try:

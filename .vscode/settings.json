@@ -26,5 +26,6 @@
         "voçês",
         "vozmic",
         "vulcanica"
-    ]
+    ],
+    "jupyter.jupyterServerType": "local"
 }

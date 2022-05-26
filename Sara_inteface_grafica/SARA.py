@@ -68,7 +68,7 @@ sara_voz.setProperty('rate', rate-50)
 def resposta(audio):
     # notification.notify(title = "SARA",message = audio,timeout = 3)
     stream.stop_stream ()
-    print(f'SARA: {audio}')
+    print(f'[bold purple]SARA:[/] [cyan]{audio}[/]')
     sara_voz.say(audio)
     sara_voz.runAndWait()
     stream.start_stream ()
@@ -265,7 +265,7 @@ class mainT(QThread):
             BASE_DIR = os.path.dirname(__file__)
             SAVE_TO = os.path.join(BASE_DIR, 'mente.json')
 
-            with open(r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\memoria\memoria.json', 'r') as file:
+            with open(r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\memoria\memoria.json', 'r',) as file:
                 self.comandos = json.load(file)
                 
                 
@@ -435,7 +435,7 @@ class mainT(QThread):
                     try:
                     
                         with open(r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\memoria\memoria.json', 'r', encoding='UTF-8') as arq, \
-                            tempfile.NamedTemporaryFile('w', delete=False) as out:
+                            tempfile.NamedTemporaryFile('w', delete=False,encoding='UTF-8') as out:
                             # ler todo o arquivo e obter o objeto JSON
                             dados = json.load(arq)
                             # atualizar os dados com a nova pergunta
@@ -459,9 +459,15 @@ class mainT(QThread):
             elif self.Input in self.comandos:
                 resposta(self.comandos[self.Input])
                  
+                 
+            elif 'exêlente' in self.comandos:
+                resposta('Eu sei, Eu sou a melhor')
+            
             elif 'bateria' in self.Input:
                 bateria()
             
+            elif 'perfeito' in self.Input:
+                resposta('Eu sei, eu sou a melhor')
             
             
             
@@ -626,7 +632,7 @@ class mainT(QThread):
             
             
                 
-            elif 'surdo' in self.Input: #Surdo!!!
+            elif 'surda' in self.Input: #Surdo!!!
                 resposta('Estava quase dormindo')
                 resposta('Desculpa')
 

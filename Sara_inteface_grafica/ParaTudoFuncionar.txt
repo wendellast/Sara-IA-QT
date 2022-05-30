@@ -18,6 +18,8 @@ Ele usa um sistema de reconhecimento de voz offline
 
 # AGORA ALGUMAS INSTALAÇÕES EM PIP:
 
+>> pip install PythonTurtle
+
 >> pip install SpeechRecognition
 
 >> pip install pyttsx3
@@ -77,5 +79,7 @@ Ele usa um sistema de reconhecimento de voz offline
 >> pip3 install gTTS
 
 >> pip3 install rich
+
+>> pip install PythonTurtle
 
 # Projeto SARA > baseado no JARVIS : https://github.com/JaimeJGJG/JARVIS-Python

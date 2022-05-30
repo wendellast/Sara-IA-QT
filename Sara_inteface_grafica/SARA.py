@@ -6,7 +6,7 @@ from PyQt5.QtGui import QMovie
 from plyer import notification
 from rich import print
 from rich.table import Table
-from build import *
+from build import sistema_solar
 
 import speech_recognition as sr
 import os
@@ -211,7 +211,7 @@ def linha_sara(): # Linha para menu
     table.add_column('Suporte', justify='center', style='green')
     
     #Adicionar linhas nas colunas >> 
-    table.add_row('Sara, assistente virtual pessoal', '--Beta v1.0--   Compativel: Windows >> Sim;   linux >> Em breve;   Mac >> Em breve  ',  'Contado: Telegram >> https://t.me/Lasstll')
+    table.add_row('Sara, assistente virtual pessoal', '--Beta v1.0--   Compativel: Windows >> Sim;   linux >> Sim(Beta);   Mac >> Em breve  ',  'Contado: Telegram >> https://t.me/Lasstll')
     
     print(table)
     
@@ -460,7 +460,7 @@ class mainT(QThread):
                 resposta(self.comandos[self.Input])
                  
                  
-            elif 'exêlente' in self.comandos:
+            elif 'exelente' in self.comandos:
                 resposta('Eu sei, Eu sou a melhor')
             
             elif 'bateria' in self.Input:
@@ -469,7 +469,19 @@ class mainT(QThread):
             elif 'perfeito' in self.Input:
                 resposta('Eu sei, eu sou a melhor')
             
-            
+            elif 'a terra é plana' in self.Input:
+                resposta('Nossa')
+                resposta('Vou ter que desenhar para ver se você entende')
+                resposta('Desenhando Sistema Solar ')
+                
+                try:
+                    sistema_solar()
+                except:
+                    resposta('ops')
+                    resposta('Viu idiota, ver se há algo plano air')
+                    
+                
+                
             
             elif 'vai chover' in self.Input:
 	            resposta('Não sei')
@@ -507,7 +519,7 @@ class mainT(QThread):
                     self.vozmic2 = self.GivenCommand()
                         
                         
-                    resposta('Ok, pesquisando no google sobre '+self.vozmic2)
+                    resposta(f'Ok, pesquisando no google sobre {self.vozmic2}')
                     webbrowser.open('http://google.com/search?q='+self.vozmic2)
                 
                 except:

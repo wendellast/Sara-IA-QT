@@ -25,6 +25,9 @@ import platform
 import shutil
 import tempfile
 import pywhatkit
+import logging
+
+
 
 vozes = sr.Recognizer()
 
@@ -101,7 +104,7 @@ def datahoje():
     datatexto = dataatual.strftime(" de %Y")
     resposta(f'Dia {diatexto} {mesatual} {datatexto}')
 
-def bateria(): # Conserta
+def bateria(): # No momento funcionameto em notebook
     try:
         bateria = psutil.sensors_battery()
         carga = bateria.percent

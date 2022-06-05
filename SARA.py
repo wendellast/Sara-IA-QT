@@ -32,13 +32,13 @@ plataforma = platform.system()
 vozes = sr.Recognizer()
 
 def SomIncial():
-    p = vlc.MediaPlayer("StartSound.mp3")
+    p = vlc.MediaPlayer("music/StartSound.mp3")
     p.play()
 
 SomIncial()
 
 def SomCarregamento():
-    p = vlc.MediaPlayer("AI.mp3")
+    p = vlc.MediaPlayer("music/AI.mp3")
     p.play()
 
 # Validacao da pasta de modelo
@@ -249,17 +249,31 @@ class mainT(QThread):
     def GivenCommand(self):
 		# print("ouvindo...")
         #rec.pause_threshold = 1
-		# Lendo audio do microfone
+		#Lendo audio do microfone
         #data = stream.read(20000)
 		# Convertendo audio em texto
         #rec.AcceptWaveform(data)   
         try:
+         #   Input = rec.Result()
             with sr.Microphone() as s:
-                audio = vozes.listen(s)
-                speech2 = vozes.recognize_google(audio, language= "pt-BR")
-            
-            
-                speech = speech2.lower()
+                vozes .adjust_for_ambient_noise(s)
+                audio = vozes .listen(s)
+                speech = vozes .recognize_google(audio, language= "pt-BR")
+            '''try:
+                with sr.Microphone() as s:
+                    audio = vozes.listen(s)
+                    speech2 = vozes.recognize_google(audio, language= "pt-BR")
+                
+                
+                    speech = speech2.lower()
+                    
+                    try:
+                    with sr.Microphone() as s:
+                        r.adjust_for_ambient_noise(s)
+                        audio = r.listen(s)
+                        speech = r.recognize_google(audio, language= "pt-BR")
+                    
+                    '''
                 
         except:
 			# Retorna os erros
@@ -269,7 +283,6 @@ class mainT(QThread):
         #Input = Input.lower()
         return speech
 
-
     # Comandos e conversas   
     def SARA(self):
         while True:
@@ -278,7 +291,7 @@ class mainT(QThread):
             BASE_DIR = os.path.dirname(__file__)
             SAVE_TO = os.path.join(BASE_DIR, 'mente.json')
 
-            with open(r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\memoria\memoria.json', 'r',) as file:
+            with open('memoria/memoria.json', 'r',) as file:
                 self.comandos = json.load(file)
                 
                 

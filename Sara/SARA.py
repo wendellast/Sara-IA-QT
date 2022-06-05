@@ -27,7 +27,7 @@ import tempfile
 import pywhatkit
 import logging
 
-
+plataforma = platform.system()
 
 vozes = sr.Recognizer()
 
@@ -56,14 +56,24 @@ stream.start_stream()
 model = Model("model-br")
 rec = KaldiRecognizer(model, 16000)
 
-# Trás a função letícia voz
-sara_voz=pyttsx3.init('sapi5')
+if 'Windows' in plataforma:
+    # Trás a função letícia voz
+    sara_voz=pyttsx3.init('sapi5')
 
-# Função de ajuste de voz da sara
-voz = sara_voz.getProperty('voices')
-sara_voz.setProperty('voice', voz[2].id)
-rate = sara_voz.getProperty('rate')
-sara_voz.setProperty('rate', rate-50)
+    # Função de ajuste de voz da sara
+    voz = sara_voz.getProperty('voices')
+    sara_voz.setProperty('voice', voz[2].id)
+    rate = sara_voz.getProperty('rate')
+    sara_voz.setProperty('rate', rate-50)
+else:
+    # Trás a função letícia voz
+    sara_voz=pyttsx3.init()
+
+    # Função de ajuste de voz da sara
+    voz = sara_voz.getProperty('voices')
+    sara_voz.setProperty('voice', voz[2].id)
+    rate = sara_voz.getProperty('rate')
+    sara_voz.setProperty('rate', rate-50)
 
 
 

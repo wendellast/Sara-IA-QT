@@ -460,7 +460,7 @@ class mainT(QThread):
                    
                     try:
                     
-                        with open(r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\memoria\memoria.json', 'r', encoding='UTF-8') as arq, \
+                        with open('memoria/memoria.json', 'r', encoding='UTF-8') as arq, \
                             tempfile.NamedTemporaryFile('w', delete=False,encoding='UTF-8') as out:
                             # ler todo o arquivo e obter o objeto JSON
                             dados = json.load(arq)
@@ -470,7 +470,7 @@ class mainT(QThread):
                             json.dump(dados, out, ensure_ascii=False, indent=4, separators=(',',':'))
 
                         # se tudo deu certo, renomeia o arquivo temporário
-                        shutil.move(out.name, r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\memoria\memoria.json')
+                        shutil.move(out.name, 'memoria/memoria.json')
                     
                     except:
                         resposta('Desculpe')

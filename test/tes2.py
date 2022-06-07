@@ -2,7 +2,7 @@
 import sqlite3
 
 nome = 'joão'
-idade = 323
+idade = 32
 email = 'joão23@gmail.com'
 
 

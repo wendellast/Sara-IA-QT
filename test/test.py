@@ -1,19 +1,33 @@
-import json
-import shutil
-import tempfile
+import sqlite3
 
-chave = 'oi'
-valor = '9'
+def cadastrar(): # Pronto // Precisa melhorar
+    nome = str(input('Digite o seu nome: '))
+    senha = str(input('Digite a sua senha: '))
+    c_senha = str(input('confirme a sua senha'))
 
-with open(r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\test\test.json', 'r', encoding='UTF-8') as arq, \
-    tempfile.NamedTemporaryFile('w', delete=False,encoding='UTF-8') as out:
-    # ler todo o arquivo e obter o objeto JSON
-    dados = json.load(arq)
-    # atualizar os dados com a nova pergunta
-    dados[chave] = valor
-    # escreve o objeto atualizado no arquivo temporário
-    json.dump(dados, out, ensure_ascii=False, indent=4, separators=(',',':'))
+    if (senha == c_senha):
+        try:
+            banco = sqlite3.connect('banco_cadastro.db') 
+            cursor = banco.cursor()
+            cursor.execute("CREATE TABLE IF NOT EXISTS cadastro (nome text, senha text)")
+            cursor.execute(f"INSERT INTO cadastro VALUES('{nome}', '{senha}') ")
 
-# se tudo deu certo, renomeia o arquivo temporário
-shutil.move(out.name, r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\test\test.json')
+            banco.commit() 
+            banco.close()
+            print('Usuario cadastrado com sucesso')
+
+        except sqlite3.Error as erro:
+            print("Erro ao inserir os dados: ",erro)
+    else:
+            print('As senhas digitadas são diferentes')
+
+def login():
+    primeira_tela.label_4.setText("")
+    nome_usuario = primeira_tela.lineEdit.text()
+    senha = primeira_tela.lineEdit_2.text()
     
+    if nome_usuario == "wendellast" and senha == "1234" :
+        primeira_tela.close()
+        segunda_tela.show()
+    else :
+        primeira_tela.label_4.setText("Dados de login incorretos!")

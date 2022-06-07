@@ -71,7 +71,7 @@ else:
 
     # Função de ajuste de voz da sara
     voz = sara_voz.getProperty('voices')
-    sara_voz.setProperty('voice', voz[2].id)
+    sara_voz.setProperty('voice', 'brasil')
     rate = sara_voz.getProperty('rate')
     sara_voz.setProperty('rate', rate-50)
 
@@ -353,7 +353,7 @@ class mainT(QThread):
                 resposta('No momento nenhuma')
                 resposta('Mas tenho certeza de que voçê vai pensar em algo')
 
-            elif 'melhor' in self.Input:
+            elif 'instagram de programação ' in self.Input:
                 os.startfile('https://www.instagram.com/hildodev/')
                 
             elif  'tudo bem' in self.Input: #Tudo bem com voçê?
@@ -460,7 +460,7 @@ class mainT(QThread):
                    
                     try:
                     
-                        with open(r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\memoria\memoria.json', 'r', encoding='UTF-8') as arq, \
+                        with open('memoria/memoria.json', 'r', encoding='UTF-8') as arq, \
                             tempfile.NamedTemporaryFile('w', delete=False,encoding='UTF-8') as out:
                             # ler todo o arquivo e obter o objeto JSON
                             dados = json.load(arq)
@@ -470,7 +470,7 @@ class mainT(QThread):
                             json.dump(dados, out, ensure_ascii=False, indent=4, separators=(',',':'))
 
                         # se tudo deu certo, renomeia o arquivo temporário
-                        shutil.move(out.name, r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\memoria\memoria.json')
+                        shutil.move(out.name, 'memoria/memoria.json')
                     
                     except:
                         resposta('Desculpe')
@@ -761,14 +761,14 @@ class mainT(QThread):
                     resposta('Fale o que deseja que eu escreva')
                     self.vozmic = self.GivenCommand()
 
-                    with open(r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\escrito\texto_escrito_pela_sara_usuario.txt', 'a+',  encoding='UTF-8') as arquivo:
+                    with open('escrito/texto_escrito_pela_sara_usuario.txt', 'a+',  encoding='UTF-8') as arquivo:
                         arquivo.write(f'{self.vozmic}')
                         resposta('Pronto escrito')
                 
                 except:
                     resposta('Desculpe, Erro na conexão')
         
-            try:
+            try: # Responder Perguntas de matematica >> ( + e  -) 
                 resposta(eval(self.Input))
             except:
                 pass

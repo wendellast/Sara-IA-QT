@@ -1,5 +1,6 @@
 import sqlite3
 
+
 def cadastrar(): # Pronto // Precisa melhorar
     nome = str(input('Digite o seu nome: '))
     senha = str(input('Digite a sua senha: '))
@@ -22,12 +23,29 @@ def cadastrar(): # Pronto // Precisa melhorar
             print('As senhas digitadas são diferentes')
 
 def login():
-    primeira_tela.label_4.setText("")
-    nome_usuario = primeira_tela.lineEdit.text()
-    senha = primeira_tela.lineEdit_2.text()
-    
-    if nome_usuario == "wendellast" and senha == "1234" :
-        primeira_tela.close()
-        segunda_tela.show()
-    else :
-        primeira_tela.label_4.setText("Dados de login incorretos!")
+    nome_usuario = str(input('Digite o seu nome: '))
+    senha = str(input('Digite a sua senha: '))
+    banco = sqlite3.connect('banco_cadastro.db')
+    cursor = banco.cursor()
+
+    try:
+        
+        cursor.execute(f'SELECT nome FROM cadastro  WHERE nome="{nome_usuario}"')
+        nome_db = cursor.fetchall()
+        cursor.execute(f'SELECT senha FROM cadastro  WHERE nome="{nome_usuario}"')
+        senha_db = cursor.fetchall()
+        print(nome_db)
+        print(senha_db)
+        banco.close()
+
+    except:
+        print('Usuario não cadastrado')
+
+    try:
+        if  senha ==  senha_db[0][0] and nome_usuario ==  nome_db[0][0]:
+            print('logado')
+        else:
+            print('Erro senha incorreta')
+    except:
+        print('Erro usuario não encontrado')
+login()

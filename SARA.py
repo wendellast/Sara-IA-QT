@@ -26,7 +26,7 @@ import shutil
 import tempfile
 import pywhatkit
 import logging
-
+import sqlite3
 plataforma = platform.system()
 
 vozes = sr.Recognizer()
@@ -294,7 +294,7 @@ class mainT(QThread):
             with open('memoria/memoria.json', 'r',) as file:
                 self.comandos = json.load(file)
                 
-                
+
             
             if 'bom dia' in self.Input: #Boa Noite Sara
                 Horario = int(datetime.datetime.now().hour)
@@ -537,7 +537,89 @@ class mainT(QThread):
                 resposta('E o meu desenvolvedor é o Wendel e ele é um maluco')
                 resposta('Quem estiver ouvindo isso')
                 resposta('Por favor me ajude')
-                
+            
+            elif 'cadastrar' in self.Input:
+                resposta('Okay, vamos cadastrar um novo usuario')
+                while True:
+
+                    try:
+
+                        try:
+                            resposta('Fale o seu nome de usuario ')
+                            self.vozmic1 = self.GivenCommand()
+                            if 'sair' in self.vozmic1:
+                                resposta('Cadastro cancelado')
+                                resposta('Saindo')
+                                break
+                            nome = self.vozmic1.title()
+                        except:
+                            resposta('Algo deu errado')
+                            continue
+                        try:
+                            resposta('Pronto, agora fale a sua senha')
+                            self.vozmic2 = self.GivenCommand()
+                            if 'sair' in self.vozmic2:
+                                resposta('Cadastro cancelado')
+                                resposta('Saindo')
+                                break
+                            senha = self.vozmic2
+                        except:
+                            resposta('Algo deu errado')
+                            continue
+                        try:
+                            resposta('Confirme a senha ')
+                            self.vozmic3 = self.GivenCommand()
+
+                            if 'sair' in self.vozmic3:
+                                resposta('Cadastro cancelado')
+                                resposta('Saindo')
+                                break
+                            c_senha = self.vozmic3
+
+                        except:
+                            resposta('Algo deu errado')
+                            continue
+                       
+                       
+                        print(nome, senha, c_senha)
+
+                        banco = sqlite3.connect('dados/banco_dados.db') 
+
+                        cursor = banco.cursor()
+                        cursor.execute(f'SELECT nome FROM cadastro  WHERE nome="{nome}"')
+                        nome_db = cursor.fetchall()
+
+                        cursor.execute(f'SELECT senha FROM cadastro  WHERE nome="{nome}"')
+                        senha_db = cursor.fetchall()
+                        
+                    except:
+                        resposta('Erro de acesso')
+
+                    try:
+                        if  senha ==  senha_db[0][0] and nome ==  nome_db[0][0]:
+                            resposta('Usuario já cadastrado')
+                            resposta('Tente novamente')
+                            continue
+
+                    except:
+                        break
+                try:        
+                    if (senha == c_senha):
+                        try:
+                            cursor.execute("CREATE TABLE IF NOT EXISTS cadastro (nome text, senha text)")
+                            cursor.execute(f"INSERT INTO cadastro VALUES('{nome}', '{senha}') ")
+
+                            banco.commit() 
+                            banco.close()
+                            resposta('Usuario cadastrado com sucesso')
+
+                        except sqlite3.Error as erro:
+                            resposta("Erro ao inserir os dados")
+                    else:
+                            resposta('As senhas digitadas são diferentes')    
+                except:
+                    pass
+
             elif 'pesquisa' in self.Input: #Realizar pesquisa
                 resposta('Muito bem, realizando pesquisa')
                 resposta('Me fale o que voçê deseja pesquisar')

@@ -1,3 +1,6 @@
+from inspect import Traceback
+from ipaddress import NetmaskValueError
+from traceback import TracebackException
 from vosk import Model, KaldiRecognizer
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -24,12 +27,16 @@ import wikipedia
 import platform
 import shutil
 import tempfile
-import pywhatkit
 import logging
 import sqlite3
+
+try:
+    import pywhatkit
+except:
+    ...
 plataforma = platform.system()
 
-vozes = sr.Recognizer()
+r= sr.Recognizer()
 
 def SomIncial():
     p = vlc.MediaPlayer("music/StartSound.mp3")
@@ -247,18 +254,30 @@ class mainT(QThread):
     # Aciona os comandos
     # Faz o reconhecimento
     def GivenCommand(self):
-		# print("ouvindo...")
-        #rec.pause_threshold = 1
-		#Lendo audio do microfone
-        #data = stream.read(20000)
-		# Convertendo audio em texto
-        #rec.AcceptWaveform(data)   
         try:
-         #   Input = rec.Result()
+            try:
+                import pywhatkit
+            except:
+                rec.pause_threshold = 1
+                # Lendo audio do microfone
+                data = stream.read(20000)
+                # Convertendo audio em texto
+                rec.AcceptWaveform(data)   
+                try:
+                    Input = rec.Result()
+                except:
+                    # Retorna os erros
+                    print('Não entendi, fale novamente')
+                    # resposta("Não entendi o que você disse, fale novamente.")
+                    return 'none'
+                #Input = Input.lower()
+                return Input
+            
+        #   Input = rec.Result()
             with sr.Microphone() as s:
-                vozes .adjust_for_ambient_noise(s)
-                audio = vozes .listen(s)
-                speech = vozes .recognize_google(audio, language= "pt-BR")
+                r.adjust_for_ambient_noise(s)
+                audio = r.listen(s)
+                speech = r.recognize_google(audio, language= "pt-BR")
             '''try:
                 with sr.Microphone() as s:
                     audio = vozes.listen(s)
@@ -274,15 +293,17 @@ class mainT(QThread):
                         speech = r.recognize_google(audio, language= "pt-BR")
                     
                     '''
-                
+    
         except:
-			# Retorna os erros
-            print('Não entendi, fale novamente')
-			# resposta("Não entendi o que você disse, fale novamente.")
+            # Retorna os erros
+            print('Não entendi, fale novamente33')
+            # resposta("Não entendi o que você disse, fale novamente.")
             return 'none'
         #Input = Input.lower()
         return speech
+    
 
+            
     # Comandos e conversas   
     def SARA(self):
         while True:
@@ -501,10 +522,13 @@ class mainT(QThread):
                 resposta('Desenhando Sistema Solar ')
                 
                 try:
-                    sistema_solar()
+                    try:
+                        sistema_solar()
+                    except:
+                        resposta('ops')
+                        resposta('Viu idiota, ver se há algo plano a ir')
                 except:
-                    resposta('ops')
-                    resposta('Viu idiota, ver se há algo plano air')
+                    resposta('Não consegue te mostra o meu desenho')
                     
                 
                 
@@ -823,8 +847,11 @@ class mainT(QThread):
 	        
             elif 'música' in self.Input:
                 musica = self.Input.replace('música', '')
-                resultado = pywhatkit.playonyt(musica)
-                resposta(f'Tocando música {musica}')
+                try:
+                    resultado = pywhatkit.playonyt(musica)
+                    resposta(f'Tocando música {musica}')
+                except:
+                    resposta('Não consegue tocar a música')
                 
          
             elif 'playlist' in self.Input: #Reproduzir música

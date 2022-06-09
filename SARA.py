@@ -547,7 +547,7 @@ class mainT(QThread):
                         try:
                             resposta('Fale o seu nome de usuario ')
                             self.vozmic1 = self.GivenCommand()
-                            if 'sair' in self.vozmic1:
+                            if 'cancela' in self.vozmic1:
                                 resposta('Cadastro cancelado')
                                 resposta('Saindo')
                                 break
@@ -558,7 +558,7 @@ class mainT(QThread):
                         try:
                             resposta('Pronto, agora fale a sua senha')
                             self.vozmic2 = self.GivenCommand()
-                            if 'sair' in self.vozmic2:
+                            if 'cancela' in self.vozmic2:
                                 resposta('Cadastro cancelado')
                                 resposta('Saindo')
                                 break
@@ -570,7 +570,7 @@ class mainT(QThread):
                             resposta('Confirme a senha ')
                             self.vozmic3 = self.GivenCommand()
 
-                            if 'sair' in self.vozmic3:
+                            if 'cancela' in self.vozmic3:
                                 resposta('Cadastro cancelado')
                                 resposta('Saindo')
                                 break
@@ -581,7 +581,7 @@ class mainT(QThread):
                             continue
                        
                        
-                        print(nome, senha, c_senha)
+                      
 
                         banco = sqlite3.connect('dados/banco_dados.db') 
 
@@ -619,6 +619,62 @@ class mainT(QThread):
                             resposta('As senhas digitadas são diferentes')    
                 except:
                     pass
+
+            
+            elif 'login' in self.Input:
+
+                while True:
+                    try:
+                        try:
+                            resposta('Qual o seu nome de usuario ')
+                            self.vozmic1 = self.GivenCommand()
+                            if 'cancela' in self.vozmic1:
+                                resposta('Login cancelado')
+                                resposta('Saindo')
+                                break
+                            nome_usuario =  self.vozmic1
+                        except:
+                            resposta('Erro alguma coisa deu errado')
+                            continue
+                        try:
+                            resposta('Fale a sua senha')
+                            self.vozmic2 = self.GivenCommand()
+                            if  'cancela' in self.vozmic2:
+                                resposta('Login cancelado')
+                                resposta('Saindo')
+                                break
+                            senha = self.vozmic2
+                        except:
+                            resposta('Erro alguma coisa deu errado')
+                            continue
+
+                        try:
+                            banco = sqlite3.connect('dados/banco_dados.db')
+                            cursor = banco.cursor()
+                            
+                            cursor.execute(f'SELECT nome FROM cadastro  WHERE nome="{nome_usuario}"')
+                            nome_db = cursor.fetchall()
+                            cursor.execute(f'SELECT senha FROM cadastro  WHERE nome="{nome_usuario}"')
+                            senha_db = cursor.fetchall()
+                            print(nome_db)
+                            print(senha_db)
+                            banco.close()
+
+                        except:
+                            resposta('Erro de conexão')
+
+                        try:
+                            if  senha ==  senha_db[0][0] and nome_usuario ==  nome_db[0][0]:
+                                resposta('logado')
+                                break
+                            else:
+                                resposta('Erro usuario ou senha errado')
+                        except:
+                            resposta('Usuario ou senha incorretos')
+                            continue
+                    except:
+                        pass
+
 
             elif 'pesquisa' in self.Input: #Realizar pesquisa
                 resposta('Muito bem, realizando pesquisa')

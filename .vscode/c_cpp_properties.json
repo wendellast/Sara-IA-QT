@@ -17,6 +17,8 @@
             "includePath": [
                 "/home/wendellast/Downloads/arduino-1.8.19-linux64/arduino-1.8.19/hardware/arduino/avr/cores/arduino",
                 "/home/wendellast/Downloads/arduino-1.8.19-linux64/arduino-1.8.19/hardware/arduino/avr/variants/standard",
+                "/home/wendellast/Arduino/libraries/DHT_sensor_library-1.4.3",
+                "/home/wendellast/Arduino/libraries/Adafruit_Unified_Sensor-1.1.5",
                 "/home/wendellast/Downloads/arduino-1.8.19-linux64/arduino-1.8.19/hardware/tools/avr/lib/gcc/avr/7.3.0/include",
                 "/home/wendellast/Downloads/arduino-1.8.19-linux64/arduino-1.8.19/hardware/tools/avr/lib/gcc/avr/7.3.0/include-fixed",
                 "/home/wendellast/Downloads/arduino-1.8.19-linux64/arduino-1.8.19/hardware/tools/avr/avr/include"

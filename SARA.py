@@ -35,9 +35,11 @@ try:
 except:
     net = False
 
+#Arquitetura 
+Digitar = True # Função para decide se vai querrer digitar ou falar, caso queira digitar mude para True
+Vercao = 'Beta v1.0'
 plataforma = platform.system()
 
-#basicConfig(level=DEBUG)
 
 # Acesso ao microfone
 r = sr.Recognizer()
@@ -315,13 +317,19 @@ class mainT(QThread):
             #Input = Input.lower()
             return speech
     
-
+    def Digitar_comando(self): # Função para digitar os comandos ao inves de falar
+            Input = input(">>")
+            return Input
+        
             
     # Comandos e conversas   
     def SARA(self):
         while True:
-            self.Input = self.GivenCommand().lower()
-            
+            if Digitar == False:
+                self.Input = self.GivenCommand().lower() # Função de falar
+            else:
+                self.Input = self.Digitar_comando().lower() # Função de escrever 
+
             BASE_DIR = os.path.dirname(__file__)
             SAVE_TO = os.path.join(BASE_DIR, 'mente.json')
 
@@ -398,7 +406,10 @@ class mainT(QThread):
                 resposta('Está tudo bem? ')
                
                 while True:
-                    self.vozmic = self.GivenCommand()
+                    if Digitar == False:
+                        self.vozmic = self.GivenCommand()
+                    else:
+                        self.vozmic = self.Digitar_comando().lower()
  
                     if 'sim' in self.vozmic:
                         resposta('Que ótimo')
@@ -420,16 +431,20 @@ class mainT(QThread):
                 resposta('Se precisar de algo é só chamar')
                 resposta('Estarei aqui aguardando')
                 while True:
-                     self.vozmic = self.GivenCommand().lower()
+                    if Digitar == False:
+                        self.vozmic = self.GivenCommand().lower()
+                    else:
+                        self.vozmic = self.Digitar_comando().lower()
+                        
                     
-                     if 'voltar' in self.vozmic:
+                    if 'voltar' in self.vozmic:
                         resposta('Ok')
                         resposta('Voltando')
                         resposta('Ficar em silencio é chato')
                         resposta('Me fale algo para fazer')
                         self.SARA()
                          
-                     elif 'retornar' in self.vozmic:
+                    elif 'retornar' in self.vozmic:
                         resposta('Ok')
                         resposta('Retornando')
                         resposta('Ficar em silencio é chato')
@@ -442,7 +457,10 @@ class mainT(QThread):
                 resposta('Eu por acaso tenho cara de palhaço?')
                 
                 while True:
-                    self.vozmic = self.GivenCommand().lower()
+                    if Digitar == False:
+                        self.vozmic = self.GivenCommand().lower()
+                    else:
+                        self.vozmic = self.Digitar_comando().lower()
                     
                     if 'exatamente' in self.vozmic:
                         resposta('Ok')
@@ -474,8 +492,12 @@ class mainT(QThread):
     
                     try:
                         resposta('Fale a nova frase do comando')
-                        
-                        self.vozmic = self.GivenCommand().lower()
+                       
+                        if Digitar == False:
+                            self.vozmic = self.GivenCommand().lower()
+                        else:
+                            self.vozmic = self.Digitar_comando().lower()
+                      
                         
                         chave = self.vozmic
 
@@ -485,7 +507,12 @@ class mainT(QThread):
                         
                     try:
                         resposta('Agora fale o que eu devo fazer')
-                        self.vozmic2 = self.GivenCommand()
+                        
+                        if Digitar == False:
+                            self.vozmic2 = self.GivenCommand().lower()
+                        else:
+                            self.vozmic2= self.Digitar_comando().lower()
+                        
                         
                         valor = self.vozmic2
                     except:
@@ -569,7 +596,7 @@ class mainT(QThread):
                 resposta('Ok')
                 resposta('Apresentando relatório')
                 resposta('Primeiramente, meu nome é SARA')
-                resposta('Atualmente estou em uma versão de testes BETA v1.0')
+                resposta(f'Atualmente estou em uma versão de testes {Vercao}')
                 resposta('Sou um assistente virtual em desenvolvimento')
                 resposta('Eu fui criado na linguagem python')
                 resposta('Diariamente recebo varias atualizações')
@@ -586,29 +613,49 @@ class mainT(QThread):
 
                         try:
                             resposta('Fale o seu nome de usuario ')
-                            self.vozmic1 = self.GivenCommand()
+                            if Digitar == False:
+                                self.vozmic1 = self.GivenCommand().lower()
+                            else:
+                                self.vozmic1= self.Digitar_comando().lower()
+                            
+
                             if 'cancela' in self.vozmic1:
                                 resposta('Cadastro cancelado')
                                 resposta('Saindo')
-                                break
+                                break 
+
                             nome = self.vozmic1.title()
+
                         except:
                             resposta('Algo deu errado')
                             continue
+                        
                         try:
                             resposta('Pronto, agora fale a sua senha')
-                            self.vozmic2 = self.GivenCommand()
+                            if Digitar == False:
+                                self.vozmic2 = self.GivenCommand().lower()
+                            else:
+                                self.vozmic2= self.Digitar_comando().lower()
+                     
+
                             if 'cancela' in self.vozmic2:
                                 resposta('Cadastro cancelado')
                                 resposta('Saindo')
                                 break
+
                             senha = self.vozmic2
+
                         except:
                             resposta('Algo deu errado')
                             continue
+
                         try:
                             resposta('Confirme a senha ')
-                            self.vozmic3 = self.GivenCommand()
+                            if Digitar == False:
+                                self.vozmic3 = self.GivenCommand().lower()
+                            else:
+                                self.vozmic3= self.Digitar_comando().lower()
+                            
 
                             if 'cancela' in self.vozmic3:
                                 resposta('Cadastro cancelado')
@@ -667,23 +714,33 @@ class mainT(QThread):
                     try:
                         try:
                             resposta('Qual o seu nome de usuario ')
-                            self.vozmic1 = self.GivenCommand()
+                            if Digitar == False:
+                                self.vozmic1 = self.GivenCommand().lower()
+                            else:
+                                self.vozmic1= self.Digitar_comando().lower()
+                              
                             if 'cancela' in self.vozmic1:
                                 resposta('Login cancelado')
                                 resposta('Saindo')
                                 break
+
                             nome_usuario =  self.vozmic1
                         except:
                             resposta('Erro alguma coisa deu errado')
                             continue
                         try:
                             resposta('Fale a sua senha')
-                            self.vozmic2 = self.GivenCommand()
+                            if Digitar == False:
+                                self.vozmic2 = self.GivenCommand().lower()
+                            else:
+                                self.vozmic2= self.Digitar_comando().lower()
+                            
                             if  'cancela' in self.vozmic2:
                                 resposta('Login cancelado')
                                 resposta('Saindo')
                                 break
                             senha = self.vozmic2
+
                         except:
                             resposta('Erro alguma coisa deu errado')
                             continue
@@ -720,7 +777,12 @@ class mainT(QThread):
                 resposta('Muito bem, realizando pesquisa')
                 resposta('Me fale o que voçê deseja pesquisar')
                 try:
-                    self.vozmic2 = self.GivenCommand().lower()
+                    
+                    if Digitar == False:
+                        self.vozmic2 = self.GivenCommand().lower()
+                    else:
+                        self.vozmic2= self.Digitar_comando().lower()
+                     
                         
                         
                     resposta(f'Ok, pesquisando no google sobre {self.vozmic2}')
@@ -736,7 +798,11 @@ class mainT(QThread):
                 resposta('Sobre qual assunto?')
                 
                 try:
-                    self.vozmic2 = self.GivenCommand()
+                    if Digitar == False:
+                        self.vozmic2 = self.GivenCommand().lower()
+                    else:
+                        self.vozmic2= self.Digitar_comando().lower()
+                   
                     
                     resposta('Interessante')
                     resposta('Aguarde um momento')
@@ -745,21 +811,13 @@ class mainT(QThread):
                     wikipedia.set_lang('pt')
                     resultado = wikipedia.summary(procurar,2)
                     print(resultado)
-                    respostalonga(resultado)
-                   
-                        
-                        
-                        
+                    resposta(resultado)
+
                     
-                    system_os = platform.system()
-                
-                    if 'Windows' in system_os:
-                        with open(r'C:\Users\Wendel\Documents\GitHub\Sara_Python\Sara_inteface_grafica\resumo\resumo_texto.txt', 'a+', encoding='UTF-8') as arquivo:
-                            arquivo.write(f'{resultado}')
-                            resposta('Escrevir o resumo para você')
-                        
-                        
-                       
+                    with open('resumo/resumo', 'a+', encoding='UTF-8') as  arquivo:
+                        arquivo.write(f'{resultado}')
+                        resposta('Escrevir o resumo para você')
+                             
                 except:
                     resposta('Erro')
                     resposta('A conexão falhou')
@@ -781,7 +839,7 @@ class mainT(QThread):
                 resposta('Entendi')
                 resposta('Quer dizer')
                 resposta('Mais ou menos')
-                print(self.Input)
+                
 	
             elif 'horas' in self.Input: #Que horas são???
                 horario()
@@ -800,10 +858,12 @@ class mainT(QThread):
                 else:
                     try:
                         resposta('Abrindo arquivos')
-                        os.system("thunar //home//*//")
+                        os.system("nautilus //home//*//")
+                        
                     except:
                         resposta('Abrindo arquivos')
-                        os.system("nautilus //home//*//")
+                        os.system("thunar //home//*//")
+                        
          
             elif 'teste' in self.Input: #TesteTeste
                 resposta('Ok')
@@ -880,8 +940,10 @@ class mainT(QThread):
 
                     if 'linux' in plataforma:
                         os.system("rhythmbox-client --play")
-                    resposta('Reproduzindo música')
-                    os.startfile('"')
+                        resposta('Reproduzindo música')
+                    
+                    else:
+                        pass
 
                 except:
                     resposta('Desculpe, não consegue reproduzir a música ')
@@ -935,7 +997,7 @@ class mainT(QThread):
                 
                 if 'Windows' in system_os:
                     cpu()
-                    resposta('A temperatura do CPU não possivel ver no Windows ')
+                    resposta('A temperatura do CPU não possivel ver no Windows no momento ')
                 else:
                     cpu()
                     temperaturadacpu()
@@ -947,7 +1009,12 @@ class mainT(QThread):
                    
                         
                     resposta('Fale o que deseja que eu escreva')
-                    self.vozmic = self.GivenCommand()
+
+                    if Digitar == False:
+                        self.vozmic = self.GivenCommand().lower()
+                    else:
+                        self.vozmic = self.Digitar_comando().lower()
+                   
 
                     with open('escrito/texto_escrito_pela_sara_usuario.txt', 'a+',  encoding='UTF-8') as arquivo:
                         arquivo.write(f'{self.vozmic}')

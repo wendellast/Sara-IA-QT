@@ -1,6 +1,3 @@
-from inspect import Traceback
-from ipaddress import NetmaskValueError
-from traceback import TracebackException
 from vosk import Model, KaldiRecognizer
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -10,6 +7,9 @@ from plyer import notification
 from rich import print
 from rich.table import Table
 from build import sistema_solar
+from logging import basicConfig
+#from logging import INFO, DEBUG
+
 
 import speech_recognition as sr
 import os
@@ -27,16 +27,20 @@ import wikipedia
 import platform
 import shutil
 import tempfile
-import logging
 import sqlite3
 
 try:
     import pywhatkit
+    net = True
 except:
-    ...
+    net = False
+
 plataforma = platform.system()
 
-r= sr.Recognizer()
+#basicConfig(level=DEBUG)
+
+# Acesso ao microfone
+r = sr.Recognizer()
 
 def SomIncial():
     p = vlc.MediaPlayer("music/StartSound.mp3")
@@ -51,17 +55,18 @@ def SomCarregamento():
 # Validacao da pasta de modelo
 # É necessario criar a pasta model-br a partir de onde estiver esta fonte
 if not os.path.exists("model-br"):
-    print ("Modelo em portugues nao encontrado.")
-    exit (1)
-
-# Preparando o microfone para captura
-p = pyaudio.PyAudio()
-stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=8000)
-stream.start_stream()
+    print("Modelo em portugues não encontrado.")
+    exit(1)
 
 # Apontando o algoritmo para ler o modelo treinado na pasta "model-br"
 model = Model("model-br")
 rec = KaldiRecognizer(model, 16000)
+
+# Preparando o microfone para captura
+p = pyaudio.PyAudio()
+stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=8192)
+stream.start_stream()
+
 
 if 'Windows' in plataforma:
     # Trás a função letícia voz
@@ -72,13 +77,14 @@ if 'Windows' in plataforma:
     sara_voz.setProperty('voice', voz[2].id)
     rate = sara_voz.getProperty('rate')
     sara_voz.setProperty('rate', rate-50)
+
 else:
-    # Trás a função letícia voz
+    # Trás a função letícia voz # Se não for a voz leticia padrão é Espeak
     sara_voz=pyttsx3.init()
 
     # Função de ajuste de voz da sara
-    voz = sara_voz.getProperty('voices')
-    sara_voz.setProperty('voice', 'brasil')
+    sara_voz.setProperty('voice', 'pt+f2')
+    # No 'm2'(masculino) pode colocar 'f2'(feminino) e números até 7
     rate = sara_voz.getProperty('rate')
     sara_voz.setProperty('rate', rate-50)
 
@@ -86,7 +92,7 @@ else:
 
 # Função de fala sara (voz da letícia)   
 def resposta(audio):
-    # notification.notify(title = "SARA",message = audio,timeout = 3)
+    notification.notify(title = "SARA",message = audio,timeout = 3)
     stream.stop_stream ()
     print(f'[bold purple]SARA:[/] [cyan]{audio}[/]')
     sara_voz.say(audio)
@@ -94,8 +100,8 @@ def resposta(audio):
     stream.start_stream ()
 
 def notificar(textos):
-	# notification.notify(title = "SARA",message = textos,timeout = 10)
-    pass
+	notification.notify(title = "SARA",message = textos,timeout = 10)
+    
 def respostalonga(textofala):
     
     stream.stop_stream ()
@@ -234,6 +240,8 @@ def linha_sara(): # Linha para menu
     table.add_row('Sara, assistente virtual pessoal', '--Beta v1.0--   Compativel: Windows >> Sim;   linux >> Sim(Beta);   Mac >> Em breve  ',  'Contado: Telegram >> https://t.me/Lasstll')
     
     print(table)
+
+    return 0
     
 linha_sara()  
 resposta('Olá')
@@ -254,53 +262,58 @@ class mainT(QThread):
     # Aciona os comandos
     # Faz o reconhecimento
     def GivenCommand(self):
-        try:
-            try:
-                import pywhatkit
-            except:
+       
+        if net == False:
+              
                 rec.pause_threshold = 1
                 # Lendo audio do microfone
                 data = stream.read(20000)
                 # Convertendo audio em texto
-                rec.AcceptWaveform(data)   
+                rec.AcceptWaveform(data)  
+              
+
                 try:
                     Input = rec.Result()
                 except:
                     # Retorna os erros
                     print('Não entendi, fale novamente')
-                    # resposta("Não entendi o que você disse, fale novamente.")
+                    #resposta("Não entendi o que você disse, fale novamente.")
                     return 'none'
                 #Input = Input.lower()
                 return Input
-            
-        #   Input = rec.Result()
-            with sr.Microphone() as s:
-                r.adjust_for_ambient_noise(s)
-                audio = r.listen(s)
-                speech = r.recognize_google(audio, language= "pt-BR")
-            '''try:
+       
+        else:
+            try:
+                
+                
+            #   Input = rec.Result()
                 with sr.Microphone() as s:
-                    audio = vozes.listen(s)
-                    speech2 = vozes.recognize_google(audio, language= "pt-BR")
-                
-                
-                    speech = speech2.lower()
-                    
-                    try:
+                    #r.adjust_for_ambient_noise(s)
+                    audio = r.listen(s)
+                    speech = r.recognize_google(audio, language= "pt-BR")
+                '''try:
                     with sr.Microphone() as s:
-                        r.adjust_for_ambient_noise(s)
-                        audio = r.listen(s)
-                        speech = r.recognize_google(audio, language= "pt-BR")
+                        audio = vozes.listen(s)
+                        speech2 = vozes.recognize_google(audio, language= "pt-BR")
                     
-                    '''
-    
-        except:
-            # Retorna os erros
-            print('Não entendi, fale novamente33')
-            # resposta("Não entendi o que você disse, fale novamente.")
-            return 'none'
-        #Input = Input.lower()
-        return speech
+                    
+                        speech = speech2.lower()
+                        
+                        try:
+                        with sr.Microphone() as s:
+                            r.adjust_for_ambient_noise(s)
+                            audio = r.listen(s)
+                            speech = r.recognize_google(audio, language= "pt-BR")
+                        
+                        '''
+        
+            except:
+                # Retorna os erros
+                print('Não entendi, fale novamente33')
+                # resposta("Não entendi o que você disse, fale novamente.")
+                return 'none'
+            #Input = Input.lower()
+            return speech
     
 
             
@@ -383,6 +396,7 @@ class mainT(QThread):
                 resposta('Obrigado por perguntar')
                 resposta('E com voçê?')
                 resposta('Está tudo bem? ')
+               
                 while True:
                     self.vozmic = self.GivenCommand()
  
@@ -406,7 +420,7 @@ class mainT(QThread):
                 resposta('Se precisar de algo é só chamar')
                 resposta('Estarei aqui aguardando')
                 while True:
-                     self.vozmic = self.GivenCommand()
+                     self.vozmic = self.GivenCommand().lower()
                     
                      if 'voltar' in self.vozmic:
                         resposta('Ok')
@@ -426,8 +440,9 @@ class mainT(QThread):
                 resposta('Como assim não faça nada?')
                 resposta('Voçê deve estar de brincadeira')
                 resposta('Eu por acaso tenho cara de palhaço?')
+                
                 while True:
-                    self.vozmic = self.GivenCommand()
+                    self.vozmic = self.GivenCommand().lower()
                     
                     if 'exatamente' in self.vozmic:
                         resposta('Ok')
@@ -460,7 +475,7 @@ class mainT(QThread):
                     try:
                         resposta('Fale a nova frase do comando')
                         
-                        self.vozmic = self.GivenCommand()
+                        self.vozmic = self.GivenCommand().lower()
                         
                         chave = self.vozmic
 
@@ -474,6 +489,7 @@ class mainT(QThread):
                         
                         valor = self.vozmic2
                     except:
+                       
                         resposta('Desculpe, deu algum erro tente de novo')
                         continue
                     
@@ -533,12 +549,12 @@ class mainT(QThread):
                 
                 
             
-            elif 'vai chover' in self.Input:
+            elif  'vai chover' in self.Input:
 	            resposta('Não sei')
 	            resposta('Eu não tenho essa função ainda')
                 
 	       
-            elif 'errado' in self.Input:
+            elif  'errado' in self.Input:
                 
                 resposta('Desculpa')
                 resposta('Errei um cálculo')
@@ -704,7 +720,7 @@ class mainT(QThread):
                 resposta('Muito bem, realizando pesquisa')
                 resposta('Me fale o que voçê deseja pesquisar')
                 try:
-                    self.vozmic2 = self.GivenCommand()
+                    self.vozmic2 = self.GivenCommand().lower()
                         
                         
                     resposta(f'Ok, pesquisando no google sobre {self.vozmic2}')
@@ -782,8 +798,12 @@ class mainT(QThread):
                 if 'Windows' in system_os:
                     pass
                 else:
-                    resposta('Abrindo arquivos')
-                    os.system("thunar //home//*//")
+                    try:
+                        resposta('Abrindo arquivos')
+                        os.system("thunar //home//*//")
+                    except:
+                        resposta('Abrindo arquivos')
+                        os.system("nautilus //home//*//")
          
             elif 'teste' in self.Input: #TesteTeste
                 resposta('Ok')
@@ -857,8 +877,11 @@ class mainT(QThread):
             elif 'playlist' in self.Input: #Reproduzir música
                 try:
                     resposta('Ok')
+
+                    if 'linux' in plataforma:
+                        os.system("rhythmbox-client --play")
                     resposta('Reproduzindo música')
-                    os.startfile('"%ProgramFiles(x86)%\Windows Media Player\wmplayer.exe"')
+                    os.startfile('"')
 
                 except:
                     resposta('Desculpe, não consegue reproduzir a música ')
@@ -932,13 +955,15 @@ class mainT(QThread):
                 
                 except:
                     resposta('Desculpe, Erro na conexão')
-        
-            try: # Responder Perguntas de matematica >> ( + e  -) 
-                resposta(eval(self.Input))
-            except:
-                pass
-                    
             
+            elif 'qaunto é ' in self.Input:
+
+                try:
+                    resposta(eval(self.Input))
+                except:
+                    resposta('Não consegue faze a conta')
+                        
+        
 # Para adicionar a fala coloque Dspeak = mainT() e tbm Dspeak.start()
 
 class Janela (QMainWindow):

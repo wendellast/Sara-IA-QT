@@ -59,6 +59,10 @@ def SomCarregamento():
 if not os.path.exists("model-br"):
     print("Modelo em portugues não encontrado.")
     exit(1)
+    
+if not os.path.exists("memoria"):
+    print("A memoria  não encontrado.")
+    exit(1)
 
 # Apontando o algoritmo para ler o modelo treinado na pasta "model-br"
 model = Model("model-br")
@@ -333,11 +337,15 @@ class mainT(QThread):
             BASE_DIR = os.path.dirname(__file__)
             SAVE_TO = os.path.join(BASE_DIR, 'mente.json')
 
-            with open('memoria/memoria.json', 'r',) as file:
-                self.comandos = json.load(file)
+            try:    
+                with open('memoria/memoria.json', 'r',) as file:
+                    self.comandos = json.load(file)
+            except:
+                resposta('Não consegue carregar a memoria')
                 
-
+     
             
+
             if 'bom dia' in self.Input: #Boa Noite Sara
                 Horario = int(datetime.datetime.now().hour)
                 if Horario >= 0 and Horario < 12:
@@ -390,7 +398,8 @@ class mainT(QThread):
                 resposta('Olá')
                 resposta('Estou aqui')
                 resposta('Precisa de algo?')
-	         
+ 
+
             elif 'ideia' in self.Input: #Alguma ideia???
                 resposta('No momento nenhuma')
                 resposta('Mas tenho certeza de que voçê vai pensar em algo')
@@ -425,6 +434,8 @@ class mainT(QThread):
                 resposta('Estou funcionando normalmente')
                 resposta('Obrigado por perguntar')
             
+            elif 'você' in self.Input:
+                print('Pronto')
             
             elif 'silêncio' in self.Input: #Fique em silêncio
                 resposta('Ok')
@@ -546,8 +557,7 @@ class mainT(QThread):
                         resposta(f'{chave } é igual a {valor}')
                         break
                    
-            elif self.Input in self.comandos:
-                resposta(self.comandos[self.Input])
+           
                  
                  
             elif 'exelente' in self.comandos:
@@ -947,6 +957,7 @@ class mainT(QThread):
 
                 except:
                     resposta('Desculpe, não consegue reproduzir a música ')
+                    
             elif 'próxima' in self.Input: #Próxima
                 os.system("rhythmbox-client --next")
                 resposta('Próxima música')
@@ -1023,10 +1034,24 @@ class mainT(QThread):
                 except:
                     resposta('Desculpe, Erro na conexão')
         
-            try: # Responder Perguntas de matematica >> ( + e  -) 
-                resposta(eval(self.Input))
-            except:
-                pass
+          
+
+            elif 'quanto é' in self.Input:
+                resp = self.Input.replace("quanto é", " ")
+
+                try:
+                    resposta(f' É {(eval(resp))}')
+                except:
+                    resposta('Não consegue fazer a conta')
+
+            elif self.Input in self.comandos:
+                resposta(self.comandos[self.Input])
+
+            else: # comando provisorio
+                with open('comandos_udados.txt', 'a+',  encoding='UTF-8', ) as arquivo:
+                        arquivo.write(f'{self.Input}\n')
+           
+            
                     
             
             

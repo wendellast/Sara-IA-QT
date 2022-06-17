@@ -1,7 +1,7 @@
 # Conheça a SARA IA
 
 Um assistente virtual feito em Python
-Ele usa um sistema de reconhecimento de voz offline
+Ele usa um sistema de reconhecimento de voz offline e oline
 
 
 # PARA TUDO FUNCIONAR: *Windows*

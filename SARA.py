@@ -340,7 +340,7 @@ class mainT(QThread):
             #   Input = rec.Result()
                 with sr.Microphone() as s:
                     r.adjust_for_ambient_noise(s)
-                    audio = r.listen(s)
+                    audio = r.listen(s, None, 5)
                     speech = r.recognize_google(audio, language= "pt-BR")
                 '''try:
                     with sr.Microphone() as s:
@@ -1120,7 +1120,7 @@ class Janela (QMainWindow):
         self.label_gif.setAlignment(QtCore.Qt.AlignCenter)
         self.label_gif.move(0,0)
         self.label_gif.resize(400,300)
-        self.movie = QMovie("SARA.gif")
+        self.movie = QMovie("img/nova.gif")
         self.label_gif.setMovie(self.movie)
         self.movie.start()
         
@@ -1128,14 +1128,14 @@ class Janela (QMainWindow):
         self.label_sara.setText("SARA")
         self.label_sara.setAlignment(QtCore.Qt.AlignCenter)
         self.label_sara.move(0,0)
-        self.label_sara.setStyleSheet('QLabel {font:bold;font-size:16px;color:#2F00FF}')
+        self.label_sara.setStyleSheet('QLabel {font:bold;font-size:16px;color:#D9B8B8}')
         self.label_sara.resize(400,300)
         
         self.label_cpu = QLabel(self)
-        self.label_cpu.setText("Uso da CPU: 32%")
+        self.label_cpu.setText("CPU: 32%")
         self.label_cpu.setAlignment(QtCore.Qt.AlignCenter)
         self.label_cpu.move(10,270)
-        self.label_cpu.setStyleSheet('QLabel {font-size:14px;color:#000079}')
+        self.label_cpu.setStyleSheet('QLabel {font:bold;font-size:14px;color:#D971B4}')
         self.label_cpu.resize(131,20)
         cpu = QTimer(self)
         cpu.timeout.connect(self.MostrarCPU)
@@ -1144,14 +1144,14 @@ class Janela (QMainWindow):
         self.label_assv = QLabel(self)
         self.label_assv.setText("Assistente Virtual")
         self.label_assv.move(5,5)
-        self.label_assv.setStyleSheet('QLabel {font:bold;font-size:14px;color:#000079}')
+        self.label_assv.setStyleSheet('QLabel {font:bold;font-size:14px;color:#D971B4}')
         self.label_assv.resize(200,20)
 
         self.label_version = QLabel(self)
         self.label_version.setText("Versão BETA 1.0")
         self.label_version.setAlignment(QtCore.Qt.AlignCenter)
         self.label_version.move(265,270)
-        self.label_version.setStyleSheet('QLabel {font-size:14px;color:#000079}')
+        self.label_version.setStyleSheet('QLabel {font-size:14px;color:#D971B4}')
         self.label_version.resize(131,20)
         
         data =  QDate.currentDate()
@@ -1160,14 +1160,14 @@ class Janela (QMainWindow):
         self.label_data.setText(datahoje)
         self.label_data.setAlignment(QtCore.Qt.AlignCenter)
         self.label_data.move(316,25)
-        self.label_data.setStyleSheet('QLabel {font-size:14px;color:#000079}')
+        self.label_data.setStyleSheet('QLabel {font-size:14px;color:#D971B4}')
         self.label_data.resize(75,20)
           
         self.label_horas = QLabel(self)
         self.label_horas.setText("22:36:09")
         self.label_horas.setAlignment(QtCore.Qt.AlignCenter)
         self.label_horas.move(0,25)
-        self.label_horas.setStyleSheet('QLabel {font-size:14px;color:#000079}')
+        self.label_horas.setStyleSheet('QLabel {font-size:14px;color:#D971B4}')
         self.label_horas.resize(71,20)
         horas = QTimer(self)
         horas.timeout.connect(self.MostrarHorras)
@@ -1176,7 +1176,7 @@ class Janela (QMainWindow):
         botao_fechar = QPushButton("",self)
         botao_fechar.move(370,5)
         botao_fechar.resize(20,20)
-        botao_fechar.setStyleSheet("background-image : url(fechar.png);border-radius: 15px") 
+        botao_fechar.setStyleSheet("background-image : url(img/fechar.png);border-radius: 15px") 
         botao_fechar.clicked.connect(self.fechartudo)
         
         self.CarregarJanela()
@@ -1187,7 +1187,7 @@ class Janela (QMainWindow):
         self.setMinimumSize(400, 300)
         self.setMaximumSize(400, 300)
         self.setWindowOpacity(0.98) 
-        self.setWindowIcon(QtGui.QIcon('icone.png'))
+        self.setWindowIcon(QtGui.QIcon('img/sara_ts3.png'))
         self.setWindowTitle("Assistente Virtual")
         self.show()
 

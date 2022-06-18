@@ -8,6 +8,8 @@ from rich import print
 from rich.table import Table
 from build import sistema_solar
 from logging import basicConfig
+from chatterbot import ChatBot
+from difflib import SequenceMatcher
 #from logging import INFO, DEBUG
 
 
@@ -43,6 +45,49 @@ plataforma = platform.system()
 
 # Acesso ao microfone
 r = sr.Recognizer()
+
+ACCEPTANCE = 0.70
+
+def comparate_messages(message, candidate_message):
+    similarity = 0.0
+
+    if message.text and candidate_message.text:
+        message_text = message.text
+        candidate_text = candidate_message.text
+
+        similarity = SequenceMatcher(
+            None,
+            message_text,
+            candidate_text
+        )
+        similarity = round(similarity.ratio(),2)
+        
+        if similarity < ACCEPTANCE:
+            similarity = 0.0
+        else:
+            #print("Mensagem do usuário:",message_text,", mensagem candidata:",candidate_message,", nível de confiança:", similarity)
+            pass
+    return similarity
+
+def select_response(message, list_response, storage=None):
+    response = list_response[0]
+    #print("resposta escolhida:", response)
+
+    return response
+
+bot = ChatBot("Sara",
+                    read_only=True,
+                    statement_comparison_function=comparate_messages,
+                    response_selection_method=select_response,
+                    logic_adapters=[
+                        
+                        {
+                            "import_path":"chatterbot.logic.BestMatch",
+                        }
+])
+   
+
+
 
 def SomIncial():
     p = vlc.MediaPlayer("music/StartSound.mp3")
@@ -337,11 +382,8 @@ class mainT(QThread):
             BASE_DIR = os.path.dirname(__file__)
             SAVE_TO = os.path.join(BASE_DIR, 'mente.json')
 
-            try:    
-                with open('memoria/memoria.json', 'r',) as file:
-                    self.comandos = json.load(file)
-            except:
-                resposta('Não consegue carregar a memoria')
+           
+
                 
      
             
@@ -434,8 +476,6 @@ class mainT(QThread):
                 resposta('Estou funcionando normalmente')
                 resposta('Obrigado por perguntar')
             
-            elif 'você' in self.Input:
-                print('Pronto')
             
             elif 'silêncio' in self.Input: #Fique em silêncio
                 resposta('Ok')
@@ -559,9 +599,7 @@ class mainT(QThread):
                    
            
                  
-                 
-            elif 'excelente' in self.comandos:
-                resposta('Eu sei, Eu sou a melhor')
+             
             
             elif 'bateria' in self.Input:
                 bateria()
@@ -1044,12 +1082,25 @@ class mainT(QThread):
                 except:
                     resposta('Não consegue fazer a conta')
 
-            elif self.Input in self.comandos:
-                resposta(self.comandos[self.Input])
+            else:
+               
+                try:
+                    response = bot.get_response(self.Input)
+                except:
+                    pass
 
-            else: # comando provisorio
-                with open('comandos_udados.txt', 'a+',  encoding='UTF-8', ) as arquivo:
-                        arquivo.write(f'{self.Input}\n')
+                if response.confidence > 0.0:
+                    resposta(response.text)
+                    
+                else:
+                    print(f"[yellow] Ainda não sei como responder essa pergunta :( [/]")
+                    print(f"[yellow] Pergunte outra coisa... [/] ")
+
+                try:
+                    with open('comandos_udados.txt', 'a+',  encoding='UTF-8', ) as arquivo: 
+                            arquivo.write(f'{self.Input}\n')
+                except:
+                    pass
            
             
                     

@@ -4,3 +4,4 @@ Substituir abreviações  usando replace
 
 tirar print da tela
 Nome da pessoa
+s

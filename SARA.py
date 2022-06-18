@@ -36,7 +36,7 @@ except:
     net = False
 
 #Arquitetura 
-Digitar = True # Função para decide se vai querrer digitar ou falar, caso queira digitar mude para True
+Digitar = False # Função para decide se vai querrer digitar ou falar, caso queira digitar mude para True
 Vercao = 'Beta v1.0'
 plataforma = platform.system()
 

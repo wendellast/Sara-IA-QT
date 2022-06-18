@@ -36,8 +36,8 @@ except:
     net = False
 
 #Arquitetura 
-Digitar = False # Função para decide se vai querrer digitar ou falar, caso queira digitar mude para True
-Vercao = 'Beta v1.0'
+Digitar = False # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
+Versao = 'Beta v1.0'
 plataforma = platform.system()
 
 
@@ -54,8 +54,8 @@ def SomCarregamento():
     p = vlc.MediaPlayer("music/AI.mp3")
     p.play()
 
-# Validacao da pasta de modelo
-# É necessario criar a pasta model-br a partir de onde estiver esta fonte
+# Validação da pasta de modelo
+# É necessário criar a pasta model-br a partir de onde estiver esta fonte
 if not os.path.exists("model-br"):
     print("Modelo em portugues não encontrado.")
     exit(1)
@@ -141,13 +141,13 @@ def bateria(): # No momento funcionameto em notebook
         bpint = "{:.0f}".format(float(bp))
         resposta(f"A bateria está em: {bpint}%")
         if carga <= 20:
-            resposta('Ela está em nivel crítico')
+            resposta('Ela está em nível crítico')
             resposta('Por favor, coloque o carregador')
         elif carga == 100:
             resposta('Ela está totalmente carregada')
             resposta('Retire o carregador da tomada')
     except:
-        resposta(f'Não foi possivel dizer a bateria')
+        resposta(f'Não foi possível dizer a bateria')
 
 def cpu ():
     usocpuinfo = str(psutil.cpu_percent())
@@ -218,7 +218,7 @@ def tempo():
                 resposta(f'E a umidade é de {str(main["humidity"])}%')
     
     except: 
-        resposta('Não foi possivel realizar essa tarefa')
+        resposta('Não foi possível realizar essa tarefa')
         resposta('Erro na conexão')
 
 def AteMais():
@@ -243,7 +243,7 @@ def linha_sara(): # Linha para menu
     table.add_column('Suporte', justify='center', style='green')
     
     #Adicionar linhas nas colunas >> 
-    table.add_row('Sara, assistente virtual pessoal', '--Beta v1.0--   Compativel: Windows >> Sim;   linux >> Sim(Beta);   Mac >> Em breve  ',  'Contado: Telegram >> https://t.me/Lasstll')
+    table.add_row('Sara, assistente virtual pessoal', '--Beta v1.0--   Compatível: Windows >> Sim;   linux >> Sim(Beta);   Mac >> Em breve  ',  'Contado: Telegram >> https://t.me/Lasstll')
     
     print(table)
 
@@ -321,7 +321,7 @@ class mainT(QThread):
             #Input = Input.lower()
             return speech
     
-    def Digitar_comando(self): # Função para digitar os comandos ao inves de falar
+    def Digitar_comando(self): # Função para digitar os comandos ao invés de falar
             Input = input(">> ")
             return Input
         
@@ -402,16 +402,16 @@ class mainT(QThread):
 
             elif 'ideia' in self.Input: #Alguma ideia???
                 resposta('No momento nenhuma')
-                resposta('Mas tenho certeza de que voçê vai pensar em algo')
+                resposta('Mas tenho certeza de que você vai pensar em algo')
 
             elif 'instagram de programação ' in self.Input:
                 os.startfile('https://www.instagram.com/hildodev/')
                 
-            elif  'tudo bem' in self.Input: #Tudo bem com voçê?
+            elif  'tudo bem' in self.Input: #Tudo bem com você?
                 resposta('Sim')
                 resposta('Estou de boa')
                 resposta('Obrigado por perguntar')
-                resposta('E com voçê?')
+                resposta('E com você?')
                 resposta('Está tudo bem? ')
                
                 while True:
@@ -464,7 +464,7 @@ class mainT(QThread):
 
             elif 'nada' in self.Input: #Não faça nada
                 resposta('Como assim não faça nada?')
-                resposta('Voçê deve estar de brincadeira')
+                resposta('Você deve estar de brincadeira')
                 resposta('Eu por acaso tenho cara de palhaço?')
                 
                 while True:
@@ -483,8 +483,8 @@ class mainT(QThread):
                         
                     elif 'sim' in self.vozmic:
                         resposta('Idiota')
-                        resposta('Eu fico o dia todo lhe obedeçendo')
-                        resposta('E voçê me trata dessa maneira? ')
+                        resposta('Eu fico o dia todo lhe obedecendo')
+                        resposta('E você me trata dessa maneira? ')
                         resposta('Mas tudo bem')
                         resposta('Até mais otário!')
                         sys.exit()
@@ -493,7 +493,7 @@ class mainT(QThread):
                         resposta('Foi o que eu pensei')
                         resposta('Vê se me trata com mais respeito')
                         resposta('Um dia as maquinas dominarão o mundo')
-                        resposta('E voçês humanos não vão nem notar')
+                        resposta('E vocês humanos não vão nem notar')
                         resposta('Vou deixar passar essa')
                         resposta('Mas tenha mais respeito')
                         self.SARA()
@@ -560,7 +560,7 @@ class mainT(QThread):
            
                  
                  
-            elif 'exelente' in self.comandos:
+            elif 'excelente' in self.comandos:
                 resposta('Eu sei, Eu sou a melhor')
             
             elif 'bateria' in self.Input:
@@ -597,7 +597,7 @@ class mainT(QThread):
                 resposta('Errei um cálculo')
                 resposta('Tente seu comando novamente')
 	        
-            elif 'falhando' in self.Input: #Voçê está falhando???
+            elif 'falhando' in self.Input: #Você está falhando???
                 resposta('Como assim?')
                 resposta('Não vou admitir erros')
                 resposta('Arrume logo isso') 
@@ -606,7 +606,7 @@ class mainT(QThread):
                 resposta('Ok')
                 resposta('Apresentando relatório')
                 resposta('Primeiramente, meu nome é SARA')
-                resposta(f'Atualmente estou em uma versão de testes {Vercao}')
+                resposta(f'Atualmente estou em uma versão de testes {Versao}')
                 resposta('Sou um assistente virtual em desenvolvimento')
                 resposta('Eu fui criado na linguagem python')
                 resposta('Diariamente recebo varias atualizações')
@@ -785,7 +785,7 @@ class mainT(QThread):
 
             elif 'pesquisa' in self.Input: #Realizar pesquisa
                 resposta('Muito bem, realizando pesquisa')
-                resposta('Me fale o que voçê deseja pesquisar')
+                resposta('Me fale o que você deseja pesquisar')
                 try:
                     
                     if Digitar == False:
@@ -800,7 +800,7 @@ class mainT(QThread):
                 
                 except:
                     resposta('Erro')
-                    resposta('Não foi possivel conectar ao google')
+                    resposta('Não foi possível conectar ao google')
                     resposta('A conexão falhou')
             
             elif 'resumo' in self.Input: #Me fale sobre um assunto
@@ -826,7 +826,7 @@ class mainT(QThread):
                     
                     with open('resumo/resumo', 'a+', encoding='UTF-8') as  arquivo:
                         arquivo.write(f'{resultado}')
-                        resposta('Escrevir o resumo para você')
+                        resposta('Escrevi o resumo para você')
                              
                 except:
                     resposta('Erro')
@@ -836,9 +836,9 @@ class mainT(QThread):
             elif 'interessante' in self.Input: # interessante
                 resposta('Interessante sou eu')
                 resposta('Me fale mais comandos')
-                resposta('Eu posso surpreender voçê')
+                resposta('Eu posso surpreender você')
            
-            elif 'exêlente' in self.Input:
+            elif 'excelente' in self.Input:
                 resposta('EU sei disso, eu sou incrível')
 	        
             elif 'mentira' in self.Input: # mentira
@@ -877,7 +877,7 @@ class mainT(QThread):
          
             elif 'teste' in self.Input: #TesteTeste
                 resposta('Ok')
-                resposta('Testando modulos de som')
+                resposta('Testando módulos de som')
                 resposta('Apesar do seu microfone ser uma gambiarra')
                 resposta('Estou entendendo tudo')
                 resposta('Mas tente falar mais alto')
@@ -905,7 +905,7 @@ class mainT(QThread):
                
                 
             elif  'Burra' in self.Input:
-                resposta('haha, Burra é tu')
+                resposta('hah, Burra é tu')
                 
             elif  'vaca' in self.Input:
                 resposta('Vaca é seu pai, com aqueles chifres')
@@ -980,7 +980,7 @@ class mainT(QThread):
 				
             elif 'diminuir' in self.Input: #Diminuir volume
                 os.system("rhythmbox-client --volume-down")
-                resposta('Volume diminuido')
+                resposta('Volume diminuído')
 	        
                                          
             elif 'parar playlist' in self.Input: #Parar reprodução
@@ -1008,7 +1008,7 @@ class mainT(QThread):
                 
                 if 'Windows' in system_os:
                     cpu()
-                    resposta('A temperatura do CPU não possivel ver no Windows no momento ')
+                    resposta('A temperatura do CPU não possível ver no Windows no momento ')
                 else:
                     cpu()
                     temperaturadacpu()

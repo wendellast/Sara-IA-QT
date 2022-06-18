@@ -1,4 +1,0 @@
-{
-    "board": "arduino:avr:uno",
-    "port": "/dev/ttyUSB0"
-}

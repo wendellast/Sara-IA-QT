@@ -294,7 +294,7 @@ class mainT(QThread):
                 
             #   Input = rec.Result()
                 with sr.Microphone() as s:
-                    #r.adjust_for_ambient_noise(s)
+                    r.adjust_for_ambient_noise(s)
                     audio = r.listen(s)
                     speech = r.recognize_google(audio, language= "pt-BR")
                 '''try:
@@ -315,14 +315,14 @@ class mainT(QThread):
         
             except:
                 # Retorna os erros
-                print('Não entendi, fale novamente33')
+                print('Não entendi, fale novamente')
                 # resposta("Não entendi o que você disse, fale novamente.")
                 return 'none'
             #Input = Input.lower()
             return speech
     
     def Digitar_comando(self): # Função para digitar os comandos ao inves de falar
-            Input = input(">>")
+            Input = input(">> ")
             return Input
         
             

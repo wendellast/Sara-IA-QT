@@ -10,6 +10,7 @@ from build import sistema_solar
 from logging import basicConfig
 from chatterbot import ChatBot
 from difflib import SequenceMatcher
+from Treinar_Sara import treinar
 #from logging import INFO, DEBUG
 
 
@@ -548,8 +549,16 @@ class mainT(QThread):
                             self.vozmic = self.GivenCommand().lower()
                         else:
                             self.vozmic = self.Digitar_comando().lower()
+
+                       
                       
-                        
+                        if 'none' in self.vozmic:
+                            resposta('Não entendi, fale de novo')
+                            continue
+                       
+                        if 'cancelar' in self.vozmic:
+                            resposta('Tudo bem, cancelando aprendizado')
+                            break
                         chave = self.vozmic
 
                     except:
@@ -564,7 +573,13 @@ class mainT(QThread):
                         else:
                             self.vozmic2= self.Digitar_comando().lower()
                         
-                        
+                        if 'none' in self.vozmic2:
+                            resposta('Não entendi, fale de novo')
+                            continue
+                         
+                        if 'cancelar' in self.vozmic2:
+                            resposta('Tudo bem, cancelando aprendizado')
+                            break
                         valor = self.vozmic2
                     except:
                        
@@ -584,6 +599,10 @@ class mainT(QThread):
                             # escreve o objeto atualizado no arquivo temporário
                             json.dump(dados, out, ensure_ascii=False, indent=4, separators=(',',':'))
 
+                        if chave in dados:
+                            resposta('Desculpe, esse comando já existe')
+                            continue
+
                         # se tudo deu certo, renomeia o arquivo temporário
                         shutil.move(out.name, 'memoria/memoria.json')
                     
@@ -596,14 +615,22 @@ class mainT(QThread):
                         resposta('Pronto, aprendi') 
                         resposta(f'{chave } é igual a {valor}')
                         break
-                   
-           
-                 
-             
+
             
             elif 'bateria' in self.Input:
                 bateria()
-            
+
+            elif 'treinar' in self.Input:
+                try:
+                    resposta('Iniciando treinamento')
+                    treinar()
+                except:
+                    resposta('Não consegue fazer o treinamento')
+                    resposta('Tente de novo')
+                else:
+                    resposta('Treinamento finalizado')
+
+
             elif 'perfeito' in self.Input:
                 resposta('Eu sei, eu sou a melhor')
             

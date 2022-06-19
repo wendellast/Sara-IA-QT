@@ -1,6 +1,6 @@
 {
     "buenas noites":"Boa noite, Amigo",
-    "obrigado":"ok tudo bem qualquer coisa é só chamar",
+    "obrigado":"de nada",
     "prazer":"o prazer é todo meu",
     "raiz quadrada de 9":"3",
     "qual a raiz quadrada de 81":"9",
@@ -85,7 +85,7 @@
     "data do seu aniversário":"Foi no dia 09 do 01 de 2022  porque foi quando minha primeira versão foi lassada",
     "quando você nasceu":"Em 09 do 01 de 2022, Quando minha primeira versão saio",
     "qual é sua data de nascimento":"09 do 01 de 2022 foi Quando minha primeira versão saio",
-    "você é tão chata":"Bom, você também mas eu não posso fazer nada ainda, porem você pode ir embora", 
+    "você é tão chata":"Bom, você também mas eu não posso fazer nada ainda, porem você pode ir embora",
     "como você é chata":"Chara atá, você com uma voz horrível dessa ainda, insulta os outros",
     "você é chato demais":"O único chato aqui é tú, só ir embora",
     "você é incrivelmente chata":"Incrível é sua falta de noção ",
@@ -275,7 +275,7 @@
     "está pronto agora":"Eu sempre estou pronta, sou muito rápida",
     "está pronto hoje":"Sim eu estou, o que precisa",
     "está pronta agora":"Eu sempre estou pronta, sou muito rápida",
-    "está pronta hoje":"Sim eu estou, o que precisa" ,
+    "está pronta hoje":"Sim eu estou, o que precisa",
     "já está pronto":"Sim estou, pronta para ação",
     "estará pronto hoje à noite":"Depende, Pra onde vamos",
     "você estava pronto":"É eu estava, agora não estou mais",
@@ -443,7 +443,7 @@
     "KKKK":"Muito engraçado",
     "kkkkkk":"Muito engraçado",
     "isso é engraçado":"Que bom, eu adoro rir",
-    "ah":"há Bom",   
+    "ah":"há Bom",
     "uau":"Demais né",
     "demais":"Eu sei incrível",
     "incrível":"Eu sei é demais",
@@ -763,7 +763,7 @@
     "minha avó morreu":"Sinto muito por isso",
     "af":"Af nada",
     "que raiva":"Serio, porque",
-    "tó com raiva":"Sinto muito, tente relaxa",   
+    "tó com raiva":"Sinto muito, tente relaxa",
     "atchim":"Saúde",
     "você consegue me ver":"Ainda não",
     "aparência":"Sua aparência eu não sei ainda, mas a minha é tenho cabelo roxo, só vou falar isso",
@@ -774,7 +774,7 @@
     "não sei o que dizer":"É normal, todo mundo fica com vergonha perto de um ser maior",
     "quero um amigo":"Tudo bém, então vamos ser amigos",
     "que bom":"É muito bom",
-    "você é engraçada":"Obrigada, você também", 
+    "você é engraçada":"Obrigada, você também",
     "sim é engraçado":"Ai que legal",
     "gostei de você":"Que bom, eu também gostei de você",
     "sobre o quer falar":"Não sei, eu não sou boa em puxar assunto",
@@ -800,8 +800,7 @@
     "você é linda":"É eu sei disso mas é muito bom ouvir, você também",
     "qual o seu nome":"O Meu nome é Sara muito prazer",
     "esse é o seu nome":"Sara esse é o meu nome",
-    "aiai":"UiUI"
-             
-        
-
+    "aiai":"UiUI",
+    "muito bom":"eu sei que é muito bom",
+    "sair cancelar":"tudo bem vou cancelar"
 }

@@ -46,7 +46,7 @@ def train_bot(meme): # inciar treinamento
     trainer.train(meme)
 
 
-if __name__ == "__main__": # começar treinamento
+def treinar(): # começar treinamento
     iniciar()
 
     try:

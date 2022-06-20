@@ -3,15 +3,14 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtGui import QMovie
-from plyer import notification
 from rich import print
-from rich.table import Table
 from build import sistema_solar
 from logging import basicConfig
 from chatterbot import ChatBot
 from difflib import SequenceMatcher
 from Treinar_Sara import treinar
-#from logging import INFO, DEBUG
+from modules.modulos_funcoes import *
+from config.config_dados import *
 
 
 import speech_recognition as sr
@@ -42,6 +41,7 @@ except:
 Digitar = False # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
 Versao = 'Beta v1.0'
 plataforma = platform.system()
+diretorio_atual=os.getcwd()
 
 
 # Acesso ao microfone
@@ -89,6 +89,7 @@ bot = ChatBot("Sara",
    
 
 
+  
 
 def SomIncial():
     p = vlc.MediaPlayer("music/StartSound.mp3")
@@ -110,14 +111,15 @@ if not os.path.exists("memoria"):
     print("A memoria  não encontrado.")
     exit(1)
 
-# Apontando o algoritmo para ler o modelo treinado na pasta "model-br"
-model = Model("model-br")
-rec = KaldiRecognizer(model, 16000)
+if net == False:
+    # Apontando o algoritmo para ler o modelo treinado na pasta "model-br"
+    model = Model("model-br")
+    rec = KaldiRecognizer(model, 16000)
 
-# Preparando o microfone para captura
-p = pyaudio.PyAudio()
-stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=8192)
-stream.start_stream()
+    # Preparando o microfone para captura
+    p = pyaudio.PyAudio()
+    stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=8192)
+    stream.start_stream()
 
 
 if 'Windows' in plataforma:
@@ -142,159 +144,6 @@ else:
 
 
 
-# Função de fala sara (voz da letícia)   
-def resposta(audio):
-    notification.notify(title = "SARA",message = audio,timeout = 3)
-    stream.stop_stream ()
-    print(f'[bold purple]SARA:[/] [cyan]{audio}[/]')
-    sara_voz.say(audio)
-    sara_voz.runAndWait()
-    stream.start_stream ()
-
-def notificar(textos):
-	notification.notify(title = "SARA",message = textos,timeout = 10)
-    
-def respostalonga(textofala):
-    
-    stream.stop_stream ()
-    sara_voz.say(textofala)
-    sara_voz.runAndWait()
-    stream.start_stream ()
-
-def horario():
-	from datetime import datetime
-	hora = datetime.now()
-	horas= hora.strftime('%H horas e %M minutos')
-	resposta(f'Agora são {horas}')
-    
-
-def datahoje():
-    from datetime import date
-    dataatual = date.today()
-    diassemana = ('Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado','Domingo')
-    meses = ('Zero','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro')
-    resposta(f"Hoje é {diassemana[dataatual.weekday()]}")
-    diatexto = f'{dataatual.day} de '
-    mesatual = (meses[dataatual.month])
-    datatexto = dataatual.strftime(" de %Y")
-    resposta(f'Dia {diatexto} {mesatual} {datatexto}')
-
-def bateria(): # No momento funcionameto em notebook
-    try:
-        bateria = psutil.sensors_battery()
-        carga = bateria.percent
-        bp = str(bateria.percent)
-        bpint = "{:.0f}".format(float(bp))
-        resposta(f"A bateria está em: {bpint}%")
-        if carga <= 20:
-            resposta('Ela está em nível crítico')
-            resposta('Por favor, coloque o carregador')
-        elif carga == 100:
-            resposta('Ela está totalmente carregada')
-            resposta('Retire o carregador da tomada')
-    except:
-        resposta(f'Não foi possível dizer a bateria')
-
-def cpu ():
-    usocpuinfo = str(psutil.cpu_percent())
-    usodacpu  = "{:.0f}".format(float(usocpuinfo))
-    resposta('Verificando carga do sistema')
-    resposta(f'O uso do processador está em {usodacpu}%')
-
-def temperaturadacpu():
-    tempcpu = psutil.sensors_temperatures(fahrenheit=False)
-    cputemp = tempcpu['coretemp'][0]
-    temperaturacpu = cputemp.current
-    cputempint = "{:.0f}".format(float(temperaturacpu))
-    resposta(f'A temperatura da CPU está em {cputempint}° ')
-
-# função de boas vindas, fases do dia
-def BoasVindas():
-    Horario = int(datetime.datetime.now().hour)
-    if Horario >= 0 and Horario < 12:
-        resposta('Bom dia')
-
-    elif Horario >= 12 and Horario < 18:
-        resposta('Boa tarde')
-
-    elif Horario >= 18 and Horario != 0:
-        resposta('Boa noite')
-	
-def tempo(): 
-    try:
-        #Procure no google maps as cordenadas da sua cidade e coloque no "lat" e no "lon"(Latitude,Longitude)
-        api_url = "https://fcc-weather-api.glitch.me/api/current?lat=14º 13 30&lon=42º 46 53"
-        data = requests.get(api_url)
-        data_json = data.json()
-        if data_json['cod'] == 200:
-            main = data_json['main']
-            wind = data_json['wind']
-            weather_desc = data_json['weather'][0]
-            temperatura =  str(main['temp'])
-            tempint = "{:.0f}".format(float(temperatura))
-            vento = str(wind['speed'])
-            ventoint = "{:.0f}".format(float(vento))
-            dicionario = {
-                'Rain' : 'chuvoso',
-                'Clouds' : 'nublado',
-                'Thunderstorm' : 'com trovoadas',
-                'Drizzle' : 'com garoa',
-                'Snow' : 'com possibilidade de neve',
-                'Mist' : 'com névoa',
-                'Smoke' : 'com muita fumaça',
-                'Haze' : 'com neblina',
-                'Dust' : 'com muita poeira',
-                'Fog' : 'com névoa',
-                'Sand' : 'com areia',
-                'Ash' : 'com cinza vulcanica no ar',
-                'Squall' : 'com rajadas de vento',
-                'Tornado' : 'com possibilidade de tornado',
-                'Clear' : 'com céu limpo'
-                }
-            tipoclima =  weather_desc['main']
-            if data_json['name'] == "Shuzenji":
-                resposta('Erro')
-                resposta('Não foi possivel verificar o clima')
-                resposta('Tente novamente o comando')
-            else:
-                resposta(f'Verificando clima para a cidade de {data_json["name"]}')
-                resposta(f'O clima hoje está {dicionario[tipoclima]}')
-                resposta(f'A temperatura é de {tempint}°')
-                resposta(f'O vento está em {ventoint} kilometros por hora')
-                resposta(f'E a umidade é de {str(main["humidity"])}%')
-    
-    except: 
-        resposta('Não foi possível realizar essa tarefa')
-        resposta('Erro na conexão')
-
-def AteMais():
-    Horario = int(datetime.datetime.now().hour)
-    if Horario >= 0 and Horario < 12:
-        resposta('Tenha um ótimo dia')
-
-    elif Horario >= 12 and Horario < 18:
-        resposta('Tenha uma ótima tarde')
-
-    elif Horario >= 18 and Horario != 0:
-        resposta('Boa noite')
-
-def linha_sara(): # Linha para menu
-   
-    
-    #Tabela Sara >> 
-    table = Table(title='----> SARA <----', title_justify='center', title_style='blue')
-    
-    table.add_column('Informação', justify='center', style='purple')
-    table.add_column('Versão', justify='center', style='red')
-    table.add_column('Suporte', justify='center', style='green')
-    
-    #Adicionar linhas nas colunas >> 
-    table.add_row('Sara, assistente virtual pessoal', '--Beta v1.0--   Compatível: Windows >> Sim;   linux >> Sim(Beta);   Mac >> Em breve  ',  'Contado: Telegram >> https://t.me/Lasstll')
-    
-    print(table)
-
-    return 0
-    
 linha_sara()  
 resposta('Olá')
 BoasVindas()
@@ -340,24 +189,10 @@ class mainT(QThread):
                 
             #   Input = rec.Result()
                 with sr.Microphone() as s:
-                    r.adjust_for_ambient_noise(s)
+                   # r.adjust_for_ambient_noise(s)
                     audio = r.listen(s, None, 5)
                     speech = r.recognize_google(audio, language= "pt-BR")
-                '''try:
-                    with sr.Microphone() as s:
-                        audio = vozes.listen(s)
-                        speech2 = vozes.recognize_google(audio, language= "pt-BR")
-                    
-                    
-                        speech = speech2.lower()
-                        
-                        try:
-                        with sr.Microphone() as s:
-                            r.adjust_for_ambient_noise(s)
-                            audio = r.listen(s)
-                            speech = r.recognize_google(audio, language= "pt-BR")
-                        
-                        '''
+                    speech.lower()
         
             except:
                 # Retorna os erros
@@ -365,6 +200,7 @@ class mainT(QThread):
                 # resposta("Não entendi o que você disse, fale novamente.")
                 return 'none'
             #Input = Input.lower()
+            print(speech)
             return speech
     
     def Digitar_comando(self): # Função para digitar os comandos ao invés de falar
@@ -375,6 +211,7 @@ class mainT(QThread):
     # Comandos e conversas   
     def SARA(self):
         while True:
+
             if Digitar == False:
                 self.Input = self.GivenCommand().lower() # Função de falar
             else:
@@ -437,10 +274,6 @@ class mainT(QThread):
                     resposta('Olá')
                     resposta('Boa noite')
 
-            elif 'olá' in self.Input: #Olá Sara
-                resposta('Olá')
-                resposta('Estou aqui')
-                resposta('Precisa de algo?')
  
 
             elif 'ideia' in self.Input: #Alguma ideia???
@@ -450,7 +283,7 @@ class mainT(QThread):
             elif 'instagram de programação ' in self.Input:
                 os.startfile('https://www.instagram.com/hildodev/')
                 
-            elif  'tudo bem' in self.Input: #Tudo bem com você?
+            elif  'você está bem' in self.Input: #Tudo bem com você?
                 resposta('Sim')
                 resposta('Estou de boa')
                 resposta('Obrigado por perguntar')
@@ -459,7 +292,7 @@ class mainT(QThread):
                
                 while True:
                     if Digitar == False:
-                        self.vozmic = self.GivenCommand()
+                        self.vozmic = self.GivenCommand().lower()
                     else:
                         self.vozmic = self.Digitar_comando().lower()
  
@@ -631,8 +464,7 @@ class mainT(QThread):
                     resposta('Treinamento finalizado')
 
 
-            elif 'perfeito' in self.Input:
-                resposta('Eu sei, eu sou a melhor')
+            
             
             elif 'a terra é plana' in self.Input:
                 resposta('Nossa')
@@ -979,13 +811,56 @@ class mainT(QThread):
                 resposta('Cachorra é você Cadela')     
                 
             elif 'piada' in self.Input: #Conte uma piada
-                resposta('Não sei contar piadas')
-                resposta('Diferente dos outros assistentes virtuais')
-                resposta('Eu não fui criado com emoções')
-                resposta('Então, não posso produzir nada engraçado')
-                resposta('Sugiro pesquisar na web')
+                resposta('Não tenho nenhuma no momento')
+                
             
+            elif 'criar arquivo' in self.Input:
+                resposta('Ta bém, vamos criar um arquivo')
+                resposta('Qual vai ser o nome do arquivo')
+
+                pasta='arquivos'
+               
+                while True:
+                    resposta('Por favor fale a extensão do arquivo junto, .txt. json .pdf, etcetera')
+                    
+                    if Digitar == False:
+                        self.vozmic = self.GivenCommand().lower()
+                    else:
+                        self.vozmic = self.Digitar_comando().lower()
+
+                        
+                        
+                    if 'none' in self.vozmic:
+                        resposta('Não entendi, fale de novo')
+                        continue
+                        
+                    if 'cancelar' in self.vozmic:
+                        resposta('Tudo bem, cancelando aprendizado')
+                        break
+
+                    raw_input = self.vozmic
             
+                    nome_arquivo= raw_input
+
+                    try:
+                        os.mkdir(pasta)
+                        os.chdir(os.getcwd()+'/'+pasta)
+                    except OSError:
+                        os.chdir(os.getcwd()+'/'+pasta)
+
+                    try:
+                        arquivo=open(nome_arquivo,'r')
+                        resposta('Esse arquivo já existe ')
+                        resposta('Tente de novo')
+                        continue
+                    
+
+                    except IOError:
+                        arquivo=open(nome_arquivo,'w')
+                        resposta('Pronto, Arquivo salvo na pasta arquivos\n')
+                        os.chdir(diretorio_atual)
+                        break
+
                 
             elif 'surda' in self.Input: #Surdo!!!
                 resposta('Estava quase dormindo')
@@ -1006,19 +881,19 @@ class mainT(QThread):
                     resultado = pywhatkit.playonyt(musica)
                     resposta(f'Tocando música {musica}')
                 except:
-                    resposta('Não consegue tocar a música')
+                    resposta('Não consegui, tocar a música')
                 
          
             elif 'playlist' in self.Input: #Reproduzir música
                 try:
                     resposta('Ok')
 
-                    if 'linux' in plataforma:
+                    if 'win' in plataforma:
+                        pass
+                    else:
                         os.system("rhythmbox-client --play")
                         resposta('Reproduzindo música')
                     
-                    else:
-                        pass
 
                 except:
                     resposta('Desculpe, não consegue reproduzir a música ')

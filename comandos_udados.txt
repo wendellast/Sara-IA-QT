@@ -116,3 +116,152 @@ ai ai
 aí aí
 poxa
 eu tô cansado
+oi
+agora iniciar treino
+none
+tem um comando
+none
+none
+você falou agora jogar free fire
+free fire
+tinha falado
+jogar pubg
+ponto da corrente do golfo muda cor
+none
+toque believer
+none
+toque believe
+none
+none
+none
+aí eu pedi para ela
+believe believe
+no ritmo do
+estúpida missão depois
+none
+canal do trabalho que deve se colocar cor
+olha a cor ela concorda como é que vai
+praça com azul e digita
+em que era muito grafite né
+telefone
+none
+ele não pegou não
+none
+none
+none
+none
+mãe
+none
+none
+none
+none
+none
+none
+none
+none
+cabeça
+a casa caiu
+none
+none
+none
+none
+none
+vem me perturbando
+none
+comando
+none
+none
+inferior a você
+none
+oola
+oi
+tudo
+quem e imferior a vc
+quem e seu dono
+quem e seu mestre
+vc e menina
+to triste
+estou triste
+
+
+quamto e 521+52
+quer namorar com migo 
+bora namorar
+vc e bv
+vc quer ser meu amigo
+quer casar comigo
+to cxamssado
+
+
+oi
+burra
+vagabumda
+ideia
+
+none
+none
+none
+none
+none
+none
+none
+none
+none
+none
+none
+none
+none
+none
+none
+none
+none
+none
+none
+none
+que dia é hoje
+hoje é que dia
+como você está
+none
+none
+none
+none
+none
+none
+none
+olá
+oie
+none
+none
+none
+none
+none
+none
+none
+none
+{
+  "text" : ""
+}
+{
+  "text" : ""
+}
+{
+  "text" : ""
+}
+{
+  "text" : ""
+}
+{
+  "text" : ""
+}
+{
+  "text" : ""
+}
+{
+  "text" : ""
+}
+{
+  "text" : ""
+}
+{
+  "text" : ""
+}

@@ -204,7 +204,7 @@ class mainT(QThread):
             return speech
     
     def Digitar_comando(self): # Função para digitar os comandos ao invés de falar
-            Input = input("[red]>>$[/] ")
+            Input = input(">>$  ")
             return Input
         
             
@@ -890,7 +890,7 @@ class mainT(QThread):
                         resposta('Tente de novo')
                         continue
 
-           
+                        
             
             elif 'surda' in self.Input: #Surdo!!!
                 resposta('Estava quase dormindo')
@@ -951,6 +951,45 @@ class mainT(QThread):
                         resposta(' Esse arquivo não existe')
                         resposta('Tente de novo')
                         continue
+
+            elif 'remover pasta'  in self.Input:
+                resposta('Tudo bem, vamos pagar uma pasta')
+
+                while True:
+                    resposta('Qual é o nome da pasta')
+                    if Digitar == False:
+                        self.vozmic = self.GivenCommand().lower()
+                    else:
+                        self.vozmic = self.Digitar_comando().lower()
+
+                        
+                    if 'cancelar' in self.vozmic:
+                        resposta('Tudo bem, Cancelando a remoção da pasta')
+                        break
+                    
+                    if 'none' in self.vozmic:
+                        resposta('Eu não entendi, fale novamente')
+                        continue
+
+                    nome_arquivo = self.vozmic
+
+                    if(nome_arquivo == 'modules' or nome_arquivo == 'test' or nome_arquivo == 'dados' or nome_arquivo == 'build' or nome_arquivo == 'config' or nome_arquivo == 'escrito'or nome_arquivo == 'img' or nome_arquivo == 'memoria' or nome_arquivo == 'model-br' or nome_arquivo == 'music' or nome_arquivo == 'resumo' or nome_arquivo == 'venv'):
+
+                        resposta('Essas pastas estão protegidas, não podem ser apagadas')
+                        
+                    else:
+                        try: # Conserta depois
+                        
+                            os.chdir(diretorio_atual)
+                            os.rmdir(nome_arquivo)
+                            resposta('Pronto pasta removida')
+                            break
+                        
+                        except OSError:
+                            resposta('Essa pasta  não existe')
+                            resposta('Tente de novo')
+                            continue
+                       
             elif 'playlist' in self.Input: #Reproduzir música
                 try:
                     resposta('Ok')

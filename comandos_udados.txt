@@ -303,3 +303,4 @@ rdeligar
 olá
 obrigado
 agradeço
+obrigado

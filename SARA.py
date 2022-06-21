@@ -1170,7 +1170,23 @@ class mainT(QThread):
                                 resposta('Tente de novo')
                                 continue
 
-            
+            elif 'esvaziar lixeira' in self.Input or 'limpar lixeira' in self.Input:
+                resposta('Está bem, vou esvaziar a lixeira')
+               
+                #os.system('./esvaziar.sh')
+                os.chdir(os.environ['HOME']+'/.local/share/Trash/files')
+                a=os.listdir(os.environ['HOME']+'/.local/share/Trash/files')
+                for elemento in a:
+                    try:
+                        print('removendo -> ' + str(elemento))
+                        os.remove(elemento)
+                    except OSError:
+                        print('removendo -> ' + str(elemento))
+
+                        os.system('rm -r '+ elemento)
+                resposta('Pronto, lixeira limpa')
+                            
+
             elif 'playlist' in self.Input: #Reproduzir música
                 try:
                     resposta('Ok')

@@ -1,6 +1,0 @@
-Marca tempo ex: Sara marca 10 minutos.. depois de 10 minutos ela chama você de volta
-
-Substituir abreviações  usando replace
-
-tirar print da tela
-Nome da pessoa

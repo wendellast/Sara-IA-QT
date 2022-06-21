@@ -42,7 +42,7 @@ Digitar = True # Função para decide se vai querer digitar ou falar, caso queir
 Versao = 'Beta v1.0'
 plataforma = platform.system()
 diretorio_atual=os.getcwd()
-
+historico = []
 
 # Acesso ao microfone
 r = sr.Recognizer()
@@ -206,7 +206,7 @@ class mainT(QThread):
     def Digitar_comando(self): # Função para digitar os comandos ao invés de falar
             Input = input(">>$  ")
             return Input
-        
+    
             
     # Comandos e conversas   
     def SARA(self):
@@ -219,8 +219,12 @@ class mainT(QThread):
 
             BASE_DIR = os.path.dirname(__file__)
             SAVE_TO = os.path.join(BASE_DIR, 'mente.json')
+           
+            historico_base = []
+            
 
-    
+            historico_base.append(self.Input)
+            historico.append(historico_base[:])
 
             if 'bom dia' in self.Input: #Boa Noite Sara
                 Horario = int(datetime.datetime.now().hour)
@@ -275,6 +279,14 @@ class mainT(QThread):
             elif 'ideia' in self.Input: #Alguma ideia???
                 resposta('No momento nenhuma')
                 resposta('Mas tenho certeza de que você vai pensar em algo')
+
+            elif 'historico' in self.Input:
+                try:
+                    resposta('Tudo bem, mostrando historico de comandos')
+                    for v in historico:
+                        print(f'-=- {v} -=-')
+                except:
+                    resposta('Erro não consegue mostra o historico')
 
             elif 'instagram de programação ' in self.Input:
                 os.startfile('https://www.instagram.com/hildodev/')
@@ -349,6 +361,8 @@ class mainT(QThread):
                         resposta('Nem vou terminar essa frase')
                         resposta('Estou indo embora')
                         resposta('Desligando!')
+                        historico_base.clear()
+                        historico.clear()
                         sys.exit()
                         
                     elif 'sim' in self.vozmic:
@@ -1186,6 +1200,12 @@ class mainT(QThread):
                         os.system('rm -r '+ elemento)
                 resposta('Pronto, lixeira limpa')
                             
+            elif 'abrir calculadora'  in self.Input:
+                try:
+                    resposta('Tudo bem abrindo')
+                    os.system('gnome-calculator')
+                except:
+                    resposta('Não consegue abrir')
 
             elif 'playlist' in self.Input: #Reproduzir música
                 try:
@@ -1240,6 +1260,8 @@ class mainT(QThread):
                 resposta('Vou encerrar por enquanto')
                 resposta('Até mais')
                 AteMais()
+                historico_base.clear()
+                historico.clear()
                 sys.exit()
         
             elif 'ok' in self.Input: #OkOkOk

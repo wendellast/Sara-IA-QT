@@ -13,24 +13,7 @@ import os
 
            
 
-def esvaziar_lixeira():
-    frase = input('O deseja')
-    if(frase == 'esvaziar lixeira' or frase == 'esvaziar'):
-        #os.system('./esvaziar.sh')
-        os.chdir(os.environ['HOME']+'/.local/share/Trash/files')
-        a=os.listdir(os.environ['HOME']+'/.local/share/Trash/files')
-        for elemento in a:
-            try:
-                print('removendo -> ' + str(elemento))
-                os.remove(elemento)
-            except OSError:
-                print('removendo -> ' + str(elemento))
-                os.system('rm -r '+ elemento)
-        print('Pronto!\n')
-        os.system('espeak -v pt-br -g 4 -a 100 "Pronto!"')
 
-def calculadora():
-        os.system('gnome-calculator')
     
 def historico():
     print('Histórico: \n')

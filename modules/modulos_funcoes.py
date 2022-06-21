@@ -7,23 +7,9 @@ import os
   
 
 
-def editar():
 
-            palavras = input('O Que você uqer editar ')
-       
-        
-            if(palavras == 'arquivo'):
-                raw_input =input(('Insira o nome do arquivo: '))
-                nome_arquivo=raw_input 
-                try:
-                    os.chdir(os.getcwd()+'/'+'arquivos')
-                except OSError:
-                    os.mkdir('arquivos')
-                    os.chdir(os.getcwd()+'/'+'arquivos')
-                os.system('gedit '+nome_arquivo)
-            else:
-                print('A penas possivel editar arquivos')
-                os.system('espeak -v pt-br -g 4 -a 100 "A penas possivel editar arquivos"')
+
+           
            
 def renomear(): # melhorar
             palavras = input('O que você quer renomear')

@@ -1030,7 +1030,72 @@ class mainT(QThread):
                        resposta('Não consegue abrer o arquivo para editar')
                        resposta('Tente de novo')
                        continue
-                
+
+            elif 'renomear arquivo' in self.Input:
+                resposta('Tudo bem, vamos renomear um arquivo')
+                while True:
+                    resposta('Fale o nome do arquivo')
+                    resposta('lembrasse de falar a extensão .txt .json etcetera')
+       
+                    if Digitar == False:
+                        self.vozmic = self.GivenCommand().lower()
+                    else:
+                        self.vozmic = self.Digitar_comando().lower()
+
+                        
+                    if 'cancelar' in self.vozmic:
+                        resposta('Tudo bem, Cancelando a renomeação do arquivo')
+                        break
+                    
+                    if 'none' in self.vozmic:
+                        resposta('Eu não entendi, fale novamente')
+                        continue
+                 
+                    nome_arquivo= self.vozmic
+                    
+                    if nome_arquivo == 'db.sqlite3' or nome_arquivo == 'LICENSE' or nome_arquivo == 'local.py' or nome_arquivo == 'README.md' or nome_arquivo == 'SARA.py' or nome_arquivo == 'Treinar_Sara.py':
+                        resposta('Esses arquivos não podem ser renomeados')
+                        resposta('Tente de novo')
+                        continue
+
+                    
+                    try:
+                        resposta('Agora fale o novo nome do arquivo')
+                        resposta('lembrasse de falar a extensão .txt .json etcetera')
+       
+                        if Digitar == False:
+                            self.vozmic2 = self.GivenCommand().lower()
+                        else:
+                            self.vozmic2 = self.Digitar_comando().lower()
+
+                            
+                        if 'cancelar' in self.vozmic2:
+                            resposta('Tudo bem, Cancelando a renomeação do arquivo')
+                            break
+                        
+                        if 'none' in self.vozmic2:
+                            resposta('Eu não entendi, fale novamente')
+                            continue
+                    
+                        novo_nome = self.vozmic2
+
+
+                        if(os.path.isfile(nome_arquivo)):
+                            os.rename(nome_arquivo, novo_nome)
+                            resposta('Pronto')
+                            resposta(f'Arquivo {nome_arquivo} renomeado para {novo_nome}')
+                            break
+                            
+                        else:
+                            resposta('Desculpe esse arquivo não existe')
+                            resposta('Tente de novo')
+                            continue
+                        
+                    except:
+                        resposta('Não consegue renomear o arquivo')
+                        resposta('Tente de novo')
+                        continue
+
 
             elif 'playlist' in self.Input: #Reproduzir música
                 try:

@@ -1079,6 +1079,10 @@ class mainT(QThread):
                     
                         novo_nome = self.vozmic2
 
+                        if (novo_nome == 'modules' or novo_nome == 'test' or novo_nome == 'dados' or novo_nome == 'build' or novo_nome == 'config' or novo_nome == 'escrito'or novo_nome == 'img' or novo_nome == 'memoria' or novo_nome == 'model-br' or novo_nome == 'music' or novo_nome == 'resumo' or novo_nome == 'venv'):
+                            resposta('Este nome não pode ser usados')
+                            resposta('Tente de novo')
+                            continue
 
                         if(os.path.isfile(nome_arquivo)):
                             os.rename(nome_arquivo, novo_nome)
@@ -1097,6 +1101,76 @@ class mainT(QThread):
                         continue
 
 
+            elif 'renomear pasta' in self.Input:
+                resposta('Tudo bem vamos renomear uma pasta')
+                while True:
+                    resposta('Qual é o nome da pasta que quer renomear')
+                    
+
+                    if Digitar == False:
+                        self.vozmic = self.GivenCommand().lower()
+                    else:
+                        self.vozmic = self.Digitar_comando().lower()
+
+                        
+                    if 'cancelar' in self.vozmic:
+                        resposta('Tudo bem, Cancelando a renomeação da pasta')
+                        break
+                    
+                    if 'none' in self.vozmic:
+                        resposta('Eu não entendi, fale novamente')
+                        continue
+                 
+                    nome_arquivo= self.vozmic
+
+
+                    
+                    if(os.path.isdir(nome_arquivo)):
+
+                        if(nome_arquivo == 'modules' or nome_arquivo == 'test' or nome_arquivo == 'dados' or nome_arquivo == 'build' or nome_arquivo == 'config' or nome_arquivo == 'escrito'or nome_arquivo == 'img' or nome_arquivo == 'memoria' or nome_arquivo == 'model-br' or nome_arquivo == 'music' or nome_arquivo == 'resumo' or nome_arquivo == 'venv'):
+                            resposta('Pastas protegidos não pode ser renomeados')
+                            resposta('Tente de novo')
+                            continue
+
+                        else:
+                            try:
+                                resposta('Agora fale o novo nome da pasta')
+                                
+            
+                                if Digitar == False:
+                                    self.vozmic2 = self.GivenCommand().lower()
+                                else:
+                                    self.vozmic2 = self.Digitar_comando().lower()
+
+                                    
+                                if 'cancelar' in self.vozmic2:
+                                    resposta('Tudo bem, Cancelando a renomeação do arquivo')
+                                    break
+                                
+                                if 'none' in self.vozmic2:
+                                    resposta('Eu não entendi, fale novamente')
+                                    continue
+
+                            
+                                novo_nome = self.vozmic2
+
+                                if (novo_nome == 'modules' or novo_nome == 'test' or novo_nome == 'dados' or novo_nome == 'build' or novo_nome == 'config' or novo_nome == 'escrito'or novo_nome == 'img' or novo_nome == 'memoria' or novo_nome == 'model-br' or novo_nome == 'music' or novo_nome == 'resumo' or novo_nome == 'venv'):
+                                    resposta('Este nome não pode ser usados')
+                                    resposta('Tente de novo')
+                                    continue
+
+
+                                os.rename(nome_arquivo, novo_nome)
+                                resposta('Pronto')
+                                resposta(f'Pasta {nome_arquivo} renomeada para {novo_nome}')
+                                break
+
+                            except:
+                                resposta('Deu algum erro')
+                                resposta('Tente de novo')
+                                continue
+
+            
             elif 'playlist' in self.Input: #Reproduzir música
                 try:
                     resposta('Ok')

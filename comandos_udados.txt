@@ -1,2 +1,5 @@
 renomer arquivo
 oie
+sair
+obrigado deligar
+delisgar

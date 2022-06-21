@@ -7,25 +7,6 @@ import os
   
 
 
-def remover():
-        raw_input = input
-
-        if(raw_input == 'diretorio'):
-                nome_arquivo = input('Qual o nome do Diretorio')
-                if(nome_arquivo == 'modules' or nome_arquivo == 'test' or nome_arquivo == 'dados' or nome_arquivo == 'build' or escolha == 'config' or nome_arquivo == 'escrito'or nome_arquivo == 'img' or nome_arquivo == 'memoria' or nome_arquivo == 'model-br' or nome_arquivo == 'music' or nome_arquivo == 'resumo' or nome_arquivo == 'venv'):
-
-                    print('Pastas protegidas, não podem ser apagadas')
-                    
-                else:
-                    try: # Conserta depois
-                        local = os.getcwd()
-                        os.chdir(local)
-                        os.rmdir(nome_arquivo)
-                        print('removido!\n')
-                       
-                    except OSError:
-                        print('Diretorio não existe')
-                       
 def editar():
 
             palavras = input('O Que você uqer editar ')

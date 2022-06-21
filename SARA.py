@@ -927,7 +927,7 @@ class mainT(QThread):
                     
                     if 'cancelar' in self.vozmic:
                         resposta('Tudo bem, Cancelando a remoção do arquivo')
-                        self.SARA()
+                        break
                     
                     if 'none' in self.vozmic:
                         resposta('Eu não entendi, fale novamente')
@@ -937,7 +937,7 @@ class mainT(QThread):
                     os.chdir(diretorio_atual)
                     nome_arquivo = self.vozmic
 
-                    if nome_arquivo == 'db.sqlite3' or nome_arquivo == 'LICENSE' or nome_arquivo == 'local' or nome_arquivo == 'README' or nome_arquivo == 'SARA' or nome_arquivo == 'Treinar_Sara':
+                    if nome_arquivo == 'db.sqlite3' or nome_arquivo == 'LICENSE' or nome_arquivo == 'local.py' or nome_arquivo == 'README.md' or nome_arquivo == 'SARA.py' or nome_arquivo == 'Treinar_Sara.py':
                         resposta('Esses arquivos não podem ser removidos')
                         resposta('Tente de novo')
                         continue
@@ -989,7 +989,49 @@ class mainT(QThread):
                             resposta('Essa pasta  não existe')
                             resposta('Tente de novo')
                             continue
-                       
+
+
+            elif 'editar arquivo' in self.Input:
+                resposta('Tudo bem, vamos editar um arquivo')
+                
+                while True:
+                    resposta('Qual é o nome do arquivo, que você quer editar')
+                    resposta('lembrasse de falar a extensão .txt .json etcetera')
+       
+                    if Digitar == False:
+                        self.vozmic = self.GivenCommand().lower()
+                    else:
+                        self.vozmic = self.Digitar_comando().lower()
+
+                        
+                    if 'cancelar' in self.vozmic:
+                        resposta('Tudo bem, Cancelando a edição do arquivo')
+                        break
+                    
+                    if 'none' in self.vozmic:
+                        resposta('Eu não entendi, fale novamente')
+                        continue
+                 
+                    nome_arquivo= self.vozmic
+                    
+                    if nome_arquivo == 'db.sqlite3' or nome_arquivo == 'LICENSE' or nome_arquivo == 'local.py' or nome_arquivo == 'README.md' or nome_arquivo == 'SARA.py' or nome_arquivo == 'Treinar_Sara.py':
+                        resposta('Esses arquivos não podem ser editados')
+                        resposta('Tente de novo')
+                        continue
+
+
+                    try:
+                        resposta(f'Tudo bem, editando arquivo {nome_arquivo}')
+                        os.chdir(diretorio_atual)
+                        os.system('gedit '+ nome_arquivo)
+                        break
+
+                    except OSError:
+                       resposta('Não consegue abrer o arquivo para editar')
+                       resposta('Tente de novo')
+                       continue
+                
+
             elif 'playlist' in self.Input: #Reproduzir música
                 try:
                     resposta('Ok')

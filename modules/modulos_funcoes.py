@@ -4,18 +4,7 @@ import os
 
 #Módulos
 
-def criar_diretorio():
-    escolha = input
-    raw_input = escolha
-    if(escolha == 'diretorio'):
-                nome_diretorio=raw_input('Insira o nome do diretorio: ')
-                try:
-                    os.mkdir(nome_diretorio)
-                    print('Pronto!\n')
-                
-                except OSError:
-                    print('Diretorio já existe\n')
-             
+  
 
 
 def remover():

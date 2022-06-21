@@ -265,3 +265,33 @@ none
 {
   "text" : ""
 }
+none
+none
+sara
+qual é o seu nome
+entendi obrigado
+tudo bem
+sara
+já basta
+none
+none
+none
+none
+oi
+sim
+sim
+s
+sim
+sim
+sim
+s
+sim
+não
+sim
+as
+sim
+sim
+sim
+
+obrigado
+valeu

@@ -1,33 +1,53 @@
 #!/bin/bash
 #Modulos pip para A sara Linux
+
+
+#variaveis
+ppp="\e[m"
+preto="\e[30;1m"
+vermelho="\e[31;1m"
+verde="\e[32;1m"
+amarelo="\e[33;1m"
+azul="\e[34;1m"
+rosa="\e[35;1m"
+ciano="\e[36;1m"
+branco="\e[37;1m"
+
+titulo="\e[31;1m"
+
+linha="»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»"
 #------------------------------------------
-echo "
+echo -e " "$titulo"
 »»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»
-			SARA IA Modulos
-««««««««««««««««««««««««««««««««««««««««««««««««««««««««
-Por favor use o >= Python3.10 para que não dê nenhum erro
+			SARA IA Modulos 
+«««««««««««««««««««««««««««««««««««««««««««««««««««««««« "$ppp"
+"$amarelo"Por favor use o Python >= 3.10 para que não ajar nenhum erro
+"$ppp"
 "
 
-echo
+echo -e ""$verde""$linha""$ppp""
 
-echo "------------------------------"
-echo "Vamos instalar todos os moulos requisitados"
-echo -e "Iniciando... \n"
+echo -e  ""$ciano"Vamos instalar todos os moulos requisitados"$ppp""
 
-echo "Atualizando Sistema"
+echo -e ""$verde""$linha""$ppp""
+echo -e ""$azul"Iniciando... "$ppp""
+echo -e ""$verde""$linha""$ppp""
+
+
+echo -e ""$rosa"Atualizando Sistema "$ppp""
 #Atualizando Sistema
 sudo apt update
 sudo apt upgrade
 
-echo
+echo -e ""$verde""$linha""$ppp""
 
-echo "Instalação do Pip"
+echo -e ""$rosa"Instalação do Pip"$ppp""
 #Instalação do Pip
 sudo apt install python3-pip
 
-echo
+echo -e ""$verde""$linha""$ppp""
 
-echo "Instalação modulos Apt"
+echo -e ""$rosa"Instalação modulos Apt "$ppp""
 #Modulos Apt
 sudo apt-get install python-tk
 sudo apt install -y python3-tk
@@ -35,9 +55,10 @@ sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp
 pip install pyaudio --user
 sudo apt-get install espeak
 sudo apt-get install vlc
-echo
 
-echo "Instalação modulos Pip"
+echo -e ""$verde""$linha""$ppp""
+
+echo -e ""$rosa"Instalação modulos Pip "$ppp""
 #Modulos PIP
 pip3 install vosk
 pip3 install rich
@@ -53,10 +74,10 @@ pip3 install SpeechRecognition
 pip3 install python-vlc
 pip3 install wikipedia
 
-echo
+echo -e ""$verde""$linha""$ppp""
 
 
-echo "Prontinho Finalizado"
-echo "------------------------------"
+echo -e ""$azul"Prontinho Finalizado"$ppp""
+echo -e ""$verde""$linha""$ppp""
 #------------------------------------------
 

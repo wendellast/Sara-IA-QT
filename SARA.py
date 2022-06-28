@@ -30,6 +30,8 @@ import platform
 import shutil
 import tempfile
 import sqlite3
+import pyautogui
+import random
 
 try:
     import pywhatkit
@@ -624,7 +626,20 @@ class mainT(QThread):
                 except:
                     pass
 
-            
+            elif 'tira print' in self.Input or 'tire print' in self.Input:
+                resposta('Tudo bem vou tirar print')
+                
+                s = random.randint(0,500)
+                try:
+                    
+                    foto = pyautogui.screenshot()
+                    foto.save(f'captura_tela/foto{s}.png')
+                except:
+                    resposta('Desculpe não consegue tira o print da tela')
+
+                
+
+
             elif 'login' in self.Input:
 
                 while True:

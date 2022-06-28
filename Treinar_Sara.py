@@ -6,7 +6,7 @@ from rich.table import Table
 
 import json
 import rich
-
+import sqlite3
 
 #Iniciar O treinamento
 def iniciar(): 
@@ -28,14 +28,36 @@ def iniciar():
 
     
 def test(arg): # Carregar conversas para treinar
+    try:
+        banco = sqlite3.connect('db.sqlite3')
+        cursor = banco.cursor()
+
+        cursor.execute(f'SELECT text FROM statement')
+        nome_db = cursor.fetchall()
+
+    except:
+        print('[blue] Não consegue ter acesso ao banco de dados [/]')
+
+    comandos = []
+    for i in nome_db:
+        comandos.append(i[0])
+
+    banco.close()
+   
+
+    
     conversas = []
     
     for k, v in arg.items():
-        conversas.append(k)
-        conversas.append(v)
+        
+        if k in comandos:
+            print('[red] Comando já existente [/]')
+        
+        else:
+            conversas.append(k)
+            conversas.append(v)
 
-        print(f'[blue]Treinando a Sara para responder:[/] [red] {k} [/] [blue] Com a resposta [/] [red] {v} [/]')
-
+            print(f'[blue]Treinando a Sara para responder:[/] [red] {k} [/] [blue] Com a resposta [/] [red] {v} [/]')
     return conversas
 
 

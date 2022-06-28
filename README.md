@@ -1,81 +1,81 @@
-# Conheça a SARA IA
+# SARA IA
+Assistente Virtual para Windows e Linux
 
-Um assistente virtual feito em Python
-Ele usa um sistema de reconhecimento de voz offline
+## Progresso
+Desenvolvimento >> Em Produção
+
+## Compatibilidade
+
+Windows: Nem todos os comandos estão fusionando no windows pois a sara usa comandos unix para facilitar 
+
+Linux: Ubuntu e derivados >> A maioria dos comandos atualmente é compatível com o linux pois é usado comandos unix.
+
+Mac: Não dizer se funciona pois os programadores não tem dinheiro pra compra um mac
+
+## Ideia
+Projeto Sara criado para ter sua propiá assistente virtual, poder controla seu dispositivo sem usar as mãos. Adaptada principalmente para deficientes visuais e contem o modo terapia para que possa desabafar. 
+
+## Utilidade
+Desenvolvida para ajudar deficientes visuais e disponibilizar assistente virtual bem desenvolvida para windows e linux
+
+## O que é a sara ?   
+A sara é uma assistente virtual que interpreta comandos de voz ou escritos que ajuda a contra seu dispositivo.
 
 
-# PARA TUDO FUNCIONAR: *Windows*
 
-> INSTALE ALGUNS MODULOS:
+# Cooperação
+## Regras para ajudar 
 
->>  Instale o python3 : https://www.python.org/downloads/
+Por favor se quiser ajuda fique a vontade mas siga as regras
 
->>  reprodutor de VLC : https://vlc-media-player.br.uptodown.com/windows
+1. Toda branch tem que ter uma issue associada;
+2. Todo problema tem que ser descrito através de uma issue;
+3. A branch tem que ter como prefixo o número da issue e como título um prevê
+resumo ou o título completo da issue;
+4. Só serão aceitos PRs cuja o CI estiver passando e que estiver com a menos 1
+aprovação de uma pessoa diferente da que realizou a mudança;
 
->>  Voz Letícia : https://f123.org/leticia/
+## Quantas pessoas essa equipe tem?
+* Apenas 1: wendellast
+
+# Planejamento
+
+
+## Objetivo
+Espande a sara para outros sistemas tais como mac, e aumenta o número de úsuarios
+
+## Metas
+Consegue alcançar e espalha a sara para muitos usúarios
+
+
+## Recursos necessários
+* Máquina com pelo menos 4 gb de ram;
+* Máquina que tenha um  alto falantes;
+* Microfone opcional porem usara o modo de digitar 
+* Algumas Funções são necessários aplicativos externos por exemplo tocar música no Spotify necessário ter instalado;
+* Recomendado ter acesso a internet porem contem o modo de fala offline
+* Espaço mínimo 100 mb recomendado 500mb de espaço em disco;
+* Máquina tem que ter python e pip com os  instalados;
 
 
 
-# AGORA ALGUMAS INSTALAÇÕES EM PIP:
 
->> pip install SpeechRecognition
+# Observações
+* Caso seja usuario linux Além dos pacotes que estão nos requirements os usuários precisam instalar outros pacotes via apt-get.
 
->> pip install pyttsx3
+*Basta executar esses comandos:
 
->> pip install psutil
+`sudo chmod +x package.sh`
+`./package.sh`
 
->> pip install python-vlc 
+*Recomendo instalar o requirements:
+`pip3 install -r requirements.txt`
 
->> pip install vosk
+Isso irar instalar todos os modulos e aplicativos necessários
 
->> pip install jsonlib-python3
+# Como rodar o sistema;
+Para executar a sara basta ir na pasta onde sara.py está e executar o comando:
 
->> pip install plyer
+`python3 SARA.py`
 
->> pip install wikipedia
-
->> pip install gTT
-
->> pip install rich
-
->> pip install pythonqt
-
-# PARA TUDO FUNCIONAR: *lINUX*
-
-# INSTALE ALGUNS MODULOS:
-
->>  sudo apt-get install python3-pyaudio
-
->>  sudo apt-get install python3-dbus
-
->>  sudo apt-get install python3-pyqt5
-
->>  Voz Letícia : https://f123.org/leticia/
-
-# AGORA ALGUMAS INSTALAÇÕES EM PIP3:
-
->> pip3 install SpeechRecognition
-
->> pip3 install pyttsx3
-
->> pip3 install datetime
-
->> pip3 install espeakng
-
->> pip3 install psutil
-
->> pip3 install python-vlc 
-
->> pip3 install vosk
-
->> pip3 install jsonlib-python3
-
->> pip3 install plyer
-
->> pip3 install wikipedia
-
->> pip3 install gTTS
-
->> pip3 install rich
-
-# Projeto SARA > baseado no JARVIS : https://github.com/JaimeJGJG/JARVIS-Python
+Após isso a Sara irar abrir e pronto aproveite

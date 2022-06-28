@@ -55,6 +55,7 @@ sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp
 pip install pyaudio --user
 sudo apt-get install espeak
 sudo apt-get install vlc
+sudo apt-get install scrot
 
 echo -e ""$verde""$linha""$ppp""
 
@@ -73,6 +74,7 @@ pip3 install pyttsx3
 pip3 install SpeechRecognition
 pip3 install python-vlc
 pip3 install wikipedia
+pip3 install pywhatkit
 
 echo -e ""$verde""$linha""$ppp""
 

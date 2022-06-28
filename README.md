@@ -42,10 +42,10 @@ aprovação de uma pessoa diferente da que realizou a mudança;
 
 
 ## Objetivo
-Espande a sara para outros sistemas tais como mac, e aumenta o número de úsuarios
+Espande a sara para outros sistemas tais como mac, e aumenta o número de usuários
 
 ## Metas
-Consegue alcançar e espalha a sara para muitos usúarios
+Consegue alcançar e espalha a sara para muitos usuários
 
 
 ## Recursos necessários

@@ -36,7 +36,7 @@ else:
     sara_voz=pyttsx3.init()
 
     # Função de ajuste de voz da sara
-    sara_voz.setProperty('voice', 'pt+f2')
+    sara_voz.setProperty('voice', 'en')
     # No 'm2'(masculino) pode colocar 'f2'(feminino) e números até 7
     rate = sara_voz.getProperty('rate')
     sara_voz.setProperty('rate', rate-50)

@@ -11,8 +11,9 @@ from difflib import SequenceMatcher
 from Treinar_Sara import treinar
 from modules.modulos_funcoes import *
 from config.config_dados import *
+from chatterbot.comparisons import LevenshteinDistance
 
-
+import chatterbot
 import speech_recognition as sr
 import os
 import pyaudio
@@ -82,12 +83,20 @@ bot = ChatBot("Sara",
                     read_only=True,
                     statement_comparison_function=comparate_messages,
                     response_selection_method=select_response,
+                    
+                    
                     logic_adapters=[
                         
                         {
+                           
+                            "import_path":"chatterbot.logic.MathematicalEvaluation",
                             "import_path":"chatterbot.logic.BestMatch",
+                            "statement_comparison_function": chatterbot.comparisons.LevenshteinDistance,
+                           
+                        
                         }
-])
+
+])                   
    
 
 
@@ -186,27 +195,28 @@ class mainT(QThread):
                 return Input
        
         else:
-            try:
+           
                 
                 
-            #   Input = rec.Result()
-                with sr.Microphone() as s:
-                   # r.adjust_for_ambient_noise(s)
-                    audio = r.listen(s, None, 5)
+          # Input = rec.Result()
+            with sr.Microphone() as s:
+                # r.adjust_for_ambient_noise(s)
+                audio = r.listen(s, 5, 5)
+                try:
                     speech = r.recognize_google(audio, language= "pt-BR")
                     speech.lower()
-        
-            except:
-                # Retorna os erros
-                print('Não entendi, fale novamente')
-                # resposta("Não entendi o que você disse, fale novamente.")
-                return 'none'
+    
+                except:
+                    # Retorna os erros
+                    print('Não entendi, fale novamente')
+                    # resposta("Não entendi o que você disse, fale novamente.")
+                    return 'none'
             #Input = Input.lower()
             
             return speech
     
     def Digitar_comando(self): # Função para digitar os comandos ao invés de falar
-            Input = input(">>$  ")
+            Input = input("\033[31m >$>  \033[m")
             return Input
     
             
@@ -1322,7 +1332,7 @@ class mainT(QThread):
                 try:
                     resposta(f' É {(eval(resp))}')
                 except:
-                    resposta('Não consegue fazer a conta')
+                    resposta('Não conseguir fazer a conta')
 
             else:
             
@@ -1338,12 +1348,15 @@ class mainT(QThread):
                     print(f"[yellow] Ainda não sei como responder essa pergunta :( [/]")
                     print(f"[yellow] Pergunte outra coisa... [/] ")
 
-                try:
-                    with open('comandos_udados.txt', 'a+',  encoding='UTF-8', ) as arquivo: 
-                            arquivo.write(f'{self.Input}\n')
-                except:
-                    pass
-    
+                    try:
+                        if 'none' in self.Input :
+                            pass
+                        else:
+                            with open('comandos_udados.txt', 'a+',  encoding='UTF-8', ) as arquivo: 
+                                arquivo.write(f'{self.Input}\n')
+                    except:
+                        pass
+        
       
             
         
@@ -1360,7 +1373,7 @@ class Janela (QMainWindow):
         self.label_gif.setAlignment(QtCore.Qt.AlignCenter)
         self.label_gif.move(0,0)
         self.label_gif.resize(400,300)
-        self.movie = QMovie("img/nova.gif")
+        self.movie = QMovie("img/SARA.gif")
         self.label_gif.setMovie(self.movie)
         self.movie.start()
         

@@ -61,7 +61,7 @@ Consegue alcançar e espalha a sara para muitos usuários
 
 
 # Observações
-* Caso seja usuario linux Além dos pacotes que estão nos requirements os usuários precisam instalar outros pacotes via apt-get.
+* Caso seja usuário linux Além dos pacotes que estão nos requirements os usuários precisam instalar outros pacotes via apt-get.
 
 *Basta executar esses comandos:
 
@@ -71,7 +71,7 @@ Consegue alcançar e espalha a sara para muitos usuários
 *Recomendo instalar o requirements:
 `pip3 install -r requirements.txt`
 
-Isso irar instalar todos os modulos e aplicativos necessários
+Isso irar instalar todos os módulos e aplicativos necessários
 
 # Como rodar o sistema;
 Para executar a sara basta ir na pasta onde sara.py está e executar o comando:

@@ -12,6 +12,8 @@ from Treinar_Sara import treinar
 from modules.modulos_funcoes import *
 from config.config_dados import *
 from chatterbot.comparisons import LevenshteinDistance
+from rich import pretty
+from config.config import *
 
 import chatterbot
 import speech_recognition as sr
@@ -41,10 +43,11 @@ except:
     net = False
 
 #Arquitetura 
-Digitar = True # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
+Digitar = False # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
 Versao = 'Beta v1.0'
 plataforma = platform.system()
 diretorio_atual=os.getcwd()
+pretty.install()
 historico = []
 
 # Acesso ao microfone
@@ -201,8 +204,9 @@ class mainT(QThread):
           # Input = rec.Result()
             with sr.Microphone() as s:
                 # r.adjust_for_ambient_noise(s)
-                audio = r.listen(s, 5, 5)
+                audio = r.listen(s,4, 5)
                 try:
+                    
                     speech = r.recognize_google(audio, language= "pt-BR")
                     speech.lower()
     
@@ -216,7 +220,7 @@ class mainT(QThread):
             return speech
     
     def Digitar_comando(self): # Função para digitar os comandos ao invés de falar
-            Input = input("\033[31m >$>  \033[m")
+            Input = input("\033[31m(つ◕౪◕)つ━☆ﾟ.*･｡ﾟ \033[m")
             return Input
     
             
@@ -237,6 +241,11 @@ class mainT(QThread):
 
             historico_base.append(self.Input)
             historico.append(historico_base[:])
+
+
+
+            if 'none' in self.Input:
+                return self.Input
 
             if 'bom dia' in self.Input: #Boa Noite Sara
                 Horario = int(datetime.datetime.now().hour)
@@ -288,10 +297,7 @@ class mainT(QThread):
 
 
 
-            elif 'ideia' in self.Input: #Alguma ideia???
-                resposta('No momento nenhuma')
-                resposta('Mas tenho certeza de que você vai pensar em algo')
-
+           
             elif 'historico' in self.Input:
                 try:
                     resposta('Tudo bem, mostrando historico de comandos')
@@ -753,10 +759,10 @@ class mainT(QThread):
                     wikipedia.set_lang('pt')
                     resultado = wikipedia.summary(procurar,2)
                     print(resultado)
-                    resposta(resultado)
+                    respostalonga(resultado)
 
                     
-                    with open('resumo/resumo', 'a+', encoding='UTF-8') as  arquivo:
+                    with open('resumo/resumo.txt', 'a+', encoding='UTF-8') as  arquivo:
                         arquivo.write(f'{resultado}')
                         resposta('Escrevi o resumo para você')
                             
@@ -1328,11 +1334,13 @@ class mainT(QThread):
 
             elif 'quanto é' in self.Input:
                 resp = self.Input.replace("quanto é", " ")
+                resp = self.Input.replace("mais", "+")
+                resp = self.Input.replace("menos", "-")
 
                 try:
                     resposta(f' É {(eval(resp))}')
                 except:
-                    resposta('Não conseguir fazer a conta')
+                    resposta('Desculpa eu Não conseguir fazer a conta')
 
             else:
             
@@ -1454,6 +1462,8 @@ class Janela (QMainWindow):
             self.dragPos = event.globalPos()
             event.accept()
     
+   
+   
     def mouseMoveEvent(self, event):
     
         if event.buttons() == Qt.LeftButton:

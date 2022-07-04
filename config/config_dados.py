@@ -2,7 +2,7 @@ from plyer import notification
 from rich.table import Table
 from rich import print
 from datetime import time
-
+from config.config import *
 import os
 import rich
 import psutil
@@ -11,12 +11,11 @@ import pyaudio
 import pyttsx3
 import datetime
 import requests
+import random
 
 
 
 #Configurações de dados
-
-
 plataforma = platform.system()
 
 
@@ -43,6 +42,7 @@ else:
 
 # Preparando o microfone para captura
 p = pyaudio.PyAudio()
+
 stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=8192)
 
 
@@ -55,10 +55,10 @@ def resposta(audio):
     sara_voz.runAndWait()
     stream.start_stream ()
 
-def respostalonga(textofala):
-    
+def respostalonga(textofala): 
     stream.stop_stream ()
     sara_voz.say(textofala)
+    print(f'[bold purple]SARA:[/] [cyan]{textofala}[/]')
     sara_voz.runAndWait()
     stream.start_stream ()
 
@@ -182,14 +182,14 @@ def linha_sara(): # Linha para menu
    
     
     #Tabela Sara >> 
-    table = Table(title='----> SARA <----', title_justify='center', title_style='blue')
+    table = Table(title=f"»»»»»»»»»»»»»»»»»»»»»»»»»»»»»> {baner} <««««««««««««««««««««««««««««««", title_justify='center', title_style='bold blue')
     
-    table.add_column('Informação', justify='center', style='purple')
-    table.add_column('Versão', justify='center', style='red')
-    table.add_column('Suporte', justify='center', style='green')
+    table.add_column('Informação', justify='center', style=' purple')
+    table.add_column('Versão', justify='center', style='bold red')
+    table.add_column('Suporte', justify='center', style='bold green')
     
     #Adicionar linhas nas colunas >> 
-    table.add_row('Sara, assistente virtual pessoal', '--Beta v1.0--   Compatível: Windows >> Sim;   linux >> Sim(Beta);   Mac >> Em breve  ',  'Contado: Telegram >> https://t.me/Lasstll')
+    table.add_row('Sara, assistente virtual pessoal', '--Beta v1.0--   Compatível: Windows >> Sim;   linux >> Sim;   ',  'Contado: Telegram >> https://t.me/Lasstll')
     
     print(table)
 

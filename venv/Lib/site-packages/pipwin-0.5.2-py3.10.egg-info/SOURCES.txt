@@ -1,0 +1,16 @@
+LICENSE
+MANIFEST.in
+README.rst
+setup.cfg
+setup.py
+pipwin/__init__.py
+pipwin/__main__.py
+pipwin/command.py
+pipwin/pipwin.py
+pipwin.egg-info/PKG-INFO
+pipwin.egg-info/SOURCES.txt
+pipwin.egg-info/dependency_links.txt
+pipwin.egg-info/entry_points.txt
+pipwin.egg-info/not-zip-safe
+pipwin.egg-info/requires.txt
+pipwin.egg-info/top_level.txt

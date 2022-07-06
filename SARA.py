@@ -14,6 +14,7 @@ from config.config_dados import *
 from chatterbot.comparisons import LevenshteinDistance
 from rich import pretty
 from config.config import *
+from build.ajuda import *
 
 import chatterbot
 import speech_recognition as sr
@@ -43,13 +44,15 @@ except:
     net = False
 
 #Arquitetura 
-Digitar = False # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
+Digitar = True # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
+
 Versao = 'Beta v1.0'
 plataforma = platform.system()
 diretorio_atual=os.getcwd()
 pretty.install()
 historico = []
-
+BLUE, RED, WHITE, YELLOW, MAGENTA, GREEN, END = '\33[94m', '\033[91m', '\33[97m', '\33[93m', '\033[1;35m', '\033[1;32m', '\033[0m'
+time.clock = time.time
 # Acesso ao microfone
 r = sr.Recognizer()
 
@@ -191,7 +194,7 @@ class mainT(QThread):
                     Input = rec.Result()
                 except:
                     # Retorna os erros
-                    print('Não entendi, fale novamente')
+                    print('Não entendi, fale novamente ! ')
                     #resposta("Não entendi o que você disse, fale novamente.")
                     return 'none'
                 #Input = Input.lower()
@@ -220,7 +223,7 @@ class mainT(QThread):
             return speech
     
     def Digitar_comando(self): # Função para digitar os comandos ao invés de falar
-            Input = input("\033[31m(つ◕౪◕)つ━☆ﾟ.*･｡ﾟ \033[m")
+            Input = input(f"{RED}(つ◕౪◕)つ━☆ﾟ.*･｡ﾟ {END}")
             return Input
     
             
@@ -306,15 +309,13 @@ class mainT(QThread):
                 except:
                     resposta('Erro não consegue mostra o historico')
 
-            elif 'instagram de programação ' in self.Input:
-                os.startfile('https://www.instagram.com/hildodev/')
                 
             elif  'você está bem' in self.Input: #Tudo bem com você?
                 resposta('Sim')
                 resposta('Estou de boa')
                 resposta('Obrigado por perguntar')
-                resposta('E com você?')
-                resposta('Está tudo bem? ')
+                resposta('E com você ?')
+                resposta('Está tudo bem ? ')
             
                 while True:
                     if Digitar == False:
@@ -363,9 +364,9 @@ class mainT(QThread):
                         self.SARA()
 
             elif 'nada' in self.Input: #Não faça nada
-                resposta('Como assim não faça nada?')
+                resposta('Como assim não faça nada ?')
                 resposta('Você deve estar de brincadeira')
-                resposta('Eu por acaso tenho cara de palhaço?')
+                resposta('Eu por acaso tenho cara de palhaço ?')
                 
                 while True:
                     if Digitar == False:
@@ -375,10 +376,10 @@ class mainT(QThread):
                     
                     if 'exatamente' in self.vozmic:
                         resposta('Ok')
-                        resposta('Vai tomar no seu!')
+                        resposta('Vai tomar no seu !')
                         resposta('Nem vou terminar essa frase')
                         resposta('Estou indo embora')
-                        resposta('Desligando!')
+                        resposta('Desligando !')
                         historico_base.clear()
                         historico.clear()
                         sys.exit()
@@ -404,7 +405,7 @@ class mainT(QThread):
                 while True:
     
                     try:
-                        resposta('Fale a nova frase do comando')
+                        resposta('Fale a nova frase do comando ')
                     
                         if Digitar == False:
                             self.vozmic = self.GivenCommand().lower()
@@ -414,7 +415,7 @@ class mainT(QThread):
                     
                     
                         if 'none' in self.vozmic:
-                            resposta('Não entendi, fale de novo')
+                            resposta('Não entendi, fale de novo !')
                             continue
                     
                         if 'cancelar' in self.vozmic:
@@ -423,7 +424,7 @@ class mainT(QThread):
                         chave = self.vozmic
 
                     except:
-                        resposta('Desculpe, deu algum erro tente de novo')
+                        resposta('Desculpe, deu algum erro tente de novo !')
                         continue
                         
                     try:
@@ -435,7 +436,7 @@ class mainT(QThread):
                             self.vozmic2= self.Digitar_comando().lower()
                         
                         if 'none' in self.vozmic2:
-                            resposta('Não entendi, fale de novo')
+                            resposta('Não entendi, fale de novo !')
                             continue
                         
                         if 'cancelar' in self.vozmic2:
@@ -481,7 +482,11 @@ class mainT(QThread):
             elif 'bateria' in self.Input:
                 bateria()
 
-            elif 'treinar' in self.Input:
+            elif 'help' in self.Input:
+                self.Input.replace('help', ' ')
+                ajuda(self.Input)
+
+            elif 'treinar' in self.Input or 'iniciar treinamento' in self.Input or 'treine' in self.Input:
                 try:
                     resposta('Iniciando treinamento')
                     treinar()
@@ -507,10 +512,7 @@ class mainT(QThread):
                         resposta('Viu idiota, ver se há algo plano a ir')
                 except:
                     resposta('Não consegue te mostra o meu desenho')
-                    
-                
-                
-            
+   
             elif  'vai chover' in self.Input:
                 resposta('Não sei')
                 resposta('Eu não tenho essa função ainda')
@@ -661,7 +663,7 @@ class mainT(QThread):
                 while True:
                     try:
                         try:
-                            resposta('Qual o seu nome de usuario ')
+                            resposta('Qual o seu nome de usuario ?')
                             if Digitar == False:
                                 self.vozmic1 = self.GivenCommand().lower()
                             else:
@@ -721,7 +723,7 @@ class mainT(QThread):
                         pass
 
 
-            elif 'pesquisa' in self.Input: #Realizar pesquisa
+            elif 'pesquisa' in self.Input or 'pesquise' in self.Input: #Realizar pesquisa
                 resposta('Muito bem, realizando pesquisa')
                 resposta('Me fale o que você deseja pesquisar')
                 try:
@@ -743,7 +745,7 @@ class mainT(QThread):
             
             elif 'resumo' in self.Input: #Me fale sobre um assunto
                 resposta('Ok')
-                resposta('Sobre qual assunto?')
+                resposta('Sobre qual assunto ?')
                 
                 try:
                     if Digitar == False:
@@ -792,13 +794,13 @@ class mainT(QThread):
             elif 'horas' in self.Input: #Que horas são???
                 horario()
     
-            elif 'data' in self.Input: #Qual a data de hoje?
+            elif 'data' in self.Input or 'que dia é  hoje' in self.Input or 'hoje é que dia' in self.Input: #Qual a data de hoje?
                 datahoje()
             
             elif 'clima' in self.Input: #Como está o clima???
                 tempo()
     
-            elif 'arquivos' in self.Input: #Abrir arquivos
+            elif 'abrir arquivos' in self.Input: #Abrir arquivos
                 system_os = platform.system()
                 
                 if 'Windows' in system_os:
@@ -820,7 +822,7 @@ class mainT(QThread):
                 resposta('Estou entendendo tudo')
                 resposta('Mas tente falar mais alto')
                 
-            elif 'google' in self.Input: #Abrir Google
+            elif 'abrir google' in self.Input: #Abrir Google
                 resposta('Ok, Quer usar o google né, então vai')
                 webbrowser.open('www.google.com')
                 resposta('Abrindo google')
@@ -831,8 +833,6 @@ class mainT(QThread):
                 resposta('Estou certa sempre')
                 resposta('Aprenda viu')
 
-            elif 'quem é você' in self.Input:
-                resposta('Eu sou SARA, Uma inteligencia Artificial')
             
             # Insutos    
             elif  'porra' in self.Input:
@@ -859,13 +859,14 @@ class mainT(QThread):
                 resposta('Ta bém, vamos criar um arquivo')
                 resposta('Qual vai ser o nome do arquivo')
 
-                pasta='arquivos'
+                pasta='area_de_trabalho'
             
                 while True:
                     resposta('Por favor fale a extensão do arquivo junto, .txt. json .pdf, etcetera')
                     
                     if Digitar == False:
                         self.vozmic = self.GivenCommand().lower()
+
                     else:
                         self.vozmic = self.Digitar_comando().lower()
 
@@ -881,7 +882,7 @@ class mainT(QThread):
 
                     raw_input = self.vozmic
             
-                    nome_arquivo= raw_input
+                    nome_arquivo = raw_input
 
                     try:
                         os.mkdir(pasta)
@@ -905,6 +906,7 @@ class mainT(QThread):
             elif 'criar pasta' in self.Input:
                 resposta('Tudo bem')
                 resposta('Vamos criar uma nova pasta')
+
                 while True:
                     resposta('Qual vai ser o nome da pasta')
 
@@ -962,7 +964,7 @@ class mainT(QThread):
             elif 'remover arquivo' in self.Input:
                 resposta('Tudo bem, vamos apagar um arquivo')
                 while True:
-                    resposta('Qual o nome do arquivo')
+                    resposta('Qual o nome do arquivo ?')
                     
                     if Digitar == False:
                         self.vozmic = self.GivenCommand().lower()
@@ -978,8 +980,8 @@ class mainT(QThread):
                         resposta('Eu não entendi, fale novamente')
                         continue
 
-                    
-                    os.chdir(diretorio_atual)
+                    pasta='area_de_trabalho'
+                    os.chdir(pasta)
                     nome_arquivo = self.vozmic
 
                     if nome_arquivo == 'db.sqlite3' or nome_arquivo == 'LICENSE' or nome_arquivo == 'local.py' or nome_arquivo == 'README.md' or nome_arquivo == 'SARA.py' or nome_arquivo == 'Treinar_Sara.py':
@@ -988,6 +990,7 @@ class mainT(QThread):
                         continue
 
                     elif os.path.isfile(nome_arquivo):
+                        
                         os.remove(nome_arquivo)
                         resposta('Arquivo Removido')
                         break
@@ -1238,7 +1241,7 @@ class mainT(QThread):
                 except:
                     resposta('Não consegue abrir')
 
-            elif 'playlist' in self.Input: #Reproduzir música
+            elif 'playlist' in self.Input or 'toque playlist' in self.Input: #Reproduzir música
                 try:
                     resposta('Ok')
 

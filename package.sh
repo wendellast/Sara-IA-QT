@@ -36,8 +36,8 @@ echo -e ""$verde""$linha""$ppp""
 
 echo -e ""$rosa"Atualizando Sistema "$ppp""
 #Atualizando Sistema
-sudo apt update
-sudo apt upgrade
+sudo apt update -y
+sudo apt upgrade -y
 
 echo -e ""$verde""$linha""$ppp""
 
@@ -64,20 +64,21 @@ echo -e ""$rosa"Instalação modulos Pip "$ppp""
 pip3 install vosk
 pip3 install rich
 pip3 install PyQt5
-pip3 install tk
-pip3 install tk-tools
 pip3 install PythonTurtle
 pip3 install plyer
 pip3 install psutil
-pip3 install pipwin
 pip3 install pyttsx3
 pip3 install SpeechRecognition
 pip3 install python-vlc
 pip3 install wikipedia
 pip3 install pywhatkit
-
+pip install chatterbot==1.0.4
 echo -e ""$verde""$linha""$ppp""
 
+echo -e ""$rosa"Atualizando Sistema "$ppp""
+#Atualizando Sistema
+sudo apt update -y
+sudo apt upgrade -y
 
 echo -e ""$azul"Prontinho Finalizado"$ppp""
 echo -e ""$verde""$linha""$ppp""

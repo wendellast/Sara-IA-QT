@@ -44,9 +44,9 @@ except:
     net = False
 
 #Arquitetura 
-Digitar = True # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
+Digitar = False # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
 
-Versao = 'Beta v1.0'
+Versao = 'Versão Beta v1.0'
 plataforma = platform.system()
 diretorio_atual=os.getcwd()
 pretty.install()
@@ -310,7 +310,7 @@ class mainT(QThread):
                     resposta('Erro não consegue mostra o historico')
 
                 
-            elif  'você está bem' in self.Input: #Tudo bem com você?
+            elif 'você está bem' in self.Input: #Tudo bem com você?
                 resposta('Sim')
                 resposta('Estou de boa')
                 resposta('Obrigado por perguntar')
@@ -530,17 +530,7 @@ class mainT(QThread):
                 resposta('Arrume logo isso') 
     
             elif 'relatório' in self.Input: #Relatório do sistema
-                resposta('Ok')
-                resposta('Apresentando relatório')
-                resposta('Primeiramente, meu nome é SARA')
-                resposta(f'Atualmente estou em uma versão de testes {Versao}')
-                resposta('Sou um assistente virtual em desenvolvimento')
-                resposta('Eu fui criado na linguagem python')
-                resposta('Diariamente recebo varias atualizações')
-                resposta('Uso um modulo de reconhecimento de voz offline')
-                resposta('E o meu desenvolvedor é o Wendel e ele é um maluco')
-                resposta('Quem estiver ouvindo isso')
-                resposta('Por favor me ajude')
+               relatorio()
             
             elif 'cadastrar' in self.Input:
                 resposta('Okay, vamos cadastrar um novo usuario')
@@ -648,8 +638,7 @@ class mainT(QThread):
                 resposta('Tudo bem vou tirar print')
                 
                 s = random.randint(0,500)
-                try:
-                    
+                try: 
                     foto = pyautogui.screenshot()
                     foto.save(f'captura_tela/foto{s}.png')
                 except:
@@ -861,6 +850,12 @@ class mainT(QThread):
 
                 pasta='area_de_trabalho'
             
+                if os.path.isdir(pasta):
+                    os.chdir(os.getcwd()+'/'+pasta)
+                else:
+                    os.mkdir(pasta)
+                    os.chdir(os.getcwd()+'/'+pasta)
+
                 while True:
                     resposta('Por favor fale a extensão do arquivo junto, .txt. json .pdf, etcetera')
                     
@@ -884,11 +879,7 @@ class mainT(QThread):
             
                     nome_arquivo = raw_input
 
-                    try:
-                        os.mkdir(pasta)
-                        os.chdir(os.getcwd()+'/'+pasta)
-                    except OSError:
-                        os.chdir(os.getcwd()+'/'+pasta)
+                  
 
                     try:
                         arquivo=open(nome_arquivo,'r')
@@ -899,7 +890,7 @@ class mainT(QThread):
 
                     except IOError:
                         arquivo=open(nome_arquivo,'w')
-                        resposta(f'Pronto, Arquivo {nome_arquivo} salvo na pasta arquivos\n')
+                        resposta(f'Pronto, Arquivo {nome_arquivo} salvo na pasta area_de_trabalho')
                         os.chdir(diretorio_atual)
                         break
 
@@ -928,13 +919,13 @@ class mainT(QThread):
 
                     try:
                         os.mkdir(nome_pasta)
-                        resposta('Pronto!\n')
+                        resposta('Pronto !')
                         resposta(f'Pasta {nome_pasta} foi criada')
                         break
                     
                     except OSError:
-                        resposta('Essa pasta já existe')
-                        resposta('Tente de novo')
+                        resposta('Essa pasta já existe !')
+                        resposta('Tente de novo !')
                         continue
 
                         
@@ -963,6 +954,14 @@ class mainT(QThread):
                 
             elif 'remover arquivo' in self.Input:
                 resposta('Tudo bem, vamos apagar um arquivo')
+
+                pasta='area_de_trabalho'
+                if os.path.isdir(pasta):
+                    os.chdir(os.getcwd()+'/'+pasta)
+                else:
+                    os.mkdir(pasta)
+                    os.chdir(os.getcwd()+'/'+pasta)
+
                 while True:
                     resposta('Qual o nome do arquivo ?')
                     
@@ -980,8 +979,8 @@ class mainT(QThread):
                         resposta('Eu não entendi, fale novamente')
                         continue
 
-                    pasta='area_de_trabalho'
-                    os.chdir(pasta)
+                    
+                    
                     nome_arquivo = self.vozmic
 
                     if nome_arquivo == 'db.sqlite3' or nome_arquivo == 'LICENSE' or nome_arquivo == 'local.py' or nome_arquivo == 'README.md' or nome_arquivo == 'SARA.py' or nome_arquivo == 'Treinar_Sara.py':
@@ -993,6 +992,7 @@ class mainT(QThread):
                         
                         os.remove(nome_arquivo)
                         resposta('Arquivo Removido')
+                        os.chdir(diretorio_atual)
                         break
 
                     else:
@@ -1412,7 +1412,7 @@ class Janela (QMainWindow):
         self.label_assv.resize(200,20)
 
         self.label_version = QLabel(self)
-        self.label_version.setText("Versão BETA 1.0")
+        self.label_version.setText(f"{Versao}")
         self.label_version.setAlignment(QtCore.Qt.AlignCenter)
         self.label_version.move(265,270)
         self.label_version.setStyleSheet('QLabel {font-size:14px;color:#D971B4}')
@@ -1456,7 +1456,7 @@ class Janela (QMainWindow):
         self.show()
 
     def fechartudo(self):
-        print('botao fechar presionado')
+        print('Botao fechar presionado')
         sys.exit()
 
     def mousePressEvent(self, event):

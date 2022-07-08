@@ -46,6 +46,8 @@ except:
 #Arquitetura 
 Digitar = True # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
 
+Thema = 'img/thema1.gif' #Altere o tema da sara de 1 a 5 ou padão escreva sara
+
 Versao = 'Versão Beta v1.0'
 plataforma = platform.system()
 diretorio_atual=os.getcwd()
@@ -1391,7 +1393,7 @@ class Janela (QMainWindow):
         self.label_gif.setAlignment(QtCore.Qt.AlignCenter)
         self.label_gif.move(0,0)
         self.label_gif.resize(400,300)
-        self.movie = QMovie("img/SARA.gif")
+        self.movie = QMovie(f"{Thema}")
         self.label_gif.setMovie(self.movie)
         self.movie.start()
         

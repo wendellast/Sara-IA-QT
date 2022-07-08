@@ -45,7 +45,7 @@ def ajuda(comando):
         resposta('O comando bateria serve para a sara dizer qual o nível de bateria do dispositivo')
 
     elif 'easter egg' in comando:
-        resposta('Easter egg são comandos divertidos que a Sara tem, para usar basta dizer um desses, "a terra é plana" ') #fazer depois
+        resposta('Easter egg são comandos divertidos que a Sara tem, para usar basta dizer um desses, "a terra é plana", "desenha sistema solar" ') #fazer depois
 
     elif 'relatório' in comando:
         resposta('O comando relatório serve para mostra informações sobre a sara')

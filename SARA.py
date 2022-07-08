@@ -773,7 +773,14 @@ class mainT(QThread):
             elif 'mentira' in self.Input: # mentira
                 resposta('É mesmo é, eu não ligo')
                 resposta('Devo apenas ter errado um cálculo ')
-                
+
+            elif 'desenha sistema solar' in self.Input:
+                resposta('Tudo bem, vou desenha o sistema solar')
+                try:
+                    sistema_solar2()
+                except:
+                    resposta('Desculpe eu não consegue te mostra !')
+
             elif 'entendeu' in self.Input: #entendeu???
                 resposta('Entendi')
                 resposta('Quer dizer')

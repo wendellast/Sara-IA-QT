@@ -117,7 +117,7 @@ def sistema_solar():
    
     main()
 
-sistema_solar2():
+def sistema_solar2():
     import pygame
     import math
     pygame.init()
@@ -248,4 +248,3 @@ sistema_solar2():
     main()
 
     
-sistema_solar2()

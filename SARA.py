@@ -790,7 +790,7 @@ class mainT(QThread):
             elif 'horas' in self.Input: #Que horas são???
                 horario()
     
-            elif 'data' in self.Input or 'que dia é  hoje' in self.Input or 'hoje é que dia' in self.Input: #Qual a data de hoje?
+            elif 'data' in self.Input or 'que dia é hoje' in self.Input or 'hoje é que dia' in self.Input: #Qual a data de hoje?
                 datahoje()
             
             elif 'clima' in self.Input: #Como está o clima???

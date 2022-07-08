@@ -1,13 +1,30 @@
 #Ajuda sobre comandos
 #Aqui vamos informa o que cada comando faz
 from config.config_dados import *
-
+from rich.table import Table
+from rich import print
 
 def ajuda(comando):
     
 
     if 'comandos' in comando:
-        list_comando = ['sara','historico','silencio','horas']
+
+        resposta('Tudo bem, Mostrando lista de comandos ')
+        
+        list_comando1 = ['sara','historico','silencio','horas','aprenda','bateria','easter egg','relatório','cadastro','tira print','login','pesquisa','resumo',
+        'data','abrir arquivos', 'criar arquivo', 'criar pasta','música','remover arquivo','remover pasta','editar arquivo','renomear arquivo','renomear pasta', 'esvaziar lixeira', 'abrir calculadora','playlist','desligar','temperatura do sistema','escreva','quanto é']
+
+
+        table = Table(title='----> Comandos <----', title_justify='center', title_style='blue')
+
+        table.add_column('Comandos 1', justify='center', style='purple')
+  
+        for i in list_comando1:
+                table.add_row(f'{i}')
+  
+        print(table)
+        return table
+
 
     elif 'sara' in comando:
         resposta('Sara é uma assistente virtual pessoal, ela foi criada para ser uma companheira no seu dia dia, onde possa ter alguém para conversar e desabafar, também focada em ajuda os necessitados como deficientes visuais, usando a Sara para poder usar o seu dispositivo sem a necessidade das mãos')
@@ -28,7 +45,7 @@ def ajuda(comando):
         resposta('O comando bateria serve para a sara dizer qual o nível de bateria do dispositivo')
 
     elif 'easter egg' in comando:
-        resposta('Easter egg são comandos ') #fazer depois
+        resposta('Easter egg são comandos divertidos que a Sara tem, para usar basta dizer um desses, "a terra é plana" ') #fazer depois
 
     elif 'relatório' in comando:
         resposta('O comando relatório serve para mostra informações sobre a sara')
@@ -104,4 +121,5 @@ def ajuda(comando):
 
     else:
         resposta('Desculpe comando não encontrado !!')
+
 

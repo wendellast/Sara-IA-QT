@@ -4,7 +4,7 @@ from PyQt5.QtCore import *
 from PyQt5 import QtGui, QtCore
 from PyQt5.QtGui import QMovie
 from rich import print
-from build import sistema_solar
+from build import *
 from logging import basicConfig
 from chatterbot import ChatBot
 from difflib import SequenceMatcher
@@ -44,7 +44,7 @@ except:
     net = False
 
 #Arquitetura 
-Digitar = False # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
+Digitar = True # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
 
 Versao = 'Versão Beta v1.0'
 plataforma = platform.system()

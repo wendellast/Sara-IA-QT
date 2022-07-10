@@ -45,5 +45,6 @@
         "Wendel",
         "wikipedia",
         "youtube"
-    ]
+    ],
+    "C_Cpp.errorSquiggles": "Disabled"
 }

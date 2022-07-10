@@ -1,14 +1,22 @@
 #include <LiquidCrystal.h> // Biblioteca visor
 #include <Servo.h> // Biblioteca Micro servo
+#include "DHT.h"
 
 
-#define pinPIR 0
+#define pinPIR A3
+#define DHTPIN A2
+#define DHTTYPE DHT11
+
 
 //Variáveis
 const int trigPin = 8; // vs e mic
 const int echoPin = 9;
 bool som;
-int LED8 = 1;
+
+int LED13 = 13; // Vermelho
+int LED14 = 18; // Amarelo
+int LED15 = 19; // Azul
+
 int buzzer = 11;
 int smoke = A1;
 int sensorGas = 500;
@@ -20,17 +28,27 @@ int distance;
 
 Servo myServo;
 
+
+//Temperatura
+DHT dht(DHTPIN, DHTTYPE);
+
 void setup() {
   //Config
   Serial.begin(9600);
-  //Teste
-  pinMode(LED8, OUTPUT);  // liga led test
+  pinMode(LED13, OUTPUT);  // liga led test
 
-    
+  //Sensor de som
+  pinMode(12, INPUT);
+
+
+  // Sensor de presensa
+  pinMode(pinPIR, INPUT);
+
   //Visor lcd
   lcd.begin(16,2);
   
-  
+  //DHT11 Temperatura
+  dht.begin();
 
 
   //Micro servo e sensor de distancia
@@ -48,32 +66,74 @@ void loop() {
   bool valorPIR = digitalRead(pinPIR); // Sensor de presença
   int LDR = analogRead(A0); // sensor de luz
   int analogSensor = analogRead(smoke);  // Sensor de gâs
+  float h = dht.readHumidity(); // Umidade
+  float t = dht.readTemperature(); // Temperatura
 
-  lcd.print("oie");
+
+  // sensor de som
+  som = digitalRead(12);
+  if (!som){
+    digitalWrite(LED15, HIGH);
+    
+  }
+  else{
+    digitalWrite(LED15, LOW);
+  }
+
+  //Serial.println(som);
+  //delay(100);
+
+
+ 
   //Serial.println(LDR);
 
   //Sensor de luz
   if (LDR > 400){
-    digitalWrite(LED8, HIGH);
+    digitalWrite(LED14, LOW);
   }
 
   else{
-    digitalWrite(LED8, LOW);
+    digitalWrite(LED14, HIGH);
   }
 
   Serial.println(analogSensor);
+
+
+  //Sensor de presença
+  if (valorPIR) {
+    digitalWrite(LED14, HIGH);
+  }
+
+  else {
+    digitalWrite(LED14, LOW);
+  }
+
+
+
   
   //Sensor de gâs e buzzer
   if (analogSensor > sensorGas){
     digitalWrite(buzzer, HIGH);
+    digitalWrite(LED13, HIGH);
     delay(100);
+    digitalWrite(LED13, LOW);
     digitalWrite(buzzer, LOW);
+    digitalWrite(LED13, HIGH);
   }
 
   else{
     digitalWrite(buzzer, LOW);
+    digitalWrite(LED13, LOW);
   }
 
+  //Temperatura e Umidade
+
+  //Serial.print("Umidade: ");
+  //Serial.print(h);
+  //Serial.print(" Temperatura: ");
+  //Serial.println(t);
+
+  //delay(1000);
   
 
   

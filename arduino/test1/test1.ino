@@ -5,10 +5,15 @@
 #define pinPIR 0
 
 //Variáveis
-const int trigPin = 8;
+const int trigPin = 8; // vs e mic
 const int echoPin = 9;
 bool som;
-int LED8 = 8;
+int LED8 = 1;
+int buzzer = 11;
+int smoke = A1;
+int sensorGas = 500;
+
+//Visor e micro servo
 LiquidCrystal lcd(2,3,4,5,6,7); // config Visor
 long duration;
 int distance;
@@ -25,19 +30,26 @@ void setup() {
   //Visor lcd
   lcd.begin(16,2);
   
+  
 
 
   //Micro servo e sensor de distancia
   pinMode(trigPin, OUTPUT); 
   pinMode(echoPin, INPUT); 
   myServo.attach(10);
+
+  //Buzzer e sensor de gas
+  pinMode(buzzer, OUTPUT);
+  pinMode(smoke, INPUT);
   
 }
 
 void loop() {
   bool valorPIR = digitalRead(pinPIR); // Sensor de presença
   int LDR = analogRead(A0); // sensor de luz
-  
+  int analogSensor = analogRead(smoke);  // Sensor de gâs
+
+  lcd.print("oie");
   //Serial.println(LDR);
 
   //Sensor de luz
@@ -48,6 +60,22 @@ void loop() {
   else{
     digitalWrite(LED8, LOW);
   }
+
+  Serial.println(analogSensor);
+  
+  //Sensor de gâs e buzzer
+  if (analogSensor > sensorGas){
+    digitalWrite(buzzer, HIGH);
+    delay(100);
+    digitalWrite(buzzer, LOW);
+  }
+
+  else{
+    digitalWrite(buzzer, LOW);
+  }
+
+  
+
   
   //Micro servo e sensor de distancia
   for(int i=15;i<=165;i++){  
@@ -58,7 +86,7 @@ void loop() {
   lcd.clear();
   lcd.print("Distancia: ");
   lcd.print(distance);
-  Serial.print(distance);
+  //Serial.print(distance);
 
   
   }
@@ -72,8 +100,11 @@ void loop() {
   lcd.clear();
   lcd.print("Distancia: ");
   lcd.print(distance);
-  Serial.print(distance);
+  //Serial.print(distance);
+  
   }
+
+ 
 }
 
 

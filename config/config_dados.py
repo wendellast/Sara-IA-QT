@@ -13,6 +13,14 @@ import datetime
 import requests
 import random
 
+try:
+    from pyfirmata import Arduino, util, STRING_DATA
+
+    board = Arduino('/dev/ttyUSB0') # Informe a ponrta do arduino
+    arduino = True
+except:
+    arduino = False
+
 
 
 #Configurações de dados
@@ -52,13 +60,24 @@ def resposta(audio):
     stream.stop_stream()
     print(f'[bold purple]SARA:[/] [cyan]{audio}[/]')
     sara_voz.say(audio)
+
+    if arduino == True:
+        try:
+            board.send_sysex( STRING_DATA, util.str_to_two_byte_iter(audio) )
+        except:
+            pass
     sara_voz.runAndWait()
     stream.start_stream ()
 
 def respostalonga(textofala): 
     stream.stop_stream ()
-    sara_voz.say(textofala)
     print(f'[bold purple]SARA:[/] [cyan]{textofala}[/]')
+    sara_voz.say(textofala)
+    if arduino == True:
+        try:
+            board.send_sysex( STRING_DATA, util.str_to_two_byte_iter(textofala) )
+        except:
+            pass
     sara_voz.runAndWait()
     stream.start_stream ()
 

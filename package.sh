@@ -60,6 +60,7 @@ sudo apt-get install scrot
 echo -e ""$verde""$linha""$ppp""
 
 echo -e ""$rosa"Instalação modulos Pip "$ppp""
+
 #Modulos PIP
 pip3 install vosk
 pip3 install rich
@@ -72,7 +73,9 @@ pip3 install SpeechRecognition
 pip3 install python-vlc
 pip3 install wikipedia
 pip3 install pywhatkit
-pip install chatterbot==1.0.4
+pip3 install chatterbot==1.0.4
+pip3 install pyfirmata
+
 echo -e ""$verde""$linha""$ppp""
 
 echo -e ""$rosa"Atualizando Sistema "$ppp""

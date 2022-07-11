@@ -1,6 +1,0 @@
-{
-    "board": "arduino:avr:uno",
-    "programmer": "arduino:avrispmkii",
-    "port": "/dev/ttyUSB0",
-    "sketch": "test1.ino"
-}

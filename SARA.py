@@ -46,7 +46,7 @@ except:
 #Arquitetura 
 Digitar = True # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
 
-Thema = 'img/thema1.gif' #Altere o tema da sara de 1 a 5 ou padão escreva sara
+Thema = 'img/thema3.gif' #Altere o tema da sara de 1 a 5 ou padrão escreva sara
 
 Versao = 'Versão Beta v1.0'
 plataforma = platform.system()

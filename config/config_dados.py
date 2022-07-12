@@ -16,7 +16,7 @@ import random
 try:
     from pyfirmata import Arduino, util, STRING_DATA
 
-    board = Arduino('/dev/ttyUSB0') # Informe a ponrta do arduino
+    board = Arduino('/dev/ttyUSB0') # Informe a porta do arduino
     arduino = True
 except:
     arduino = False

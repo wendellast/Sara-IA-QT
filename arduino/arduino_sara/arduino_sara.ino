@@ -20,7 +20,7 @@ int LED15 = 19; // verde
 
 int buzzer = 11;
 int smoke = A1;
-int sensorGas = 500;
+int sensorGas = 310;
 
 //Visor e micro servo
 LiquidCrystal lcd(2,3,4,5,6,7); // config Visor
@@ -135,6 +135,9 @@ void loop() {
   bool valorPIR = digitalRead(pinPIR); // Sensor de presença
   if (valorPIR){
     digitalWrite(LED13, HIGH);
+    digitalWrite(buzzer, HIGH);
+
+
   }
 
    
@@ -214,6 +217,8 @@ void loop() {
   bool valorPIR = digitalRead(pinPIR); // Sensor de presença
   if (valorPIR){
     digitalWrite(LED13, HIGH);
+    digitalWrite(buzzer, HIGH);
+
   }
 
   
@@ -288,6 +293,8 @@ void loop() {
   bool valorPIR = digitalRead(pinPIR); // Sensor de presença
   if (valorPIR){
     digitalWrite(LED13, HIGH);
+    digitalWrite(buzzer, HIGH);
+ 
   }
 
   

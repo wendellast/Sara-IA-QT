@@ -20,7 +20,7 @@ int LED15 = 19; // verde
 
 int buzzer = 11;
 int smoke = A1;
-int sensorGas = 310;
+int sensorGas = 500;
 
 //Visor e micro servo
 LiquidCrystal lcd(2,3,4,5,6,7); // config Visor

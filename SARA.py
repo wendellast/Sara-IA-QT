@@ -209,7 +209,7 @@ class mainT(QThread):
           # Input = rec.Result()
             with sr.Microphone() as s:
                 # r.adjust_for_ambient_noise(s)
-                audio = r.listen(s,4, 5)
+                audio = r.listen(s,2, 5)
                 try:
                     
                     speech = r.recognize_google(audio, language= "pt-BR")

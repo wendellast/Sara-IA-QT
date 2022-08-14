@@ -1372,7 +1372,7 @@ class mainT(QThread):
                         if 'none' in self.Input :
                             pass
                         else:
-                            with open('comandos_udados.txt', 'a+',  encoding='UTF-8', ) as arquivo: 
+                            with open('comandos_falados_sem_resp.txt', 'a+',  encoding='UTF-8', ) as arquivo: 
                                 arquivo.write(f'{self.Input}\n')
                     except:
                         pass

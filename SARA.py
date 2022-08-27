@@ -15,15 +15,16 @@ from chatterbot.comparisons import LevenshteinDistance
 from rich import pretty
 from config.config import *
 from build.ajuda import *
+from time import sleep
 
-import chatterbot
+
 import speech_recognition as sr
+import chatterbot
 import os
 import pyaudio
 import pyttsx3
 import sys
 import datetime
-import psutil
 import webbrowser
 import vlc
 import json
@@ -31,8 +32,6 @@ import requests
 import time
 import wikipedia
 import platform
-import shutil
-import tempfile
 import sqlite3
 import pyautogui
 import random
@@ -46,13 +45,14 @@ except:
 #Arquitetura 
 Digitar = True # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
 
-Thema = 'img/thema3.gif' #Altere o tema da sara de 1 a 5 ou padrão escreva sara
+Thema = 'img/sara.gif' #Altere o tema da sara de 1 a 5 ou padrão escreva sara
 
 Versao = 'Versão Beta v1.0'
 plataforma = platform.system()
 diretorio_atual=os.getcwd()
 pretty.install()
 historico = []
+
 BLUE, RED, WHITE, YELLOW, MAGENTA, GREEN, END = '\33[94m', '\033[91m', '\33[97m', '\33[93m', '\033[1;35m', '\033[1;32m', '\033[0m'
 time.clock = time.time
 # Acesso ao microfone
@@ -228,11 +228,12 @@ class mainT(QThread):
             Input = input(f"{RED}(つ◕౪◕)つ━☆ﾟ.*･｡ﾟ {END}")
             return Input
     
-            
     # Comandos e conversas   
     def SARA(self):
+        
         while True:
-
+            
+            
             if Digitar == False:
                 self.Input = self.GivenCommand().lower() # Função de falar
             else:
@@ -247,8 +248,8 @@ class mainT(QThread):
             historico_base.append(self.Input)
             historico.append(historico_base[:])
 
-
-
+            
+                
             if 'none' in self.Input:
                 return self.Input
 
@@ -738,31 +739,36 @@ class mainT(QThread):
                 resposta('Ok')
                 resposta('Sobre qual assunto ?')
                 
+               
+                if Digitar == False:
+                    self.vozmic2 = self.GivenCommand().lower()
+                else:
+                    self.vozmic2= self.Digitar_comando().lower()
+            
                 try:
-                    if Digitar == False:
-                        self.vozmic2 = self.GivenCommand().lower()
-                    else:
-                        self.vozmic2= self.Digitar_comando().lower()
-                
-                    
                     resposta('Interessante')
                     resposta('Aguarde um momento')
                     resposta(f'Vou pesquisar e apresentar um resumo sobre {self.vozmic2}')
                     procurar = self.vozmic2.replace('resumo', '')
                     wikipedia.set_lang('pt')
                     resultado = wikipedia.summary(procurar,2)
-                    print(resultado)
-                    respostalonga(resultado)
-
                     
-                    with open('resumo/resumo.txt', 'a+', encoding='UTF-8') as  arquivo:
-                        arquivo.write(f'{resultado}')
-                        resposta('Escrevi o resumo para você')
-                            
+                    respostalonga(resultado)
+                    
                 except:
                     resposta('Erro')
                     resposta('A conexão falhou')
-                    # Mais um assusto    
+                    
+                
+                try:
+                    with open(f'resumo/{self.vozmic2 + ".txt"}', 'a+', encoding='UTF-8') as  arquivo:
+                        arquivo.write(f'{resultado}')
+                        resposta('Escrevi o resumo para você')
+                except:
+                    resposta('Desculpe não consegue escrever o resumo')
+                   
+                            
+                   
             
             elif 'interessante' in self.Input: # interessante
                 resposta('Interessante sou eu')
@@ -1372,10 +1378,45 @@ class mainT(QThread):
                         if 'none' in self.Input :
                             pass
                         else:
-                            with open('comandos_udados.txt', 'a+',  encoding='UTF-8', ) as arquivo: 
-                                arquivo.write(f'{self.Input}\n')
+    
+                            #Importa comandos csv
+                            if  not os.path.isfile("command/comandos.csv"):
+                                dados = [
+                                []
+                            
+                                ]
+
+                                comandos = pd.DataFrame(data=dados, columns=['comandos'])
+                                
+                                comandos.to_csv('command/comandos.csv', index=False)
+                           
+                            comandos = pd.read_csv('command/comandos.csv')
+                           
+                               
+                                
+                            comandos.loc[len(comandos)] = self.Input
+                            
+                            #exporta comandos csv
+                            comandos.to_csv('command/comandos.csv', index=False)
+                            
+                            resposta('Me fale uma coisa ')
+                            ler_frase()
+                            
+                            if Digitar == False:
+                                self.vozmic4 = self.GivenCommand().lower()
+                            else:
+                                self.vozmic4 = self.Digitar_comando().lower()
+                                
+                            pergunta = self.vozmic4
+                            
+                            if pergunta == 'não quero responder':
+                                resposta('Tudo bem, eu entendo')
+                            else:
+                                perguntas(pergunta)
+                           
                     except:
                         pass
+        
         
       
             

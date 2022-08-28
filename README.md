@@ -54,7 +54,7 @@ Consegue alcançar e espalha a sara para muitos usuários
 
 
 ## Recursos necessários
-* Máquina com pelo menos 4 gb de ram;
+* Máquina com pelo menos 2 gb de ram;
 * Máquina que tenha um  alto falantes;
 * Microfone opcional porem usara o modo de digitar 
 * Algumas Funções são necessários aplicativos externos por exemplo tocar música no Spotify necessário ter instalado;

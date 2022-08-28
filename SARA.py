@@ -35,6 +35,8 @@ import platform
 import sqlite3
 import pyautogui
 import random
+import requests
+
 
 try:
     import pywhatkit
@@ -46,6 +48,9 @@ except:
 Digitar = True # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
 
 Thema = 'img/sara.gif' #Altere o tema da sara de 1 a 5 ou padrão escreva sara
+
+#Perguntas >> Faz a sara fazer perguntas ao usuario
+perguntas = False
 
 Versao = 'Versão Beta v1.0'
 plataforma = platform.system()
@@ -1349,7 +1354,8 @@ class mainT(QThread):
                     resposta('Desculpe, Erro na conexão')
         
         
-
+                
+                
             elif 'quanto é' in self.Input:
                 resp = self.Input.replace("quanto é", " ")
                 resp = self.Input.replace("mais", "+")
@@ -1399,20 +1405,22 @@ class mainT(QThread):
                             #exporta comandos csv
                             comandos.to_csv('command/comandos.csv', index=False)
                             
-                            resposta('Me fale uma coisa ')
-                            ler_frase()
-                            
-                            if Digitar == False:
-                                self.vozmic4 = self.GivenCommand().lower()
-                            else:
-                                self.vozmic4 = self.Digitar_comando().lower()
+                            if pergunta == True:
                                 
-                            pergunta = self.vozmic4
-                            
-                            if pergunta == 'não quero responder':
-                                resposta('Tudo bem, eu entendo')
-                            else:
-                                perguntas(pergunta)
+                                resposta('Me fale uma coisa ')
+                                ler_frase()
+                                
+                                if Digitar == False:
+                                    self.vozmic4 = self.GivenCommand().lower()
+                                else:
+                                    self.vozmic4 = self.Digitar_comando().lower()
+                                    
+                                pergunta = self.vozmic4
+                                
+                                if pergunta == 'não quero responder':
+                                    resposta('Tudo bem, eu entendo')
+                                else:
+                                    perguntas(pergunta)
                            
                     except:
                         pass

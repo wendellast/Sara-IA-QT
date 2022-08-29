@@ -15,15 +15,16 @@ from chatterbot.comparisons import LevenshteinDistance
 from rich import pretty
 from config.config import *
 from build.ajuda import *
+from time import sleep
 
-import chatterbot
+
 import speech_recognition as sr
+import chatterbot
 import os
 import pyaudio
 import pyttsx3
 import sys
 import datetime
-import psutil
 import webbrowser
 import vlc
 import json
@@ -31,11 +32,11 @@ import requests
 import time
 import wikipedia
 import platform
-import shutil
-import tempfile
 import sqlite3
 import pyautogui
 import random
+import requests
+
 
 try:
     import pywhatkit
@@ -44,15 +45,19 @@ except:
     net = False
 
 #Arquitetura 
-Digitar = False # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
+Digitar = True # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
 
-Thema = 'img/thema3.gif' #Altere o tema da sara de 1 a 5 ou padrão escreva sara
+Thema = 'img/sara.gif' #Altere o tema da sara de 1 a 5 ou padrão escreva sara
+
+#Perguntas >> Faz a sara fazer perguntas ao usuario
+perguntas = False
 
 Versao = 'Versão Beta v1.0'
 plataforma = platform.system()
 diretorio_atual=os.getcwd()
 pretty.install()
 historico = []
+
 BLUE, RED, WHITE, YELLOW, MAGENTA, GREEN, END = '\33[94m', '\033[91m', '\33[97m', '\33[93m', '\033[1;35m', '\033[1;32m', '\033[0m'
 time.clock = time.time
 # Acesso ao microfone
@@ -111,13 +116,13 @@ bot = ChatBot("Sara",
   
 
 def SomIncial():
-    p = vlc.MediaPlayer("music/StartSound.mp3")
+    p = vlc.MediaPlayer("sounds/StartSound.mp3")
     p.play()
 
 SomIncial()
 
 def SomCarregamento():
-    p = vlc.MediaPlayer("music/AI.mp3")
+    p = vlc.MediaPlayer("sounds/on.mp3")
     p.play()
 
 # Validação da pasta de modelo
@@ -168,9 +173,9 @@ resposta('Olá')
 BoasVindas()
 resposta('Iniciando módulos')
 
-class mainT(QThread):
+class spertI(QThread):
     def __init__(self):
-        super(mainT,self).__init__()
+        super(spertI,self).__init__()
 
     def run(self):
         SomCarregamento()
@@ -181,7 +186,7 @@ class mainT(QThread):
 
     # Aciona os comandos
     # Faz o reconhecimento
-    def GivenCommand(self):
+    def microphoneSara(self):
        
         if net == False:
               
@@ -228,13 +233,14 @@ class mainT(QThread):
             Input = input(f"{RED}(つ◕౪◕)つ━☆ﾟ.*･｡ﾟ {END}")
             return Input
     
-            
     # Comandos e conversas   
     def SARA(self):
+        senha = 1234
         while True:
-
+            
+            senha_root = str(senha)
             if Digitar == False:
-                self.Input = self.GivenCommand().lower() # Função de falar
+                self.Input = self.microphoneSara().lower() # Função de falar
             else:
                 self.Input = self.Digitar_comando().lower() # Função de escrever 
 
@@ -247,8 +253,8 @@ class mainT(QThread):
             historico_base.append(self.Input)
             historico.append(historico_base[:])
 
-
-
+            
+                
             if 'none' in self.Input:
                 return self.Input
 
@@ -321,7 +327,7 @@ class mainT(QThread):
             
                 while True:
                     if Digitar == False:
-                        self.vozmic = self.GivenCommand().lower()
+                        self.vozmic = self.microphoneSara().lower()
                     else:
                         self.vozmic = self.Digitar_comando().lower()
 
@@ -346,7 +352,7 @@ class mainT(QThread):
                 resposta('Estarei aqui aguardando')
                 while True:
                     if Digitar == False:
-                        self.vozmic = self.GivenCommand().lower()
+                        self.vozmic = self.microphoneSara().lower()
                     else:
                         self.vozmic = self.Digitar_comando().lower()
                         
@@ -372,7 +378,7 @@ class mainT(QThread):
                 
                 while True:
                     if Digitar == False:
-                        self.vozmic = self.GivenCommand().lower()
+                        self.vozmic = self.microphoneSara().lower()
                     else:
                         self.vozmic = self.Digitar_comando().lower()
                     
@@ -410,7 +416,7 @@ class mainT(QThread):
                         resposta('Fale a nova frase do comando ')
                     
                         if Digitar == False:
-                            self.vozmic = self.GivenCommand().lower()
+                            self.vozmic = self.microphoneSara().lower()
                         else:
                             self.vozmic = self.Digitar_comando().lower()
 
@@ -433,7 +439,7 @@ class mainT(QThread):
                         resposta('Agora fale o que eu devo fazer')
                         
                         if Digitar == False:
-                            self.vozmic2 = self.GivenCommand().lower()
+                            self.vozmic2 = self.microphoneSara().lower()
                         else:
                             self.vozmic2= self.Digitar_comando().lower()
                         
@@ -543,7 +549,7 @@ class mainT(QThread):
                         try:
                             resposta('Fale o seu nome de usuario ')
                             if Digitar == False:
-                                self.vozmic1 = self.GivenCommand().lower()
+                                self.vozmic1 = self.microphoneSara().lower()
                             else:
                                 self.vozmic1= self.Digitar_comando().lower()
                             
@@ -562,7 +568,7 @@ class mainT(QThread):
                         try:
                             resposta('Pronto, agora fale a sua senha')
                             if Digitar == False:
-                                self.vozmic2 = self.GivenCommand().lower()
+                                self.vozmic2 = self.microphoneSara().lower()
                             else:
                                 self.vozmic2= self.Digitar_comando().lower()
                     
@@ -581,7 +587,7 @@ class mainT(QThread):
                         try:
                             resposta('Confirme a senha ')
                             if Digitar == False:
-                                self.vozmic3 = self.GivenCommand().lower()
+                                self.vozmic3 = self.microphoneSara().lower()
                             else:
                                 self.vozmic3= self.Digitar_comando().lower()
                             
@@ -656,7 +662,7 @@ class mainT(QThread):
                         try:
                             resposta('Qual o seu nome de usuario ?')
                             if Digitar == False:
-                                self.vozmic1 = self.GivenCommand().lower()
+                                self.vozmic1 = self.microphoneSara().lower()
                             else:
                                 self.vozmic1= self.Digitar_comando().lower()
                             
@@ -672,7 +678,7 @@ class mainT(QThread):
                         try:
                             resposta('Fale a sua senha')
                             if Digitar == False:
-                                self.vozmic2 = self.GivenCommand().lower()
+                                self.vozmic2 = self.microphoneSara().lower()
                             else:
                                 self.vozmic2= self.Digitar_comando().lower()
                             
@@ -720,7 +726,7 @@ class mainT(QThread):
                 try:
                     
                     if Digitar == False:
-                        self.vozmic2 = self.GivenCommand().lower()
+                        self.vozmic2 = self.microphoneSara().lower()
                     else:
                         self.vozmic2= self.Digitar_comando().lower()
                     
@@ -738,31 +744,36 @@ class mainT(QThread):
                 resposta('Ok')
                 resposta('Sobre qual assunto ?')
                 
+               
+                if Digitar == False:
+                    self.vozmic2 = self.microphoneSara().lower()
+                else:
+                    self.vozmic2= self.Digitar_comando().lower()
+            
                 try:
-                    if Digitar == False:
-                        self.vozmic2 = self.GivenCommand().lower()
-                    else:
-                        self.vozmic2= self.Digitar_comando().lower()
-                
-                    
                     resposta('Interessante')
                     resposta('Aguarde um momento')
                     resposta(f'Vou pesquisar e apresentar um resumo sobre {self.vozmic2}')
                     procurar = self.vozmic2.replace('resumo', '')
                     wikipedia.set_lang('pt')
                     resultado = wikipedia.summary(procurar,2)
-                    print(resultado)
-                    respostalonga(resultado)
-
                     
-                    with open('resumo/resumo.txt', 'a+', encoding='UTF-8') as  arquivo:
-                        arquivo.write(f'{resultado}')
-                        resposta('Escrevi o resumo para você')
-                            
+                    respostalonga(resultado)
+                    
                 except:
                     resposta('Erro')
                     resposta('A conexão falhou')
-                    # Mais um assusto    
+                    
+                
+                try:
+                    with open(f'resumo/{self.vozmic2 + ".txt"}', 'a+', encoding='UTF-8') as  arquivo:
+                        arquivo.write(f'{resultado}')
+                        resposta('Escrevi o resumo para você')
+                except:
+                    resposta('Desculpe não consegue escrever o resumo')
+                   
+                            
+                   
             
             elif 'interessante' in self.Input: # interessante
                 resposta('Interessante sou eu')
@@ -869,7 +880,7 @@ class mainT(QThread):
                     resposta('Por favor fale a extensão do arquivo junto, .txt. json .pdf, etcetera')
                     
                     if Digitar == False:
-                        self.vozmic = self.GivenCommand().lower()
+                        self.vozmic = self.microphoneSara().lower()
 
                     else:
                         self.vozmic = self.Digitar_comando().lower()
@@ -911,7 +922,7 @@ class mainT(QThread):
                     resposta('Qual vai ser o nome da pasta')
 
                     if Digitar == False:
-                        self.vozmic = self.GivenCommand().lower()
+                        self.vozmic = self.microphoneSara().lower()
                     else:
                         self.vozmic = self.Digitar_comando().lower()
 
@@ -975,7 +986,7 @@ class mainT(QThread):
                     resposta('Qual o nome do arquivo ?')
                     
                     if Digitar == False:
-                        self.vozmic = self.GivenCommand().lower()
+                        self.vozmic = self.microphoneSara().lower()
                     else:
                         self.vozmic = self.Digitar_comando().lower()
 
@@ -1015,7 +1026,7 @@ class mainT(QThread):
                 while True:
                     resposta('Qual é o nome da pasta')
                     if Digitar == False:
-                        self.vozmic = self.GivenCommand().lower()
+                        self.vozmic = self.microphoneSara().lower()
                     else:
                         self.vozmic = self.Digitar_comando().lower()
 
@@ -1056,7 +1067,7 @@ class mainT(QThread):
                     resposta('lembrasse de falar a extensão .txt .json etcetera')
        
                     if Digitar == False:
-                        self.vozmic = self.GivenCommand().lower()
+                        self.vozmic = self.microphoneSara().lower()
                     else:
                         self.vozmic = self.Digitar_comando().lower()
 
@@ -1095,7 +1106,7 @@ class mainT(QThread):
                     resposta('lembrasse de falar a extensão .txt .json etcetera')
        
                     if Digitar == False:
-                        self.vozmic = self.GivenCommand().lower()
+                        self.vozmic = self.microphoneSara().lower()
                     else:
                         self.vozmic = self.Digitar_comando().lower()
 
@@ -1121,7 +1132,7 @@ class mainT(QThread):
                         resposta('lembrasse de falar a extensão .txt .json etcetera')
        
                         if Digitar == False:
-                            self.vozmic2 = self.GivenCommand().lower()
+                            self.vozmic2 = self.microphoneSara().lower()
                         else:
                             self.vozmic2 = self.Digitar_comando().lower()
 
@@ -1165,7 +1176,7 @@ class mainT(QThread):
                     
 
                     if Digitar == False:
-                        self.vozmic = self.GivenCommand().lower()
+                        self.vozmic = self.microphoneSara().lower()
                     else:
                         self.vozmic = self.Digitar_comando().lower()
 
@@ -1195,7 +1206,7 @@ class mainT(QThread):
                                 
             
                                 if Digitar == False:
-                                    self.vozmic2 = self.GivenCommand().lower()
+                                    self.vozmic2 = self.microphoneSara().lower()
                                 else:
                                     self.vozmic2 = self.Digitar_comando().lower()
 
@@ -1298,7 +1309,7 @@ class mainT(QThread):
                 resposta('Ok, abrindo youtube ')
                 webbrowser.open('www.youtube.com')
                 
-            elif 'desligar' in self.Input: #Desligar
+            elif 'sair' in self.Input: #Desligar
                 resposta('Ok')
                 resposta('Vou encerrar por enquanto')
                 resposta('Até mais')
@@ -1330,7 +1341,7 @@ class mainT(QThread):
                     resposta('Fale o que deseja que eu escreva')
 
                     if Digitar == False:
-                        self.vozmic = self.GivenCommand().lower()
+                        self.vozmic = self.microphoneSara().lower()
                     else:
                         self.vozmic = self.Digitar_comando().lower()
                 
@@ -1343,7 +1354,22 @@ class mainT(QThread):
                     resposta('Desculpe, Erro na conexão')
         
         
-
+                
+            elif 'desligar' in self.Input:
+                resposta('Tudo bem')
+                resposta('Fale a sua senha Root')
+                
+                if Digitar == False:
+                    self.vozmic4 = self.microphoneSara().lower()
+                else:
+                    self.vozmic4 = self.Digitar_comando().lower()
+                
+                resp = self.vozmic4
+                
+                if resp == senha_root:
+                    os.system("shutdown /s /t 0")
+                else:
+                    resposta('Senha root incorreta')
             elif 'quanto é' in self.Input:
                 resp = self.Input.replace("quanto é", " ")
                 resp = self.Input.replace("mais", "+")
@@ -1372,10 +1398,47 @@ class mainT(QThread):
                         if 'none' in self.Input :
                             pass
                         else:
-                            with open('comandos_falados_sem_resp.txt', 'a+',  encoding='UTF-8', ) as arquivo: 
-                                arquivo.write(f'{self.Input}\n')
+    
+                            #Importa comandos csv
+                            if  not os.path.isfile("command/comandos.csv"):
+                                dados = [
+                                []
+                            
+                                ]
+
+                                comandos = pd.DataFrame(data=dados, columns=['comandos'])
+                                
+                                comandos.to_csv('command/comandos.csv', index=False)
+                           
+                            comandos = pd.read_csv('command/comandos.csv')
+                           
+                               
+                                
+                            comandos.loc[len(comandos)] = self.Input
+                            
+                            #exporta comandos csv
+                            comandos.to_csv('command/comandos.csv', index=False)
+                            
+                            if pergunta == True:
+                                
+                                resposta('Me fale uma coisa ')
+                                ler_frase()
+                                
+                                if Digitar == False:
+                                    self.vozmic4 = self.microphoneSara().lower()
+                                else:
+                                    self.vozmic4 = self.Digitar_comando().lower()
+                                    
+                                pergunta = self.vozmic4
+                                
+                                if pergunta == 'não quero responder':
+                                    resposta('Tudo bem, eu entendo')
+                                else:
+                                    perguntas(pergunta)
+                           
                     except:
                         pass
+        
         
       
             
@@ -1386,7 +1449,7 @@ class Janela (QMainWindow):
     def __init__(self):
         super().__init__()
         
-        Dspeak = mainT()
+        Dspeak = spertI()
         Dspeak.start()
         
         self.label_gif = QLabel(self)
@@ -1460,7 +1523,7 @@ class Janela (QMainWindow):
         self.setMinimumSize(400, 300)
         self.setMaximumSize(400, 300)
         self.setWindowOpacity(0.98) 
-        self.setWindowIcon(QtGui.QIcon('img/sara_ts3.png'))
+        self.setWindowIcon(QtGui.QIcon('img/sara_icon.png'))
         self.setWindowTitle("Assistente Virtual")
         self.show()
 

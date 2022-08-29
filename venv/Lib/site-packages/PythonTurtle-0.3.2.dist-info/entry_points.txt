@@ -1,3 +1,0 @@
-[console_scripts]
-PythonTurtle = pythonturtle.__main__:application.run
-

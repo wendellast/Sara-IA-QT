@@ -75,7 +75,6 @@ pip3 install wikipedia
 pip3 install pywhatkit
 pip3 install chatterbot==1.0.4
 pip3 install pyfirmata
-pip3 install pygame
 
 echo -e ""$verde""$linha""$ppp""
 

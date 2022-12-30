@@ -70,8 +70,8 @@ Consegue alcançar e espalha a sara para muitos usuários
 
 *Basta executar esses comandos:
 
-`sudo chmod +x setup.sh`
-`./setup.sh`
+`sudo chmod +x package.sh`
+`./package.sh`
 
 *Recomendo instalar o requirements:
 

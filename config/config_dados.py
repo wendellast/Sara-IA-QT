@@ -3,6 +3,9 @@ from rich.table import Table
 from rich import print
 from datetime import time
 from config.config import *
+from requests import get
+
+import json
 import os
 import rich
 import psutil
@@ -12,6 +15,7 @@ import pyttsx3
 import datetime
 import requests
 import random
+import requests
 
 try:
     from pyfirmata import Arduino, util, STRING_DATA
@@ -57,13 +61,14 @@ stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, fram
 
 def resposta(audio):
     notification.notify(title = "SARA",message = audio,timeout = 3)
+    
     stream.stop_stream()
     print(f'[bold purple]SARA:[/] [cyan]{audio}[/]')
     sara_voz.say(audio)
 
     if arduino == True:
         try:
-            board.send_sysex( STRING_DATA, util.str_to_two_byte_iter(audio) )
+            board.send_sysex(STRING_DATA, util.str_to_two_byte_iter(audio) )
         except:
             pass
     sara_voz.runAndWait()
@@ -104,28 +109,47 @@ def bateria(): # No momento funcionameto em notebook
         carga = bateria.percent
         bp = str(bateria.percent)
         bpint = "{:.0f}".format(float(bp))
-        resposta(f"A bateria está em: {bpint}%")
+        resposta("A bateria está em:" +bpint +'%')
         if carga <= 20:
-            resposta('Ela está em nível crítico')
+            resposta('Ela está em nivel crítico')
             resposta('Por favor, coloque o carregador')
         elif carga == 100:
             resposta('Ela está totalmente carregada')
             resposta('Retire o carregador da tomada')
     except:
-        resposta(f'Não foi possível dizer a bateria')
+        resposta('Desculpa')
+        resposta('Seu dispositivo atual não está usando bateria')
+        resposta('Por isso é impossivel informar a quantidade de carga')
 
 def cpu ():
     usocpuinfo = str(psutil.cpu_percent())
     usodacpu  = "{:.0f}".format(float(usocpuinfo))
-    resposta('Verificando carga do sistema')
-    resposta(f'O uso do processador está em {usodacpu}%')
-
+    resposta('O uso do processador está em ' +usodacpu +'%')
+    
 def temperaturadacpu():
-    tempcpu = psutil.sensors_temperatures(fahrenheit=False)
+    tempcpu = psutil.sensors_temperatures()
     cputemp = tempcpu['coretemp'][0]
     temperaturacpu = cputemp.current
     cputempint = "{:.0f}".format(float(temperaturacpu))
-    resposta(f'A temperatura da CPU está em {cputempint}° ')
+    if temperaturacpu >= 20 and temperaturacpu < 40:
+        resposta('Estamos trabalhado em um nível agradavel')
+        resposta('A temperatura está em ' +cputempint +'°')
+
+    elif temperaturacpu >= 40 and temperaturacpu < 58:
+        resposta('Estamos operando em nivel rasoável')
+        resposta('A temperatura é de ' +cputempint +'°')
+
+    elif temperaturacpu >= 58 and temperaturacpu < 70:
+        resposta('A temperatura da CPU está meio alta')
+        resposta('Algum processo do sistema está causando aquecimento')
+        resposta('Fique de olho')
+        resposta('A temperatura está em ' +cputempint +'°')
+
+    elif temperaturacpu >= 70 and temperaturacpu != 80:
+        resposta('Atenção')
+        resposta('Temperatura de ' +cputempint +'°')
+        resposta('Estamos em nivel crítico')
+        resposta('Desligue o sistema imediatamente')
 
 # função de boas vindas, fases do dia
 def BoasVindas():
@@ -213,4 +237,32 @@ def linha_sara(): # Linha para menu
     print(table)
 
     return 0
-    
+   
+def localizacao():
+	try:
+		EndereçoIP = get('https://api.ipify.org').text
+		url = 'https://get.geojs.io/v1/ip/geo/'+EndereçoIP+'.json'
+		geo_reqeust = get(url)
+		geo_data = geo_reqeust.json()
+		city = geo_data['city']
+		resposta('Sua localização é '+str(city))
+	except:
+		resposta('Falha ao verificar a localização')
+  
+def primeira_vez():
+    ler = open('build/cache.txt', 'r')
+    leitura = json.loads(ler.read())
+    if leitura == 0:
+        resposta('Oie, Meu nome é Sara')
+        resposta('A parte de agora sou sua nova assistente pessoal')
+        resposta('Estou pronta para atender o seus comandos')
+        resposta('Vai ser um prazer trabalha com você')
+        resposta('Vamos lá me diga um comando :)')
+        resposta('Se você não souber basta digitar ou falar')
+        resposta('"help comandos" para ver os meus comandos')
+        dicionario = 1
+        f = open('build/cache.txt', 'w+')
+        f.write(json.dumps(dicionario))
+
+    elif leitura == 1:
+        None

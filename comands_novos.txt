@@ -1,0 +1,4 @@
+localização
+fechar janela
+youtube
+esconder janela

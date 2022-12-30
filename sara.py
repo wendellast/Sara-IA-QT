@@ -242,7 +242,7 @@ class spertI():
     def iniciar_assistente(self):
         self.p = QProcess()
         self.p.finished.connect(self.fechartudo)
-        self.p.start("python3", ['Sara.py'])
+        self.p.start("python3", ['Ui.py'])
 		
     # Comandos e conversas   
     def SARA(self):

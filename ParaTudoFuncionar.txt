@@ -1,85 +1,31 @@
-# Conheça a SARA IA
+# Conheça a SARA IA QT
 
 Um assistente virtual feito em Python
 Ele usa um sistema de reconhecimento de voz offline e oline
 
-
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # PARA TUDO FUNCIONAR: *Windows*
 
-> INSTALE ALGUNS MODULOS:
+>> Basta executa o arquivo `requirements.txt`
 
->>  Instale o python3 : https://www.python.org/downloads/
-
->>  reprodutor de VLC : https://vlc-media-player.br.uptodown.com/windows
-
->>  Voz Letícia : https://f123.org/leticia/
+>: Depois disse execute no terminal o comando:
+"python sara.py"
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 
 
-# AGORA ALGUMAS INSTALAÇÕES EM PIP:
 
->> pip install PythonTurtle
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# PARA TUDO FUNCIONAR: *Linux baseado debia/ubuntu*
 
->> pip install SpeechRecognition
+>> No linux basta execulta o comando :
 
->> pip install pyttsx3
+"sudo chmod 777 setup.sh" e depois "sudo ./setup.sh"
 
->> pip install psutil
+>> Depois de tudo ter instalado execulte o comando :
+"python3 sara.py"
+=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
->> pip install python-vlc 
 
->> pip install vosk
+#Caso esteja com alguma duvida entre em contato com migo no telegram : https://t.me/Lasstll
 
->> pip install jsonlib-python3
-
->> pip install plyer
-
->> pip install wikipedia
-
->> pip install gTT
-
->> pip install rich
-
->> pip install pythonqt
-
-# PARA TUDO FUNCIONAR: *lINUX*
-
-# INSTALE ALGUNS MODULOS:
-
->>  sudo apt-get install python3-pyaudio
-
->>  sudo apt-get install python3-dbus
-
->>  sudo apt-get install python3-pyqt5
-
->>  Voz Letícia : https://f123.org/leticia/
-
-# AGORA ALGUMAS INSTALAÇÕES EM PIP3:
-
->> pip3 install SpeechRecognition
-
->> pip3 install pyttsx3
-
->> pip3 install datetime
-
->> pip3 install espeakng
-
->> pip3 install psutil
-
->> pip3 install python-vlc 
-
->> pip3 install vosk
-
->> pip3 install jsonlib-python3
-
->> pip3 install plyer
-
->> pip3 install wikipedia
-
->> pip3 install gTTS
-
->> pip3 install rich
-
->> pip install PythonTurtle
-
-# Projeto SARA > baseado no JARVIS : https://github.com/JaimeJGJG/JARVIS-Python

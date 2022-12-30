@@ -1,3 +1,5 @@
+**Projeto Sara criado para aprendizado em conta disso há varios erros e bugs no sistema, mas ainda assim funcionando.**
+
 # SARA IA
 Assistente Virtual para Windows e Linux
 
@@ -73,9 +75,9 @@ Depois Para executar a sara basta ir na pasta onde sara.py está e executar o co
 
 ### Execulte os comandos dentro da pasta da sara
 
->> Basta executa o comando `pip install -r requirements.txt `
+> Basta executa o comando `pip install -r requirements.txt `
 
->: Depois disse execute no terminal o comando:
+> Depois disse execute no terminal o comando:
 `python sara.py`
 
 -=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=-

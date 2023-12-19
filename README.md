@@ -1,5 +1,3 @@
-**Projeto Sara criado para aprendizado em conta disso há varios erros e bugs no sistema, mas ainda assim funcionando.**
-
 # SARA IA
 Assistente Virtual para Windows e Linux
 
@@ -81,3 +79,9 @@ Depois Para executar a sara basta ir na pasta onde sara.py está e executar o co
 `python sara.py`
 
 -=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=--=-=-=-=-
+<div align="center">
+
+![Imagem do Projeto](img/exemplo2.png)
+
+![Imagem do Projeto](img/exemplo1.png)
+</div>

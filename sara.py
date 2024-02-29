@@ -44,7 +44,7 @@ except:
 
 
 #Arquitetura 
-Digitar = False # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
+Digitar = True # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
 
 #Faze de teste não ligue ainda
 perguntas = False #Perguntas >> Faz a sara fazer perguntas ao usuario 
@@ -161,7 +161,7 @@ class spertI():
             texto_falado =  texto_reconhecido
         except sr.UnknownValueError:
             print("Não foi possível entender o áudio.")
-            return 'none'
+            return None
         except sr.RequestError as e:
             print("Erro ao requisitar resultados; {0}".format(e))
             return None
@@ -196,9 +196,13 @@ class spertI():
                 senha_root = str(senha)
                 
                 if Digitar == False:
+                    if self.microphoneSara == None:
+                        self.microphoneSara()
                     self.Inputt = str(self.microphoneSara())
                     self.Input = self.Inputt.lower() # Função de falar
                 else:
+                    if self.Digitar_comando == None:
+                        self.Digitar_comando()
                     self.Inputt = str(self.Digitar_comando())
                     self.Input = self.Inputt.lower() # Função de escrever 
 

@@ -161,7 +161,7 @@ class spertI():
             texto_falado =  texto_reconhecido
         except sr.UnknownValueError:
             print("Não foi possível entender o áudio.")
-            return None
+            return 'none'
         except sr.RequestError as e:
             print("Erro ao requisitar resultados; {0}".format(e))
             return None
@@ -196,9 +196,11 @@ class spertI():
                 senha_root = str(senha)
                 
                 if Digitar == False:
-                    self.Input = self.microphoneSara().lower() # Função de falar
+                    self.Inputt = str(self.microphoneSara())
+                    self.Input = self.Inputt.lower() # Função de falar
                 else:
-                    self.Input = self.Digitar_comando().lower() # Função de escrever 
+                    self.Inputt = str(self.Digitar_comando())
+                    self.Input = self.Inputt.lower() # Função de escrever 
 
                 BASE_DIR = os.path.dirname(__file__)
                 SAVE_TO = os.path.join(BASE_DIR, 'mente.json')
@@ -1387,7 +1389,6 @@ class spertI():
         
 aplicacao = QApplication(sys.argv)        
 Dspeak = spertI()
-Dspeak.iniciar_assistente()          
 Dspeak.SARA()
 sys.exit(aplicacao.exec_())
         

@@ -155,23 +155,32 @@ class spertI():
     # Faz o reconhecimento
     def microphoneSara(self):
        
-                # Input = rec.Result()
-        with sr.Microphone() as s:
-            #r.adjust_for_ambient_noise(s)
-            audio = r.listen(s)
-            try:
-                
-                speech = r.recognize_google(audio, language= "pt-BR")
-                speech.lower()
-
-            except:
-                # Retorna os erros
-                print('Não entendi, fale novamente')
-                # resposta("Não entendi o que você disse, fale novamente.")
-                return 'none'
-        #Input = Input.lower()
+            # Input = rec.Result()
+        recognizer = sr.Recognizer()
         
-        return speech
+        with sr.Microphone() as source:
+            print("Escultando:")
+            # Ajusta o nível de ruído do ambiente
+            recognizer.adjust_for_ambient_noise(source)
+            
+            # Escuta o áudio do microfone
+            audio = recognizer.listen(source)
+        
+        try:
+            # Reconhece o discurso usando o serviço do Google Speech Recognition
+            texto_reconhecido = recognizer.recognize_google(audio, language='pt-BR')
+            print("Você disse: " + texto_reconhecido)
+            texto_falado =  texto_reconhecido
+        except sr.UnknownValueError:
+            print("Não foi possível entender o áudio.")
+            return None
+        except sr.RequestError as e:
+            print("Erro ao requisitar resultados; {0}".format(e))
+            return None
+      
+        return texto_falado
+        
+        
     
     def Digitar_comando(self): # Função para digitar os comandos ao invés de falar
             Input = input(f"{RED}(つ◕౪◕)つ━☆ﾟ.*･｡ﾟ {END}")
@@ -212,38 +221,8 @@ class spertI():
                 historico_base.append(self.Input)
                 historico.append(historico_base[:])
 
-                #Conomentro
-                    
-                        
-                #Em teste
-                segundo += 1
-                    
-                if segundo == 60:
-                    segundo = 0
-                    minuto +=1
-                    
-                if segundo == 5:
-                    if pergunta == True:
-                                    
-                        resposta('Me fale uma coisa ')
-                        ler_frase()
-                        
-                        if Digitar == False:
-                            self.vozmic4 = self.microphoneSara().lower()
-                        else:
-                            self.vozmic4 = self.Digitar_comando().lower()
-                            
-                        pergunta = self.vozmic4
-                        
-                        if pergunta == 'não quero responder':
-                            resposta('Tudo bem, eu entendo')
-                        else:
-                            perguntas(pergunta)  
-                            
-                if minuto == 60:
-                    minuto = 0
-                    hora += 1
-                    
+                #Conomentro    
+              
                 
                     
                 if 'none' in self.Input:
@@ -420,7 +399,8 @@ class spertI():
                             if 'cancelar' in self.vozmic:
                                 resposta('Tudo bem, cancelando aprendizado')
                                 break
-                            chave = self.vozmic
+                            chave = str(self.vozmic)
+                            
 
                         except:
                             resposta('Desculpe, deu algum erro tente de novo !')
@@ -432,7 +412,7 @@ class spertI():
                             if Digitar == False:
                                 self.vozmic2 = self.microphoneSara().lower()
                             else:
-                                self.vozmic2= self.Digitar_comando().lower()
+                                self.vozmic2 = self.Digitar_comando().lower()
                             
                             if 'none' in self.vozmic2:
                                 resposta('Não entendi, fale de novo !')
@@ -441,14 +421,13 @@ class spertI():
                             if 'cancelar' in self.vozmic2:
                                 resposta('Tudo bem, cancelando aprendizado')
                                 break
-                            valor = self.vozmic2
+                            valor = str(self.vozmic2)
                         except:
                         
                             resposta('Desculpe, deu algum erro tente de novo')
                             continue
                         
                         
-                    
                         try:
                         
                             with open('memoria/memoria.json', 'r', encoding='UTF-8') as arq, \
@@ -472,7 +451,6 @@ class spertI():
                             resposta('Pronto, aprendi') 
                             resposta(f'{chave } é igual a {valor}')
                             break
-
                 
                 elif 'bateria' in self.Input:
                     bateria()

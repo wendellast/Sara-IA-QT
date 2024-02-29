@@ -1,9 +1,1 @@
-oLá eu sou Wendel Alves criador desse projeto, deixo o recado que esse projeto em QT foi descontinuado, não vou mais fazer atualizações. Porem irie criar uma versão usando Python Tkinter.
-
->: O Sistema da Sara Qt pode ter alguns bugs pois desenvolve esse projeto quando eu estava aprendendo.
-
->: Bem é isso apesar desse projeto não receber atualizações ainda pode ser instalado ,experimente faça melhorias se preferir.
-
->: Caso esteja com alguma duvida entre em contato com migo no telegram : https://t.me/Lasstll
-
-:> Adeus :)
+>: Caso esteja com alguma duvida entre em contato com migo no telegram : https://t.me/wendellast

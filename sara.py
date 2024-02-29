@@ -1,4 +1,3 @@
-from vosk import Model, KaldiRecognizer
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5 import QtGui, QtCore
@@ -17,7 +16,6 @@ from config.config import *
 from build.ajuda import *
 from time import sleep
 
-
 import speech_recognition as sr
 import chatterbot
 import os
@@ -33,7 +31,6 @@ import time
 import wikipedia
 import platform
 import sqlite3
-import pyautogui
 import random
 import requests
 
@@ -48,7 +45,7 @@ except:
 
 
 #Arquitetura 
-Digitar = True # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
+Digitar = False # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
 
 #Faze de teste não ligue ainda
 perguntas = False #Perguntas >> Faz a sara fazer perguntas ao usuario 
@@ -64,7 +61,7 @@ time.clock = time.time
 # Acesso ao microfone
 r = sr.Recognizer()
 
-ACCEPTANCE = 0.70
+ACCEPTANCE = 0.6  # Set your desired acceptance threshold
 
 def comparate_messages(message, candidate_message):
     similarity = 0.0
@@ -78,41 +75,17 @@ def comparate_messages(message, candidate_message):
             message_text,
             candidate_text
         )
-        similarity = round(similarity.ratio(),2)
+        similarity = round(similarity.ratio(), 2)
         
         if similarity < ACCEPTANCE:
             similarity = 0.0
-        else:
-            #print("Mensagem do usuário:",message_text,", mensagem candidata:",candidate_message,", nível de confiança:", similarity)
-            pass
+
     return similarity
 
-def select_response(message, list_response, storage=None):
-    response = list_response[0]
-    #print("resposta escolhida:", response)
+def select_response(statement, response_list):
+    return response_list[0]
 
-    return response
-
-bot = ChatBot("Sara",
-                    read_only=True,
-                    statement_comparison_function=comparate_messages,
-                    response_selection_method=select_response,
-                    
-                    
-                    logic_adapters=[
-                        
-                        {
-                           
-                            "import_path":"chatterbot.logic.MathematicalEvaluation",
-                            "import_path":"chatterbot.logic.BestMatch",
-                            "statement_comparison_function": chatterbot.comparisons.LevenshteinDistance,
-                           
-                        
-                        }
-
-])                   
-   
-
+bot = ChatBot("Sara")
 
   
 
@@ -128,23 +101,10 @@ def SomCarregamento():
 
 # Validação da pasta de modelo
 # É necessário criar a pasta model-br a partir de onde estiver esta fonte
-if not os.path.exists("model-br"):
-    print("Modelo em portugues não encontrado.")
-    exit(1)
-    
+   
 if not os.path.exists("memoria"):
     print("A memoria  não encontrado.")
     exit(1)
-
-if net == False:
-    # Apontando o algoritmo para ler o modelo treinado na pasta "model-br"
-    model = Model("model-br")
-    rec = KaldiRecognizer(model, 16000)
-
-    # Preparando o microfone para captura
-    p = pyaudio.PyAudio()
-    stream = p.open(format=pyaudio.paInt16, channels=1, rate=16000, input=True, frames_per_buffer=8192)
-    stream.start_stream()
 
 
 if 'Windows' in plataforma:
@@ -195,41 +155,23 @@ class spertI():
     # Faz o reconhecimento
     def microphoneSara(self):
        
-        if net == False:
-              
-            data = stream.read(8000)
-            Input = 'nada'
-            if len(data) == 0:
-                None
-            if rec.AcceptWaveform(data):
-                result = rec.Result()
-                resultado = json.loads(result)
-                if result is not None:
-                    Input = resultado['text']
-                    return Input
-            return Input
-       
-        else:
-           
+                # Input = rec.Result()
+        with sr.Microphone() as s:
+            #r.adjust_for_ambient_noise(s)
+            audio = r.listen(s)
+            try:
                 
-                
-          # Input = rec.Result()
-            with sr.Microphone() as s:
-                #r.adjust_for_ambient_noise(s)
-                audio = r.listen(s)
-                try:
-                    
-                    speech = r.recognize_google(audio, language= "pt-BR")
-                    speech.lower()
-    
-                except:
-                    # Retorna os erros
-                    print('Não entendi, fale novamente')
-                    # resposta("Não entendi o que você disse, fale novamente.")
-                    return 'none'
-            #Input = Input.lower()
-            
-            return speech
+                speech = r.recognize_google(audio, language= "pt-BR")
+                speech.lower()
+
+            except:
+                # Retorna os erros
+                print('Não entendi, fale novamente')
+                # resposta("Não entendi o que você disse, fale novamente.")
+                return 'none'
+        #Input = Input.lower()
+        
+        return speech
     
     def Digitar_comando(self): # Função para digitar os comandos ao invés de falar
             Input = input(f"{RED}(つ◕౪◕)つ━☆ﾟ.*･｡ﾟ {END}")
@@ -518,10 +460,6 @@ class spertI():
                                 # escreve o objeto atualizado no arquivo temporário
                                 json.dump(dados, out, ensure_ascii=False, indent=4, separators=(',',':'))
 
-                            if chave in dados:
-                                resposta('Desculpe, esse comando já existe')
-                                continue
-
                             # se tudo deu certo, renomeia o arquivo temporário
                             shutil.move(out.name, 'memoria/memoria.json')
                         
@@ -556,20 +494,7 @@ class spertI():
 
                 
                 
-                elif 'a terra é plana' in self.Input:
-                    resposta('Nossa')
-                    resposta('Vou ter que desenhar para ver se você entende')
-                    resposta('Desenhando Sistema Solar ')
-                    
-                    try:
-                        try:
-                            sistema_solar()
-                        except:
-                            resposta('ops')
-                            resposta('Viu idiota, ver se há algo plano a ir')
-                    except:
-                        resposta('Não consegue te mostra o meu desenho')
-    
+                
                 elif  'vai chover' in self.Input:
                     resposta('Não sei')
                     resposta('Eu não tenho essa função ainda')
@@ -690,18 +615,6 @@ class spertI():
                                 resposta('As senhas digitadas são diferentes')    
                     except:
                         pass
-
-                elif 'tira print' in self.Input or 'tire print' in self.Input:
-                    resposta('Tudo bem vou tirar print')
-                    
-                    s = random.randint(0,500)
-                    try: 
-                        foto = pyautogui.screenshot()
-                        foto.save(f'captura_tela/foto{s}.png')
-                    except:
-                        resposta('Desculpe não consegue tira o print da tela')
-
-                    
 
 
                 elif 'login' in self.Input:
@@ -1287,29 +1200,7 @@ class spertI():
                                     resposta('Tente de novo')
                                     continue
 
-                elif 'esvaziar lixeira' in self.Input or 'limpar lixeira' in self.Input:
-                    resposta('Está bem, vou esvaziar a lixeira')
-                
-                    #os.system('./esvaziar.sh')
-                    os.chdir(os.environ['HOME']+'/.local/share/Trash/files')
-                    a=os.listdir(os.environ['HOME']+'/.local/share/Trash/files')
-                    for elemento in a:
-                        try:
-                            print('removendo -> ' + str(elemento))
-                            os.remove(elemento)
-                        except OSError:
-                            print('removendo -> ' + str(elemento))
-
-                            os.system('rm -r '+ elemento)
-                    resposta('Pronto, lixeira limpa')
                                 
-                elif 'abrir calculadora'  in self.Input:
-                    try:
-                        resposta('Tudo bem abrindo')
-                        os.system('gnome-calculator')
-                    except:
-                        resposta('Não consegue abrir')
-
                 elif 'playlist' in self.Input or 'toque playlist' in self.Input: #Reproduzir música
                     try:
                         resposta('Ok')

@@ -88,4 +88,3 @@ def treinar(): # começar treinamento
             print(f'[cyan] Treinamento finalizado com sucesso [/] ')
 
 
-

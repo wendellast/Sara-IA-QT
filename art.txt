@@ -1,0 +1,2 @@
+sudo apt install espeak
+pip install git+https://github.com/ShoneGK/ChatterPy

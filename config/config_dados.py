@@ -38,7 +38,7 @@ if 'Windows' in plataforma:
 
     # Função de ajuste de voz da sara
     voz = sara_voz.getProperty('voices')
-    sara_voz.setProperty('voice', voz[2].id)
+    sara_voz.setProperty('voice', voz[0].id)
     rate = sara_voz.getProperty('rate')
     sara_voz.setProperty('rate', rate-50)
 

@@ -24,7 +24,6 @@ import pyttsx3
 import sys
 import datetime
 import webbrowser
-import vlc
 import json
 import requests
 import time
@@ -89,16 +88,6 @@ bot = ChatBot("Sara")
 
   
 
-def SomIncial():
-    p = vlc.MediaPlayer("sounds/StartSound.mp3")
-    p.play()
-
-SomIncial()
-
-def SomCarregamento():
-    p = vlc.MediaPlayer("sounds/on.mp3")
-    p.play()
-
 # Validação da pasta de modelo
 # É necessário criar a pasta model-br a partir de onde estiver esta fonte
    
@@ -113,7 +102,7 @@ if 'Windows' in plataforma:
 
     # Função de ajuste de voz da sara
     voz = sara_voz.getProperty('voices')
-    sara_voz.setProperty('voice', voz[2].id)
+    sara_voz.setProperty('voice', voz[0].id)
     rate = sara_voz.getProperty('rate')
     sara_voz.setProperty('rate', rate-50)
 
@@ -145,7 +134,6 @@ class spertI():
         super(spertI,self).__init__()
 
     def run(self):
-        SomCarregamento()
         resposta('Ok')
         resposta('Módulos Carregados')
         resposta('Tudo pronto, o que deseja ?')

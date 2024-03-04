@@ -44,7 +44,7 @@ except:
 
 
 #Arquitetura 
-Digitar = True # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
+Digitar = False # Função para decide se vai querer digitar ou falar, caso queira digitar mude para True
 
 #Faze de teste não ligue ainda
 perguntas = False #Perguntas >> Faz a sara fazer perguntas ao usuario 
@@ -1393,6 +1393,9 @@ class spertI():
         
 aplicacao = QApplication(sys.argv)        
 Dspeak = spertI()
+
+Dspeak.iniciar_assistente()
+
 Dspeak.SARA()
 sys.exit(aplicacao.exec_())
         
